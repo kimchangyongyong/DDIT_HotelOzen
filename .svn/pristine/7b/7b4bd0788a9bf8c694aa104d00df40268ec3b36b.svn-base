@@ -1,0 +1,34 @@
+package kr.or.ddit.cstmr.scrap.controller;
+
+import java.security.Principal;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.global.security.MberUser;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.ScrapVO;
+import kr.or.ddit.mybatis.mappers.ScrapMapper;
+
+@ControllerAdvice(basePackages = "kr.or.ddit.cstmr.recom")
+public class MemScrapControllerAdvice {
+
+	@Inject
+	private ScrapMapper scrapDAO;
+	
+	@ModelAttribute("sbrsScrapList")
+	public List<ScrapVO> addSbrsScrap(@MberUser MberVO mber, Principal authentication1) {
+		return scrapDAO.selectScrapSbrs(mber.getCstNo());
+	}
+	
+	@ModelAttribute("carScrapList")
+	public List<ScrapVO> addCarScrap(@MberUser MberVO mber, Principal authentication) {
+		return scrapDAO.selectScrapCar(mber.getCstNo());
+	}
+	
+}

@@ -1,0 +1,131 @@
+/**
+ * 
+ */
+
+const cPath = document.body.dataset.contextPath;
+
+let emps = null; 
+
+document.addEventListener("DOMContentLoaded", () => {
+	//let options = { "valueNames": ["cstNo", "mberNm", "mberId", "mberHp", "mberMbrsh", "mberMlg"], "page": 10, "pagination": true }
+	
+	let allOptions = {"valueNames":["empNm","empNo", "empTel","empDept","empJbgd","empJncmpYmd","dclzStts","empRtrmYn" ],"filter":{"key":"empDept"},"page":10,"pagination":true}
+	empList1 = new List('allEmpList', allOptions)
+	let dclzOptions = { "valueNames":["name","phone-number","report","subscription","social"],"page":1,"pagination":true}
+	empList2 = new List('dclzEmpList', dclzOptions)
+	let reitredOptions = {"valueNames":["rnum","empNm","empNo", "empTel","empDept","empJbgd","social"], "filter":{"key":"empNo"},"page":3,"pagination":true}
+	empList3 = new List('retiredEmpList', reitredOptions)
+	
+	
+	//var listFilter = document.querySelector('[data-list]');
+	var listFilter = document.querySelector('#myDept');
+	var key = allOptions.filter.key;
+	listFilter.addEventListener("change", function(e){
+		console.log("change test")
+		var filterValue = listFilter.value;
+		console.log(filterValue) 
+		empList1.filter(function(item){
+              if (e.target.value === '') {
+                return true;
+              }
+              return item.values()[key].toLowerCase().includes(e.target.value.toLowerCase());
+            });			
+		})
+//	$("#submitForm").submit();
+	
+//	emps = document.getElementById("emps").value;
+////	console.log(JSON.stringify(emps));
+////	emps = JSON.stringify(emps)
+//	console.log(emps);
+//	console.log(emps.length);
+//	console.log(emps[0]);
+//	var ftocnt = 0;
+//	var hrpcnt = 0;
+//	var fmtcnt = 0;
+//	var crmcnt = 0;
+//	var poscnt = 0;
+//	var hrmcnt = 0;
+//	
+//	for(var i=0; i<emps.length; i++) {
+//		console.log(emps[i].empDept);
+////		if(e.empDept ==='프론트오피스부') ftocnt++;
+////		if(e.empDept ==='하우스키핑부') hrpcnt++;
+////		if(e.empDept ==='시설관리부') fmtcnt++;
+////		if(e.empDept ==='고객관리부') crmcnt++;
+////		if(e.empDept ==='재무부') poscnt++;
+////		if(e.empDept ==='인사부') hrmcnt++;
+//	}
+	
+//	console.log('프론트오피스부',ftocnt);
+//	console.log('하우스키핑부',hrpcnt);
+//	console.log('시설관리부',fmtcnt);
+//	console.log('고객관리부',crmcnt);
+//	console.log('재무부',poscnt);
+//	console.log('인사부',hrmcnt);
+	
+//	var hrmEmps = $('input[name=hrmEmps]').val();
+//	 var user = [[${hrmEmpList}]];
+//	console.log(user);
+
+});
+
+
+
+
+function fnDel(){
+	document.addEventListener('click', function(){
+		var delBtn =event.target;
+		var empNo = $(delBtn).data('empNo');
+		var empRtrmYn = $(delBtn).data('rtrmYn');
+		console.log("퇴사여부", empRtrmYn);
+		if (empRtrmYn ==='Y') return false;
+		
+		//퇴사처리 여부 확인하기
+		Swal.fire({
+		   title: '정말로 그렇게 하시겠습니까?',
+		   text: '다시 되돌릴 수 없습니다. 신중하세요.',
+		   icon: 'warning',
+		   
+		   showCancelButton: true, 
+		   confirmButtonColor: '#3085d6', 
+		   cancelButtonColor: '#d33', 
+		   confirmButtonText: '승인', 
+		   cancelButtonText: '취소', 
+		   
+		   reverseButtons: true, 
+	   
+		}).then(result => {
+	   
+	   		if (result.isConfirmed) { 
+	
+				$.ajax({
+					url : cPath+"/emp/hrm/emply/delete/"+empNo
+					, method: 'GET'
+					, contentType: 'json'
+					, success:function(jsonObj){
+						console.log("jsonObj---------",jsonObj.empNo);
+						
+						
+			        	Swal.fire({
+							title:`사원번호: ${jsonObj.empNo} 퇴사 처리 되었습니다!`
+							, icon:"success"
+						}).then(result=> {
+							location.replace(cPath+"/emp/pbl/emply");
+						});
+						
+						//location.href = cPath+"/emp/hrm/empnotice/"+jsonObj.empNt.empNtNo;
+					}, error : function(jqXHR, txt, status){
+						console.log(txt, status, jqXHR);
+					}
+				}).done(()=>{
+					
+				});
+			}
+		});
+	});
+}		
+
+
+//$("#delBtn").on('click', function(){
+//	console.log("퇴사처리 눌렀나요?");
+//});

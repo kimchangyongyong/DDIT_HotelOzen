@@ -1,0 +1,20 @@
+package kr.or.ddit.cstmr.comm.notice;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("comm/notice")
+public class CstmrNoticeController {
+	
+	@GetMapping("noticeList.do")
+	public String noticeList() {
+		return "cstmr/comm/notice/noticeList";
+	}
+	
+	@GetMapping("noticeView.do")
+	public String noticeView() {
+		return "cstmr/comm/notice/noticeView";
+	}
+}

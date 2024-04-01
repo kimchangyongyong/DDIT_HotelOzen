@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.EmpStayChkoutMapper">
+	
+	<sql id="searchFrag">
+		AND
+		<trim prefix="(" suffix=")" prefixOverrides="OR">
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR CHKIN_NO LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR CST_NM LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR RM_NO LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+        </trim>
+	</sql>
+	
+	<sql id="chkoutList">
+		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+			WHERE TRUNC(CI_COWILL_YMD) >= TRUNC(SYSDATE)
+			<include refid="searchFrag" />
+        </if>
+		<if test="!@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	    	WHERE TRUNC(CI_COWILL_YMD) >= TRUNC(SYSDATE)
+	    </if>
+	</sql>
+	
+	<select id="selectTotalRecord" parameterType="PaginationInfo" resultType="int">
+		SELECT 
+		    COUNT(*)
+		FROM 
+		    TB_CHKOUT
+		    INNER JOIN TB_CHKIN USING (CHKIN_NO)
+		    INNER JOIN TB_CSTMR USING (CST_NO)
+		<include refid="chkoutList" />
+	</select>
+	
+	<resultMap type="ChkoutVO" id="chkoutMap" autoMapping="true">
+		<association property="chkin" javaType="ChkinVO" autoMapping="true">
+			<id property="chkinNo" column="CHKIN_NO"/>
+			<association property="cstmr" javaType="CstmrVO">
+				<id property="cstNo" column="CST_NO"/>
+				<result property="cstNm" column="CST_NM"/>
+			</association>
+		</association>
+	</resultMap>
+	
+	<select id="selectList" resultMap="chkoutMap" parameterType="PaginationInfo">
+		WITH RNUMRSVT AS (
+		    SELECT 
+		        ROWNUM RNUM, A.*    
+		    FROM (
+				SELECT 
+				    CHKIN_NO
+				    , CST_NM
+				    , CST_NO
+				    , CI_DT
+				    , CI_COWILL_YMD
+				    , RM_NO
+				    , CASE 
+				        WHEN CO_EXCCLC_AMNT > 0 THEN CO_EXCCLC_AMNT 
+				        ELSE 0 
+				    END AS CO_EXCCLC_AMNT
+				    , CASE 
+				        WHEN CI_CAR_NO IS NOT NULL THEN CI_CAR_NO 
+				        ELSE 'X' 
+				    END AS CI_CAR_NO
+				FROM 
+				    TB_CHKOUT
+				    INNER JOIN TB_CHKIN USING (CHKIN_NO)
+				    INNER JOIN TB_CSTMR USING (CST_NO)
+				
+			    <include refid="chkoutList" />
+				ORDER BY CHKIN_NO DESC
+			)A
+		)
+		SELECT *
+		FROM RNUMRSVT
+		<![CDATA[
+			WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+</mapper>

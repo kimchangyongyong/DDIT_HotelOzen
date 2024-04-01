@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.EmpPosSellingMapper">
+
+<select id="selectYearSetleList" parameterType="string" resultType="SellingVO">
+	WITH TB_SELLING AS (
+	    SELECT 
+	        SETLE_NO
+	        , SETLE_YMD
+	        , SETLE_AMNT
+	        , SETLE_ADD
+	    FROM
+	        TB_SETLE
+	    WHERE
+	        SETLE_STTUS_CD = 'Y'
+	)
+	SELECT 
+	    TRUNC(CAL.SELLING_DATE, 'MM') AS SELLING_DATE
+	    , UNIQUE_SETLE_ADD.SETLE_ADD
+	    , SUM(NVL(S.SETLE_AMNT, 0)) AS TOTAL
+	FROM
+	    (
+	     SELECT ADD_MONTHS(FIRST_DAY, LEVEL - TO_NUMBER(TO_CHAR(SYSDATE,'MM'))) AS SELLING_DATE
+	     FROM (
+	        SELECT TRUNC(TO_DATE(#{searchYear}, 'YYYY')) AS FIRST_DAY FROM DUAL
+	    )
+	    CONNECT BY LEVEL  <![CDATA[ <= ]]>  12
+	) CAL
+	CROSS JOIN (SELECT DISTINCT SETLE_ADD FROM TB_SELLING) UNIQUE_SETLE_ADD
+	LEFT JOIN TB_SELLING S
+	    ON TRUNC(CAL.SELLING_DATE, 'MM') = TRUNC(S.SETLE_YMD, 'MM')
+	    AND UNIQUE_SETLE_ADD.SETLE_ADD = S.SETLE_ADD
+	GROUP BY TRUNC(CAL.SELLING_DATE, 'MM'), UNIQUE_SETLE_ADD.SETLE_ADD
+	ORDER BY SELLING_DATE, UNIQUE_SETLE_ADD.SETLE_ADD
+</select>
+
+<select id="selectMonthSetleList" parameterType="string" resultType="SellingVO">
+	WITH TB_SELLING AS (
+    SELECT 
+        SETLE_NO
+        , SETLE_YMD
+        , SETLE_AMNT
+        , SETLE_ADD
+    FROM
+        TB_SETLE
+    WHERE
+        SETLE_STTUS_CD = 'Y'
+	)
+	SELECT
+	    CAL.SELLING_DATE,
+	    UNIQUE_SETLE_ADD.SETLE_ADD,
+	    NVL(SUM(S.SETLE_AMNT), 0) AS TOTAL
+	FROM (
+	    SELECT TRUNC(TO_DATE(#{searchDate}, 'YYYY-MM-DD'), 'MM') + LEVEL - 1 AS SELLING_DATE
+	    FROM DUAL
+	    CONNECT BY LEVEL <![CDATA[ <= ]]> EXTRACT(DAY FROM LAST_DAY(TO_DATE(#{searchDate}, 'YYYY-MM-DD')))
+	) CAL
+    CROSS JOIN (SELECT DISTINCT SETLE_ADD FROM TB_SELLING) UNIQUE_SETLE_ADD
+	LEFT JOIN TB_SELLING S
+	ON TRUNC(S.SETLE_YMD) = CAL.SELLING_DATE
+    AND UNIQUE_SETLE_ADD.SETLE_ADD = S.SETLE_ADD
+	GROUP BY SELLING_DATE, UNIQUE_SETLE_ADD.SETLE_ADD
+	ORDER BY SELLING_DATE, UNIQUE_SETLE_ADD.SETLE_ADD
+	</select>
+
+<select id="selectWeekSetleList" parameterType="string" resultType="SellingVO">
+	WITH TB_SELLING AS (
+    SELECT 
+        SETLE_NO
+        , SETLE_YMD
+        , SETLE_AMNT
+        , SETLE_ADD
+    FROM
+        TB_SETLE
+    WHERE
+        SETLE_STTUS_CD = 'Y'
+	)
+	SELECT 
+	    CAL.SELLING_DATE,
+	    NVL(SUM(S.SETLE_AMNT), 0) AS TOTAL,
+	    UNIQUE_SETLE_ADD.SETLE_ADD
+	FROM (
+	    SELECT TRUNC(TO_DATE(#{searchDate}, 'YYYY-MM-DD'), 'IW') + LEVEL - 1 SELLING_DATE
+	    FROM DUAL
+	    CONNECT BY LEVEL <![CDATA[ <= ]]> 7
+	) CAL
+	CROSS JOIN (SELECT DISTINCT SETLE_ADD FROM TB_SELLING) UNIQUE_SETLE_ADD
+	LEFT JOIN TB_SELLING S
+	ON TRUNC(S.SETLE_YMD) = CAL.SELLING_DATE
+	AND UNIQUE_SETLE_ADD.SETLE_ADD = S.SETLE_ADD
+	GROUP BY SELLING_DATE, UNIQUE_SETLE_ADD.SETLE_ADD
+	ORDER BY SELLING_DATE, UNIQUE_SETLE_ADD.SETLE_ADD
+</select>
+<select id="selectWeekChekinCount" parameterType="string" resultType="ChkinVO">
+	WITH TB_CHKCOUNT AS (
+	    SELECT
+	        CI_DT
+	        , COUNT(*) CHKIN_COUNT
+	    FROM TB_CHKIN
+	    GROUP BY CI_DT
+		)
+	SELECT 
+	    CAL.CI_DT
+	    , NVL(TB_CHK.CHKIN_COUNT, 0) CHECKIN_COUNT
+	FROM (
+	    SELECT TRUNC(TO_DATE(#{searchDate}, 'YYYY-MM-DD'), 'IW') + LEVEL - 1 CI_DT
+	    FROM DUAL
+	    CONNECT BY LEVEL <![CDATA[ <= ]]> 7
+	) CAL
+	LEFT JOIN TB_CHKCOUNT TB_CHK
+	ON TRUNC(TB_CHK.CI_DT) = CAL.CI_DT
+	ORDER BY CAL.CI_DT
+	
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.RefndMapper">
+	<resultMap type="RefndVO" id="refndMap" autoMapping="true">
+		<id property="refndNo" column="REFND_NO"/>
+		<association property="setleVO" javaType="SetleVO" autoMapping="true">
+			<id property="setleNo" column="SETLE_NO"/>
+		</association>
+		<association property="cstmrVO" javaType="CstmrVO"  autoMapping="true">
+			<id property="cstNo" column="CST_NO"/>
+		</association>
+	</resultMap>
+	<select id="select" parameterType="string" resultMap="refndMap">
+		SELECT 
+			  TB_REFND.REFND_NO
+			, TB_REFND.SETLE_NO
+			, TB_REFND.REFND_PLCY_NO
+			, TO_CHAR(TB_REFND.REFND_CNCDE_YMD, 'YYYY-MM-DD') AS REFND_CNCDE_YMD
+			, TB_REFND.REFND_AMNT
+			, TO_CHAR(TB_REFND.REFND_YMD, 'YYYY-MM-DD') AS REFND_YMD
+			, TB_REFND.REFND_STTUS
+            , TB_SETLE.CST_NO
+            , TO_CHAR(TB_SETLE.SETLE_YMD, 'YYYY-MM-DD')AS SETLE_YMD
+            , TB_SETLE.SETLE_AMNT
+            , TB_SETLE.SETLE_STTUS_CD
+            , TB_CSTMR.CST_NM
+            , TB_CSTMR.CST_REFND_ACNT
+            , TB_CSTMR.CST_REFND_BANK
+		FROM TB_REFND INNER JOIN TB_SETLE ON (TB_REFND.SETLE_NO = TB_SETLE.SETLE_NO)
+            LEFT OUTER JOIN TB_CSTMR ON (TB_SETLE.CST_NO = TB_CSTMR.CST_NO)
+		WHERE TB_REFND.REFND_NO = #{refndNo}
+	</select>
+
+	<select id="selectList" resultMap="refndMap">
+		SELECT 
+			  TB_REFND.REFND_NO
+			, TB_REFND.SETLE_NO
+			, TB_REFND.REFND_PLCY_NO
+			, TO_CHAR(TB_REFND.REFND_CNCDE_YMD, 'YYYY-MM-DD') AS REFND_CNCDE_YMD
+			, TB_REFND.REFND_AMNT
+			, TO_CHAR(TB_REFND.REFND_YMD, 'YYYY-MM-DD') AS REFND_YMD
+			, TB_REFND.REFND_STTUS
+            , TB_SETLE.CST_NO
+            , TO_CHAR(TB_SETLE.SETLE_YMD, 'YYYY-MM-DD')AS SETLE_YMD
+            , TB_SETLE.SETLE_AMNT
+            , TB_SETLE.SETLE_STTUS_CD
+            , TB_CSTMR.CST_NM
+            , TB_CSTMR.CST_REFND_ACNT
+            , TB_CSTMR.CST_REFND_BANK
+		FROM TB_REFND INNER JOIN TB_SETLE ON (TB_REFND.SETLE_NO = TB_SETLE.SETLE_NO)
+            LEFT OUTER JOIN TB_CSTMR ON (TB_SETLE.CST_NO = TB_CSTMR.CST_NO)
+	</select>
+
+</mapper>

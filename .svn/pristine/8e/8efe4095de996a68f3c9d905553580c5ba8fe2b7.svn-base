@@ -1,0 +1,99 @@
+/**
+ * 
+ */
+
+const baseURI = window.location.href
+
+let form = document.querySelector("#submitForm")
+$("#submitForm").on("submit", (event)=>{
+	event.preventDefault();
+	let url = form.action;
+	let method = form.method;
+	
+	let formData = new FormData(form);
+	let jsonData = {};
+		formData.forEach((value, key) => {
+		    jsonData[key] = value;
+	});
+	let listBody = document.querySelector("#listBody");
+	
+	fetch(url, {
+		method:method,
+		headers:{
+			"Content-Type": "application/json",
+       		"Accept": "application/json"
+		},
+		body: JSON.stringify(jsonData)
+		
+	}).then(resp=>{
+		if(resp.ok){
+			return resp.json();
+		}else{
+			throw new Error("오류발생", {cause:resp})
+		}
+	}).then(jsonObj=>{
+		listBody.innerHTML = '';
+		
+		let trTags = '';		
+		for(let mber of jsonObj){
+			trTags += `
+				<tr>
+					<td>${mber.rnum }</td>
+					<td class="cstNo">${mber.cstNo }</td>
+					<td class="mberNm">${mber.mberNm }</td>
+					<td class="mberId">${mber.mberId }</td>
+					<td class="mberHp">${mber.mberHp }</td>
+					<td class="mberMbrsh">${mber.mberMbrshYn }</td>
+					<td class="mberMlg">${mber.mberMlg }</td>
+					<td><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-cst-no="${mber.cstNo}">상세보기</button></td>
+				</tr>
+			`;			
+		}
+		listBody.innerHTML = trTags;
+	}).catch(err=>{
+		console.error(err)
+	}).finally(()=>{
+		
+	})
+	
+	return false;
+	
+})
+
+function fnCommFetch(url, options, fnResolve){
+	fetch(url,options)
+		.then(resp=>{
+			if(resp.ok){
+				return resp.json()
+			}else{
+				throw new Error(`상태코드 ${resp.status} 수신`, {cause:resp})
+			}
+		}).then(fnResolve).catch(err=>console.error(err));
+}
+
+var fnRetrieveMber = (event)=>{
+	let mberBtn = (event.relatedTarget);
+	let mberCstNo = (mberBtn.dataset.cstNo);
+	fnCommFetch(`${baseURI}/${mberCstNo}`,{
+		headers:{
+			"Accept":"application/json"
+		}
+	},(jsonObj)=>{
+		let mber = jsonObj.mberVO;
+		console.log(mber)
+		for(let n in mber){
+			let myInput = document.getElementById(n)
+			console.log(n)
+			console.log(myInput)
+			if(myInput == null) continue
+			myInput.value = mber[n];
+		}
+	})
+}
+
+$("#submitForm").submit();
+
+document.addEventListener("show.bs.modal", fnRetrieveMber);
+
+
+

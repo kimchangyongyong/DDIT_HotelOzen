@@ -1,0 +1,17 @@
+package kr.or.ddit.global.vo;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(of="setleNo")
+public class SetleVO {
+
+	private String setleNo;
+	private String cstNo;
+	private String setleYmd;
+	private Integer setleAmnt;
+	private String setleSttusCd;
+	
+	private SetleCardVO setleCard;
+}

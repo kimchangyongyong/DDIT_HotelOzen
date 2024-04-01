@@ -1,0 +1,216 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+<link href="${pageContext.request.contextPath}/resources/css/emp/fxtrs/fxtrsCss.css" rel="stylesheet">
+
+<div class="col mb-3">
+	<div class="card h-100">
+		<div class="card-header">
+			<div class="row flex-between-end">
+				<div class="col-auto align-self-center">
+					<h5 class="mb-0" data-anchor="data-anchor" id="share-dataset">
+						<font style="vertical-align: inherit;"> <font
+							style="vertical-align: inherit;">비품 사용내역 리스트</font>
+						</font>
+					</h5>
+				</div>
+
+				<div id="tableExample4"
+					data-list='{"valueNames":["name","email","age"],"page":10,"pagination":true}'>
+					<div class="row justify-content-end g-0">
+						<div class="col-auto col-sm-5 mb-3">
+							<form>
+								<div class="input-group">
+									<input class="form-control form-control-sm shadow-none search"
+										type="search" placeholder="Search..." aria-label="search" />
+									<div class="input-group-text bg-transparent">
+										<span class="fa fa-search fs-10 text-600"></span>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div>
+							<button class="btn float-end border mb-2" href="#fxtrs-use-add" data-bs-toggle="modal">
+								<i class="bi bi-plus-lg"></i> 추가
+							</button>
+						</div>
+					</div>
+					<div class="table-responsive scrollbar">
+						<table
+							class="table table-bordered table-striped fs-10 mb-0 bg-light">
+							<thead class="bg-200 border border-bottom">
+								<tr>
+									<th class="text-900 sort" data-sort="no">번호</th>
+									<th class="text-900 sort" data-sort="fxNm">객실호수</th>
+ 									<th class="text-900 sort" data-sort="fxMinCnt">작성자</th>
+									<th class="text-900 sort" data-sort="fxStaCnt">작성일</th>
+									<th class="text-900 sort" data-sort="fxIn">상세</th>
+								</tr>
+							</thead>
+							<tbody class="list" id="table-purchase-body">
+								<c:forEach var="i" begin="1" end="30">
+									<tr class="btn-reveal-trigger">
+										<td class="align-middle white-space-nowrap no">${i }</td>
+										<td class="align-middle white-space-nowrap rmNo">R501</td>
+										<td class="align-middle white-space-nowrap rmType">김창용</td>
+										<td class="align-middle white-space-nowrap rmstate">2024-02-16</td>
+										<td class="align-middle text-center fs-9 white-space-nowrap status clienYN" >
+											<button class="btn float-end border mb-2" href="#fxtrs-use-det" data-bs-toggle="modal">
+											<i class="bi bi-plus-lg"></i> 상세
+											</button>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					<div class="d-flex justify-content-center mt-3">
+						<button class="btn btn-sm btn-falcon-default me-1" type="button"
+							title="Previous" data-list-pagination="prev">
+							<span class="fas fa-chevron-left"></span>
+						</button>
+						<ul class="pagination mb-0"></ul>
+						<button class="btn btn-sm btn-falcon-default ms-1" type="button"
+							title="Next" data-list-pagination="next">
+							<span class="fas fa-chevron-right"></span>
+						</button>
+					</div>
+				</div>
+				
+				<div class="modal fade" id="fxtrs-use-add" tabindex="-1"
+					role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
+					<div class="modal-dialog modal-lg mt-6" role="document">
+						<div class="modal-content border-0">
+							<div class="modal-header px-5 position-relative bg-secondary  ">
+								<div class="position-relative z-1">
+									<h4 class="mb-0 text-white" id="authentication-modal-label">비품 사용내역 추가</h4>
+								</div>
+								<button class="btn-close position-absolute top-0 end-0 mt-2 me-2"
+									data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body py-4 px-5">
+								<form>
+									<div class="row gx-2">
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-no">작성자</label> <input
+												class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-no" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-no">작성일</label> <input
+												class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-no" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-name">객실호수</label>
+											<input class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-name" />
+										</div>
+									</div>
+									
+									<div class="row gx-2">
+									    <div class="col-sm-9" id="fxtrs-add1">
+									        <div class="row gx-2">
+								                <label class="form-label col-sm-2" for="model-rsvt-tel">비품코드</label>
+								                <div class="col-sm-2">
+								                	<input class="form-control " type="number" autocomplete="on" id="model-rsvt-tel" />
+								                </div>
+								                <label class="form-label col-sm-2" for="model-rsvt-tel">비품명</label>
+        									        <div class="col-sm-2">
+								                	<input class="form-control col-sm-2"  type="number" autocomplete="on" id="model-rsvt-tel" />
+												</div>								                
+								                <label class="form-label col-sm-2" for="model-rsvt-date1">수량</label>
+								                <div class="col-sm-2">
+									                <input class="form-control col-sm-2" type="number" autocomplete="on" id="model-rsvt-date1" />
+									        	</div>
+									        </div>
+									    </div>
+									    <div class="gx-2 col-sm-3 d-flex align-items-center justify-content-center" id="fxtrs-add2">
+										    <div>
+										        <i class="fas fa-plus fs-5"></i>
+										    </div>
+										</div>
+									    <div class="gx-2 col-sm-3 d-flex align-items-center justify-content-center" id="fxtrs-add2">
+										    <div>
+										        <i class="fas fa-minus fs-5"></i>
+										    </div>
+										</div>
+
+									</div>
+
+									<div>
+										<div class="mb-3 col-sm-4 float-end">
+											<button class="btn btn-secondary d-block w-100 mt-3"
+												type="submit" name="submit">등록</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="fxtrs-use-det" tabindex="-1"
+					role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
+					<div class="modal-dialog modal-lg mt-6" role="document">
+						<div class="modal-content border-0">
+							<div class="modal-header px-5 position-relative bg-secondary  ">
+								<div class="position-relative z-1">
+									<h4 class="mb-0 text-white" id="authentication-modal-label">비품 사용내역 상세조회</h4>
+								</div>
+								<button class="btn-close position-absolute top-0 end-0 mt-2 me-2"
+									data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body py-4 px-5">
+								<form>
+									<div class="row gx-2">
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-no">작성자</label> <input
+												class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-no" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-no">작성일</label> <input
+												class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-no" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-name">객실호수</label>
+											<input class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-name" />
+										</div>
+									</div>
+									<div class="row gx-2">
+										<div class="mb-3 col-sm-3">
+											<label class="form-label" for=model-rsvt-tel>비품코드</label>
+											<input class="form-control" type="number" autocomplete="on"
+												id="model-rsvt-tel" />
+										</div>
+										<div class="mb-3 col-sm-3">
+											<label class="form-label" for=model-rsvt-tel>비품명</label>
+											<input class="form-control" type="number" autocomplete="on"
+												id="model-rsvt-tel" />
+										</div>
+										<div class="mb-3 col-sm-3">
+											<label class="form-label" for="model-rsvt-date1">수량</label>
+											<input class="form-control" type="number" autocomplete="on"
+												id="model-rsvt-date1" />
+										</div>
+									</div>
+									<div>
+										<div class="mb-3 col-sm-4 float-end">
+											<button class="btn btn-secondary d-block w-100 mt-3"
+												type="submit" name="submit">확인</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

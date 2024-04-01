@@ -1,0 +1,149 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
+<link href="${pageContext.request.contextPath}/resources/css/emp/pms/fxtrs/useListadd.css"
+	rel="stylesheet">
+
+<div class="col mb-3">
+	<div class="card h-100">
+		<div class="card-header">
+			<div class="row flex-between-end">
+				<div class="col-auto align-self-center">
+					<h5 class="mb-0" data-anchor="data-anchor" id="share-dataset">
+						<font style="vertical-align: inherit;">
+							<font style="vertical-align: inherit;">비품 사용서</font>
+						</font>
+					</h5>
+				</div>
+
+
+				<div class="container px-5 py-5">
+					<table class="table table-bordered text-center custom-body-table-bd">
+						<tbody class="custom-th-bg">
+							<tr>
+								<th>사용서 번호</th>
+								<td>FXU2402005</td>
+
+								<th>객실번호</th>
+								<td>R603</td>
+							</tr>
+							<tr>
+								<th>작성자</th>
+								<td>홍길동</td>
+
+								<th>작성일</th>
+								<td>2024-02-22</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table
+						class="table table-bordered text-center custom-body-td-size custom-body-table-bd">
+						<tbody class="custom-th-bg">
+							<tr>
+								<th>비품 사용 내역</th>
+							</tr>
+							<tr>
+								<td> <!-- 내부 테이블 시작 -->
+									<table class="table table-bordered text-center custom-body-td-size">
+										<thead>
+											<tr>
+												<th>비품코드</th>
+												<th>비품명</th>
+												<th>수량</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>FX203</td>
+												<td>목욕가운</td>
+												<td>100</td>
+											</tr>
+											<tr>
+												<td>FX203</td>
+												<td>목욕가운</td>
+												<td>100</td>
+											</tr>
+											<tr>
+												<td colspan="3">
+													<a href="#fxtrs-use-add" data-bs-toggle="modal">
+														<i class="fas fa-plus"></i> &nbsp; 추가
+													</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td> <!-- 내부 테이블 끝 -->
+							</tr>
+							<tr>
+
+							</tr>
+						</tbody>
+					</table>
+					<div class="text-end">
+						<a class="btn btn-outline-danger me-1 mb-1" href="javascript:history.back()"
+							type="button">취소</a>
+						<a class="btn btn-outline-info me-1 mb-1" type="button">제출</a>
+					</div>
+				</div>
+
+
+				<div class="modal fade" id="fxtrs-use-add" tabindex="-1"
+					role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
+					<div class="modal-dialog modal-lg mt-6" role="document">
+						<div class="modal-content border-0">
+							<div class="modal-header px-5 position-relative bg-secondary  ">
+								<div class="position-relative z-1">
+									<h4 class="mb-0 text-white" id="authentication-modal-label">비품 사용 품목 추가</h4>
+								</div>
+								<button class="btn-close position-absolute top-0 end-0 mt-2 me-2"
+									data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body py-4 px-5">
+								<form>
+									<div class="row gx-2 border custom-modal-row-pd">
+										<div class="mb-3 col-sm-5 custom-modal-div-pd">
+											<label class="form-label" for="model-rsvt-no">비품명</label> 
+												<select class="form-select" id="event-type" name="event-type">
+							                        <option>배개</option>
+							                        <option>이불</option>
+							                        <option>시트</option>
+							                        <option>실내화</option>
+							                        <option>커튼</option>
+							                        <option>휴지</option>
+							                        <option>수건</option>
+						                        </select>
+										</div>
+										<div class="mb-3 col-sm-5">
+											<label class="form-label" for="model-rsvt-no">수량</label> <input
+												class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-no" />
+										</div>
+										
+										<div class="mb-3 col-sm-2 d-flex align-items-center justify-content-center">
+											<button class="btn btn-falcon-default me-1 mb-1" type="button">
+					                            <a href="#fxtrs-use-add" data-bs-toggle="modal">
+					                                <i class="fas fa-plus"></i> &nbsp; 추가
+					                            </a>
+											</button>
+				                        </div>
+									</div>
+									<div>
+										<div class="mb-3 col-sm-4 float-end">
+											<button class="btn btn-secondary d-block w-100 mt-3"
+												type="submit" name="submit">추가</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+package kr.or.ddit.emp.myinfo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/emp/myInfo")
+public class EmpMyInfoController {
+	@GetMapping("/mypage.do")
+	public String mypage() {
+		return "emp/myinfo/mypage";
+	}
+	
+	@GetMapping("/updateInfo.do")
+	public String updateInfo() {
+		return "emp/myinfo/updateInfo";
+	}
+}

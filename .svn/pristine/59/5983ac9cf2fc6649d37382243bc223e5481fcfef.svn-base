@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+.tab_start{
+	position:fixed;
+  	width:60px;
+  	height:60px;
+  	bottom:100px;
+  	right:40px;
+}
+.btn {
+    display: inline-block;
+}
+.recom-table{
+	max-width: 800px;
+}
+.recom-div{
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.scrapModal {
+	transform: translateX(200px) translateY(170px);
+}
+.tab_start {
+	 z-index: 1060;
+}
+.modal-content {
+	z-index : 1060;
+}
+.bi {
+	display:inline-block;
+	font-size:25px
+}
+.wish-area { 
+	position:absolute; 
+	top:20px;
+	right:20px;
+	width:30px;
+	height:50px;
+}
+.card-header{position:relative}
+.teb_start > img {
+	width : 50px;
+	height : 50px;
+}

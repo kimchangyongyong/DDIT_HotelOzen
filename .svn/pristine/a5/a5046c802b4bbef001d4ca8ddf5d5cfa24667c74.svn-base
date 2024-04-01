@@ -1,0 +1,21 @@
+package kr.or.ddit.mybatis.mappers;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.Test;
+
+import kr.or.ddit.AbstractRootContextTest;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+class EmpSchdlMapperTest extends AbstractRootContextTest {
+	
+	@Inject
+	EmpSchdlMapper dao;
+
+	@Test
+	void schdlListTest() {
+		log.info("{}", dao.empSchdlList("E230001"));
+	}
+
+}

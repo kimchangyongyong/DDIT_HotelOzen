@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+.room-img {
+	width: 70%;
+	margin-left: 120px
+}
+
+.ban-img {
+	width: 1000px;
+	height: 150px;
+}
+
+.d-flex {
+	display: flex;
+}
+
+.mg-right {
+	margin-right: 100px
+}
+
+.tabType01 li a {
+	display: block;
+	height: 60px;
+	line-height: 60px;
+	color: #666;
+	text-align: center;
+	font-size: 20px;
+	font-family: gothamL, notokrL;
+	letter-spacing: -1px;
+	text-transform: uppercase;
+}
+
+ul, ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.li-box {
+	display: inline-block;
+    border: 1px solid #ccc; /* 테두리 스타일을 추가할 수 있습니다. */
+    padding: 10px;
+    width: 150px; /* 박스의 가로 크기를 조절합니다. */
+    height: 70px; 
+    text-align: center;
+    line-height: 50px;
+}
+
+.tabType01 {
+	position: relative;
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+}

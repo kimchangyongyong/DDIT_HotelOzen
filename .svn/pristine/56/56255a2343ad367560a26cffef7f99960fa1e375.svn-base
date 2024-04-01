@@ -1,0 +1,30 @@
+package kr.or.ddit.global.vo;
+
+import java.time.LocalDate;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(of= "cstNo")
+public class MberVO {
+	private int rnum;
+	private String cstNo;
+	private String mberId;
+	private String mberPw;
+	private String mberNm;
+	private String mberHp;
+	private String mberTel;
+	private String mberAddr;
+	private LocalDate mberBirth;
+	private Integer mberMlg;
+	private String mberSecsnYn;
+	private String mberMbrshYn;
+	private String mberProflNm;
+	private String mberProflUuid;
+	private String mberRefndAcnt;
+	private String mberRefndBank;
+	private String mberSbscrbYmd;
+	private String mberSexdstn;
+	private String mberSpclNote;
+}

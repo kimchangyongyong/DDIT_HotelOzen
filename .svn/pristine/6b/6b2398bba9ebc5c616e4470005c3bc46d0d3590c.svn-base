@@ -1,0 +1,85 @@
+const contextPath = document.body.dataset.contextPath;
+
+
+$(searchForm).on("submit", function(event){
+	event.preventDefault();
+	let form = this;
+	let url = form.action;
+	let method = form.method;
+	let data = $(form).serialize();
+	let $listBody = $(listBody);
+	let $pagingArea = $(pagingArea);
+	
+	$.ajax({
+		url:url
+		, method:method
+		, data:data
+		, dataType:"json"
+		, success:function(jsonObj){
+            $listBody.empty();
+			$pagingArea.empty();
+			$listBody.empty();
+			let dataList = jsonObj.noticeList;
+			let pagingHTML = jsonObj.pagingHTML;
+			
+			let trTags = null;		
+			
+			if(dataList.length>0){
+				$.each(dataList, function(index, notice){
+					trTags += `
+					        <tr>
+					          <td>${notice.rnum}</td>
+					          <td class="text-left" width="50%">
+								<div class="accordion-item border-0">
+					              <div class="card-header p-0" id="faqAccordionHeading1">
+					           		 <button class="accordion-button btn btn-link text-decoration-none d-block w-100 py-2 px-3 border-0 text-start rounded-0 shadow-none collapsed" data-bs-toggle="collapse" data-bs-target="#${notice.mberNtNo}collpase" aria-expanded="false" aria-controls="collapseFaqAccordion1"><svg class="svg-inline--fa fa-caret-right fa-w-6 accordion-icon me-3" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" data-fa-i2svg="" style="transform-origin: 0.1875em 0.5em;"><g transform="translate(96 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z" transform="translate(-96 -256)"></path></g></g></svg>
+										<span class="fw-medium font-sans-serif text-900">
+										${notice.mberNtNm}
+										</span>
+									</button>
+					                   </div>
+					                    <div class="accordion-collapse collapse" id="${notice.mberNtNo}collpase" aria-labelledby="faqAccordionHeading1" data-parent="#accordionFaq" style="">
+					                      <div class="accordion-body p-0">
+					                        <div class="card-body pt-2">
+					                          <div class="ps-3 mb-0">
+													${notice.mberNtCn}
+					                            <p class="d-flex justify-content-end" id="${notice.mberNtNo}">
+					                            	<button class="btn btn-outline-warning btn-sm modbtn">수정</button>
+					                            	<button class="btn btn-outline-danger btn-sm delbtn">삭제</button>
+					                           	</p>
+					                          </div>
+					                        </div>
+					                      </div>
+					                    </div>
+					                  </div>
+					          </td>
+					          <td>${notice.empNm}</td>
+					          <td>${notice.mberNtCtgry}</td>
+					          <td>${notice.mberNtYmd}</td>
+					          <td>${notice.mberNtCnt}</td>
+					        </tr>
+					` 
+				})
+			}else{
+				trTags = `
+					<tr>
+						<td colspan="6">등록된 공지사항이 없습니다.<td
+					</tr>
+				`
+			}
+			
+			$listBody.append(trTags);
+			$pagingArea.append(pagingHTML);
+			
+		}, error:function(jqXHR, txt, status){
+			console.log(txt, status, jqXHR);
+		}
+	}).done(()=>{
+		form.page.value="";
+	});
+	return false;
+}).submit();
+
+//document.querySelectorAll('.modbtn').forEach((btn)=>{
+//    parentId = btn.parentNode.id;
+//})

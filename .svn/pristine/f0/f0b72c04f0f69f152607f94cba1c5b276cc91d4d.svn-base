@@ -1,0 +1,926 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form"  prefix="form"%>
+<%@taglib uri="http://www.springframework.org/tags"  prefix="spring"%>
+<section>
+<div class="container">
+          <div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","email","phone","address","joined"],"page":10,"pagination":true}'>
+            <div class="card-header">
+              <div class="row flex-between-center">
+                <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+                  <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">전체 직원 정보</h5>
+                </div>
+                <div class="col-8 col-sm-auto text-end ps-2">
+                  <div class="d-none" id="table-customers-actions">
+                    <div class="d-flex">
+                      <select class="form-select form-select-sm" aria-label="Bulk actions">
+                        <option selected="">Bulk actions</option>
+                        <option value="Refund">Refund</option>
+                        <option value="Delete">Delete</option>
+                        <option value="Archive">Archive</option>
+                      </select>
+                      <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
+                    </div>
+                  </div>
+                  <div id="table-customers-replace-element">
+                    <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">New</span></button>
+                    <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
+                    <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive scrollbar">
+                <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+                  <thead class="bg-200 text-900">
+                    <tr>
+                      <th>
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
+                        </div>
+                      </th>
+                      <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">이름</th>
+                      <th class="sort pe-1 align-middle white-space-nowrap" data-sort="email">사번</th>
+                      <th class="sort pe-1 align-middle white-space-nowrap" data-sort="phone">Phone</th>
+                      <th class="sort pe-1 align-middle white-space-nowrap ps-5" data-sort="address" style="min-width: 200px;">부서</th>
+                      <th class="sort pe-1 align-middle white-space-nowrap" data-sort="joined">Joined</th>
+                      <th class="align-middle no-sort"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="list" id="table-customers-body">
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-0" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <div class="avatar-name rounded-circle"><span>RA</span></div>
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">김은대</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:ricky@example.com">ricky@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:2012001851">(201) 200-1851</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">2392 Main Avenue, Penasauka, New Jersey 02139</td>
+                      <td class="joined align-middle py-2">30/03/2018</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                   
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-14" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <div class="avatar-name rounded-circle"><span>LB</span></div>
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Lucienne Blick</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:blick@example.com">blick@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:8512654641">(851) 265-4641</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">6757 Giuseppe Meadows Geraldinemouth, MO 48819-4970</td>
+                      <td class="joined align-middle py-2">23/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-14" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-14">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-15" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <img class="rounded-circle" src="assets/img/team/5.jpg" alt="" />
+
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Laverne Haag</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:haag@example.com">haag@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:2459881927">(245) 988-1927</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">2327 Kaylee Mill East Citlalli, AZ 89582-3143</td>
+                      <td class="joined align-middle py-2">22/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-15" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-15">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-16" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <img class="rounded-circle" src="assets/img/team/6.jpg" alt="" />
+
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Brandon Bednar</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:bednar@example.com">bednar@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:9535899324">(953) 589-9324 </a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">25156 Isaac Crossing Apt. 810 Lonborough, CO 83774-5999</td>
+                      <td class="joined align-middle py-2">22/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-16" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-16">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-17" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <div class="avatar-name rounded-circle"><span>DB</span></div>
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Dimitri Boehm</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:dimitri@example.com">dimitri@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:9434099147">(943) 409-9147</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">71603 Wolff Plains Apt. 885 Johnstonton, MI 01581</td>
+                      <td class="joined align-middle py-2">23/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-17" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-17">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-18" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <div class="avatar-name rounded-circle"><span>TF</span></div>
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Trace Farrell</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:trace@example.com">trace@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:4424850384">(442) 485-0384</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">431 Steuber Mews Apt. 252 Germanland, AK 25882</td>
+                      <td class="joined align-middle py-2">26/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-18" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-18">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-19" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <img class="rounded-circle" src="assets/img/team/13.jpg" alt="" />
+
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Estell Nienow</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:nienow@example.com">nienow@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:5056977549">(505) 697-7549</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">4167 Laverna Manor Marysemouth, NV 74590</td>
+                      <td class="joined align-middle py-2">26/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-19" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-19">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-20" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <img class="rounded-circle" src="assets/img/team/14.jpg" alt="" />
+
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Daisha Howe</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:howe@example.com">howe@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:3375713547">(337) 571-3547</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">829 Lavonne Valley Apt. 074 Stehrfort, RI 77914-0379</td>
+                      <td class="joined align-middle py-2">25/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-20" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-20">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-21" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <div class="avatar-name rounded-circle"><span>MH</span></div>
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Miles Haley</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:haley@example.com">haley@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:7646194683">(764) 619-4683</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">53150 Thad Squares Apt. 263 Archibaldfort, MO 00837</td>
+                      <td class="joined align-middle py-2">24/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-21" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-21">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-22" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <div class="avatar-name rounded-circle"><span>BW</span></div>
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Brenda Watsica</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:watsica@example.com">watsica@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:9616476123">(961) 647-6123</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">9198 O'Kon Harbors Morarborough, IA 75409-7383</td>
+                      <td class="joined align-middle py-2">24/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-22" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-22">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-23" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <div class="avatar-name rounded-circle"><span>EOR</span></div>
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Ellie O'Reilly</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:ellie@example.com">ellie@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:6016888144"> (601) 688-8144</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">1478 Kaitlin Haven Apt. 061 Lake Muhammadmouth, SC 35848</td>
+                      <td class="joined align-middle py-2">24/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-23" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-23">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="btn-reveal-trigger">
+                      <td class="align-middle py-2" style="width: 28px;">
+                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                          <input class="form-check-input" type="checkbox" id="customer-24" data-bulk-select-row="data-bulk-select-row" />
+                        </div>
+                      </td>
+                      <td class="name align-middle white-space-nowrap py-2"><a href="app/e-commerce/customer-details.html">
+                          <div class="d-flex d-flex align-items-center">
+                            <div class="avatar avatar-xl me-2">
+                              <div class="avatar-name rounded-circle"><span>GB</span></div>
+                            </div>
+                            <div class="flex-1">
+                              <h5 class="mb-0 fs--1">Garry Brainstrow</h5>
+                            </div>
+                          </div>
+                        </a></td>
+                      <td class="email align-middle py-2"><a href="mailto:garry@example.com">garry@example.com</a></td>
+                      <td class="phone align-middle white-space-nowrap py-2"><a href="tel:4018799970">(401) 879-9970</a></td>
+                      <td class="address align-middle white-space-nowrap ps-5 py-2">Garry Brainstrow, 13572 Kurt Mews South Merritt, IA 52491</td>
+                      <td class="joined align-middle py-2">23/04/2019</td>
+                      <td class="align-middle white-space-nowrap py-2 text-end">
+                        <div class="dropdown font-sans-serif position-static">
+                          <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-24" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+                          <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-24">
+                            <div class="py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-center">
+              <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Previous" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+              <ul class="pagination mb-0"></ul>
+              <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Next" data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+            </div>
+          </div>
+          
+          
+<!--         전체 직원, 퇴사자, 현재 출근 직원 조회 -->
+
+<div class="col-xxl-9 col-xl-8">
+              <div class="card overflow-hidden">
+                <div class="card-header p-0 scrollbar-overlay border-bottom" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;"><div class="simplebar-content" style="padding: 0px;">
+                  <ul class="nav nav-tabs border-0 tab-contact-details flex-nowrap" id="contact-details-tab" role="tablist">
+                    <li class="nav-item text-nowrap" role="presentation"><a class="nav-link mb-0 d-flex align-items-center gap-1 py-3 px-x1" id="contact-timeline-tab" data-bs-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="false" tabindex="-1"><svg class="svg-inline--fa fa-stream fa-w-16 icon text-600" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="stream" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M16 128h416c8.84 0 16-7.16 16-16V48c0-8.84-7.16-16-16-16H16C7.16 32 0 39.16 0 48v64c0 8.84 7.16 16 16 16zm480 80H80c-8.84 0-16 7.16-16 16v64c0 8.84 7.16 16 16 16h416c8.84 0 16-7.16 16-16v-64c0-8.84-7.16-16-16-16zm-64 176H16c-8.84 0-16 7.16-16 16v64c0 8.84 7.16 16 16 16h416c8.84 0 16-7.16 16-16v-64c0-8.84-7.16-16-16-16z"></path></svg><!-- <span class="fas fa-stream icon text-600"></span> Font Awesome fontawesome.com -->
+                        <h6 class="mb-0 text-600">전체</h6>
+                      </a></li>
+                    <li class="nav-item text-nowrap" role="presentation"><a class="nav-link mb-0 d-flex align-items-center gap-1 py-3 px-x1 active" id="contact-tickets-tab" data-bs-toggle="tab" href="#tickets" role="tab" aria-controls="tickets" aria-selected="true"><svg class="svg-inline--fa fa-ticket-alt fa-w-18 text-600" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ticket-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"></path></svg><!-- <span class="fas fa-ticket-alt text-600"></span> Font Awesome fontawesome.com -->
+                        <h6 class="mb-0 text-600">퇴사자</h6>
+                      </a></li>
+                    <li class="nav-item text-nowrap" role="presentation"><a class="nav-link mb-0 d-flex align-items-center gap-1 py-3 px-x1" id="contact-notes-tab" data-bs-toggle="tab" href="#notes" role="tab" aria-controls="notes" aria-selected="false" tabindex="-1"><svg class="svg-inline--fa fa-file-alt fa-w-12 icon text-600" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"></path></svg><!-- <span class="fas fa-file-alt icon text-600"></span> Font Awesome fontawesome.com -->
+                        <h6 class="mb-0 text-600">현재 출근직원</h6>
+                      </a></li>
+                  </ul>
+                </div></div></div></div><div class="simplebar-placeholder" style="width: auto; height: 50px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; display: none;"></div></div></div>
+                <div class="tab-content">
+                  <div class="card-body bg-light tab-pane" id="timeline" role="tabpanel" aria-labelledby="contact-timeline-tab">
+                    <div class="timeline-vertical py-0">
+                      <div class="timeline-item timeline-item-start mb-3">
+                        <div class="timeline-icon icon-item icon-item-lg text-primary border-300"><svg class="svg-inline--fa fa-envelope fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="fs-1 fas fa-envelope"></span> Font Awesome fontawesome.com --></div>
+                        <div class="row">
+                          
+                          
+                        </div>
+                      </div>
+                      <div class="timeline-item timeline-item-end mb-3">
+                        <div class="timeline-icon icon-item icon-item-lg text-primary border-300"><svg class="svg-inline--fa fa-envelope fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="fs-1 fas fa-envelope"></span> Font Awesome fontawesome.com --></div>
+                        <div class="row">
+                          <div class="col-lg-6 timeline-item-time">
+                            <div>
+                              <h6 class="mb-0 text-700">2022</h6>
+                              <p class="fs--2 text-500 font-sans-serif">23 September</p>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="timeline-item-content arrow-bg-white">
+                              <div class="timeline-item-card bg-white dark__bg-1100"><a href="../../app/support-desk/tickets-preview.html">
+                                  <h5 class="mb-2 hover-primary">Subscription Issue #362</h5>
+                                </a>
+                                <p class="fs--1 border-bottom mb-3 pb-4 text-600">On November 2, 2022, your membership at Falcon is going to expire. We really hope that you have benefited from your membership.</p>
+                                <div class="d-flex flex-wrap pt-2">
+                                  <h6 class="mb-0 text-600 lh-base"><svg class="svg-inline--fa fa-clock fa-w-16 me-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg><!-- <span class="far fa-clock me-1"></span> Font Awesome fontawesome.com -->09:26 PM</h6>
+                                  <div class="d-flex align-items-center ms-auto me-2 me-sm-x1 me-xl-2 me-xxl-x1">
+                                    <div class="dot me-0 me-sm-2 me-xl-0 me-xxl-2 bg-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Low"></div>
+                                    <h6 class="mb-0 text-700 d-none d-sm-block d-xl-none d-xxl-block">Low</h6>
+                                  </div><small class="badge rounded badge-soft-secondary dark__bg-1000">Closed</small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="timeline-item timeline-item-start mb-3">
+                        <div class="timeline-icon icon-item icon-item-lg text-primary border-300"><svg class="svg-inline--fa fa-envelope fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="fs-1 fas fa-envelope"></span> Font Awesome fontawesome.com --></div>
+                        <div class="row">
+                          <div class="col-lg-6 timeline-item-time">
+                            <div>
+                              <h6 class="mb-0 text-700">2022</h6>
+                              <p class="fs--2 text-500 font-sans-serif">20 September</p>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="timeline-item-content arrow-bg-white">
+                              <div class="timeline-item-card bg-white dark__bg-1100"><a href="../../app/support-desk/tickets-preview.html">
+                                  <h5 class="mb-2 hover-primary">Received a broken TV #345</h5>
+                                </a>
+                                <p class="fs--1 border-bottom mb-3 pb-4 text-600">My television from your website was delivered with a cracked screen. I need assistance getting a refund or a replacement.</p>
+                                <div class="d-flex flex-wrap pt-2">
+                                  <h6 class="mb-0 text-600 lh-base"><svg class="svg-inline--fa fa-clock fa-w-16 me-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg><!-- <span class="far fa-clock me-1"></span> Font Awesome fontawesome.com -->01:06 PM</h6>
+                                  <div class="d-flex align-items-center ms-auto me-2 me-sm-x1 me-xl-2 me-xxl-x1">
+                                    <div class="dot me-0 me-sm-2 me-xl-0 me-xxl-2 bg-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urgent"></div>
+                                    <h6 class="mb-0 text-700 d-none d-sm-block d-xl-none d-xxl-block">Urgent</h6>
+                                  </div><small class="badge rounded badge-soft-success false">Recent</small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="timeline-item timeline-item-end mb-3">
+                        <div class="timeline-icon icon-item icon-item-lg text-primary border-300"><svg class="svg-inline--fa fa-envelope fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="fs-1 fas fa-envelope"></span> Font Awesome fontawesome.com --></div>
+                        <div class="row">
+                          <div class="col-lg-6 timeline-item-time">
+                            <div>
+                              <h6 class="mb-0 text-700">2022</h6>
+                              <p class="fs--2 text-500 font-sans-serif">03 September</p>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="timeline-item-content arrow-bg-white">
+                              <div class="timeline-item-card bg-white dark__bg-1100"><a href="../../app/support-desk/tickets-preview.html">
+                                  <h5 class="mb-2 hover-primary">Payment failed #324</h5>
+                                </a>
+                                <p class="fs--1 border-bottom mb-3 pb-4 text-600">Your payment failed while I tried to make a payment on your website, I was told. My card was, however, billed.</p>
+                                <div class="d-flex flex-wrap pt-2">
+                                  <h6 class="mb-0 text-600 lh-base"><svg class="svg-inline--fa fa-clock fa-w-16 me-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg><!-- <span class="far fa-clock me-1"></span> Font Awesome fontawesome.com -->11:06 PM</h6>
+                                  <div class="d-flex align-items-center ms-auto me-2 me-sm-x1 me-xl-2 me-xxl-x1">
+                                    <div class="dot me-0 me-sm-2 me-xl-0 me-xxl-2 bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Medium"></div>
+                                    <h6 class="mb-0 text-700 d-none d-sm-block d-xl-none d-xxl-block">Medium</h6>
+                                  </div><small class="badge rounded badge-soft-secondary dark__bg-1000">Closed</small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="timeline-item timeline-item-start mb-3">
+                        <div class="timeline-icon icon-item icon-item-lg text-primary border-300"><svg class="svg-inline--fa fa-envelope fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="fs-1 fas fa-envelope"></span> Font Awesome fontawesome.com --></div>
+                        <div class="row">
+                          <div class="col-lg-6 timeline-item-time">
+                            <div>
+                              <h6 class="mb-0 text-700">2022</h6>
+                              <p class="fs--2 text-500 font-sans-serif">24 August</p>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="timeline-item-content arrow-bg-white">
+                              <div class="timeline-item-card bg-white dark__bg-1100"><a href="../../app/support-desk/tickets-preview.html">
+                                  <h5 class="mb-2 hover-primary">Password change #234</h5>
+                                </a>
+                                <p class="fs--1 border-bottom mb-3 pb-4 text-600">I must modify my password. If I make a modification, will I lose access to my account? I have a lot of items in my cart and don't want to go looking for them again.</p>
+                                <div class="d-flex flex-wrap pt-2">
+                                  <h6 class="mb-0 text-600 lh-base"><svg class="svg-inline--fa fa-clock fa-w-16 me-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg><!-- <span class="far fa-clock me-1"></span> Font Awesome fontawesome.com -->10:08 AM</h6>
+                                  <div class="d-flex align-items-center ms-auto me-2 me-sm-x1 me-xl-2 me-xxl-x1">
+                                    <div class="dot me-0 me-sm-2 me-xl-0 me-xxl-2 bg-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Urgent"></div>
+                                    <h6 class="mb-0 text-700 d-none d-sm-block d-xl-none d-xxl-block">Urgent</h6>
+                                  </div><small class="badge rounded badge-soft-secondary dark__bg-1000">Closed</small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="timeline-item timeline-item-end mb-0">
+                        <div class="timeline-icon icon-item icon-item-lg text-primary border-300"><svg class="svg-inline--fa fa-envelope fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="fs-1 fas fa-envelope"></span> Font Awesome fontawesome.com --></div>
+                        <div class="row">
+                          <div class="col-lg-6 timeline-item-time">
+                            <div>
+                              <h6 class="mb-0 text-700">2022</h6>
+                              <p class="fs--2 text-500 font-sans-serif">20 August</p>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="timeline-item-content arrow-bg-white">
+                              <div class="timeline-item-card bg-white dark__bg-1100"><a href="../../app/support-desk/tickets-preview.html">
+                                  <h5 class="mb-2 hover-primary">Email Address change #202</h5>
+                                </a>
+                                <p class="fs--1 border-bottom mb-3 pb-4 text-600">My email address needs to be updated. I'm curious if changing it will result in me losing access to my account. I've put a lot of items in my shopping basket and don't want to search for them again.</p>
+                                <div class="d-flex flex-wrap pt-2">
+                                  <h6 class="mb-0 text-600 lh-base"><svg class="svg-inline--fa fa-clock fa-w-16 me-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg><!-- <span class="far fa-clock me-1"></span> Font Awesome fontawesome.com -->12:26 PM</h6>
+                                  <div class="d-flex align-items-center ms-auto me-2 me-sm-x1 me-xl-2 me-xxl-x1">
+                                    <div class="dot me-0 me-sm-2 me-xl-0 me-xxl-2 bg-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Low"></div>
+                                    <h6 class="mb-0 text-700 d-none d-sm-block d-xl-none d-xxl-block">Low</h6>
+                                  </div><small class="badge rounded badge-soft-secondary dark__bg-1000">Closed</small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body tab-pane p-0 active show" id="tickets" role="tabpanel" aria-labelledby="contact-tickets-tab">
+                    <div class="bg-light d-flex flex-column gap-3 p-x1">
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm d-md-flex d-xl-inline-block d-xxl-flex align-items-center">
+                        <div>
+                          <p class="fw-semi-bold"><a href="../../app/support-desk/tickets-preview.html">Got a new television | Order #377</a></p>
+                          <div class="d-flex align-items-center">
+                            <h6 class="mb-0 me-3 text-800">25 September, 2022</h6><small class="badge rounded badge-soft-success false">Recent</small>
+                          </div>
+                        </div>
+                        <div class="border-bottom mt-4 mb-x1"></div>
+                        <div class="d-flex justify-content-between ms-auto">
+                          <div class="d-flex align-items-center gap-2 ms-md-4 ms-xl-0 ms-xxl-4" style="width:7.5rem;">
+                            <div style="--falcon-circle-progress-bar:100">
+                              <svg class="circle-progress-svg" width="26" height="26" viewBox="0 0 120 120">
+                                <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none" stroke-width="12"></circle>
+                                <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none" stroke-linecap="round" stroke="#e63757" stroke-width="12"></circle>
+                              </svg>
+                            </div>
+                            <h6 class="mb-0 text-700">Urgent</h6>
+                          </div>
+                          <select class="form-select form-select-sm" aria-label="agents actions" style="width:9.375rem;">
+                            <option>Select Agent</option>
+                            <option selected="selected">Anindya</option>
+                            <option>Nowrin</option>
+                            <option>Khalid</option>
+                            <option>Shajeeb</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm d-md-flex d-xl-inline-block d-xxl-flex align-items-center">
+                        <div>
+                          <p class="fw-semi-bold"><a href="../../app/support-desk/tickets-preview.html">Subscription Issue | Order #362</a></p>
+                          <div class="d-flex align-items-center">
+                            <h6 class="mb-0 me-3 text-800">23 September, 2022</h6><small class="badge rounded badge-soft-secondary dark__bg-1000">Closed</small>
+                          </div>
+                        </div>
+                        <div class="border-bottom mt-4 mb-x1"></div>
+                        <div class="d-flex justify-content-between ms-auto">
+                          <div class="d-flex align-items-center gap-2 ms-md-4 ms-xl-0 ms-xxl-4" style="width:7.5rem;">
+                            <div style="--falcon-circle-progress-bar:25">
+                              <svg class="circle-progress-svg" width="26" height="26" viewBox="0 0 120 120">
+                                <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none" stroke-width="12"></circle>
+                                <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none" stroke-linecap="round" stroke="#00D27B" stroke-width="12"></circle>
+                              </svg>
+                            </div>
+                            <h6 class="mb-0 text-700">Low</h6>
+                          </div>
+                          <select class="form-select form-select-sm" aria-label="agents actions" style="width:9.375rem;">
+                            <option>Select Agent</option>
+                            <option>Anindya</option>
+                            <option>Nowrin</option>
+                            <option selected="selected">Khalid</option>
+                            <option>Shajeeb</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm d-md-flex d-xl-inline-block d-xxl-flex align-items-center">
+                        <div>
+                          <p class="fw-semi-bold"><a href="../../app/support-desk/tickets-preview.html">Received a broken TV | Order #345</a></p>
+                          <div class="d-flex align-items-center">
+                            <h6 class="mb-0 me-3 text-800">20 September, 2022</h6><small class="badge rounded badge-soft-success false">Recent</small>
+                          </div>
+                        </div>
+                        <div class="border-bottom mt-4 mb-x1"></div>
+                        <div class="d-flex justify-content-between ms-auto">
+                          <div class="d-flex align-items-center gap-2 ms-md-4 ms-xl-0 ms-xxl-4" style="width:7.5rem;">
+                            <div style="--falcon-circle-progress-bar:100">
+                              <svg class="circle-progress-svg" width="26" height="26" viewBox="0 0 120 120">
+                                <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none" stroke-width="12"></circle>
+                                <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none" stroke-linecap="round" stroke="#e63757" stroke-width="12"></circle>
+                              </svg>
+                            </div>
+                            <h6 class="mb-0 text-700">Urgent</h6>
+                          </div>
+                          <select class="form-select form-select-sm" aria-label="agents actions" style="width:9.375rem;">
+                            <option>Select Agent</option>
+                            <option>Anindya</option>
+                            <option selected="selected">Nowrin</option>
+                            <option>Khalid</option>
+                            <option>Shajeeb</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm d-md-flex d-xl-inline-block d-xxl-flex align-items-center">
+                        <div>
+                          <p class="fw-semi-bold"><a href="../../app/support-desk/tickets-preview.html">Payment failed | Order #324</a></p>
+                          <div class="d-flex align-items-center">
+                            <h6 class="mb-0 me-3 text-800">03 September, 2022</h6><small class="badge rounded badge-soft-secondary dark__bg-1000">Closed</small>
+                          </div>
+                        </div>
+                        <div class="border-bottom mt-4 mb-x1"></div>
+                        <div class="d-flex justify-content-between ms-auto">
+                          <div class="d-flex align-items-center gap-2 ms-md-4 ms-xl-0 ms-xxl-4" style="width:7.5rem;">
+                            <div style="--falcon-circle-progress-bar:50">
+                              <svg class="circle-progress-svg" width="26" height="26" viewBox="0 0 120 120">
+                                <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none" stroke-width="12"></circle>
+                                <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none" stroke-linecap="round" stroke="#2A7BE4" stroke-width="12"></circle>
+                              </svg>
+                            </div>
+                            <h6 class="mb-0 text-700">Medium</h6>
+                          </div>
+                          <select class="form-select form-select-sm" aria-label="agents actions" style="width:9.375rem;">
+                            <option>Select Agent</option>
+                            <option selected="selected">Anindya</option>
+                            <option>Nowrin</option>
+                            <option>Khalid</option>
+                            <option>Shajeeb</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm d-md-flex d-xl-inline-block d-xxl-flex align-items-center">
+                        <div>
+                          <p class="fw-semi-bold"><a href="../../app/support-desk/tickets-preview.html">Password change | Order #234</a></p>
+                          <div class="d-flex align-items-center">
+                            <h6 class="mb-0 me-3 text-800">24 August, 2022</h6><small class="badge rounded badge-soft-secondary dark__bg-1000">Closed</small>
+                          </div>
+                        </div>
+                        <div class="border-bottom mt-4 mb-x1"></div>
+                        <div class="d-flex justify-content-between ms-auto">
+                          <div class="d-flex align-items-center gap-2 ms-md-4 ms-xl-0 ms-xxl-4" style="width:7.5rem;">
+                            <div style="--falcon-circle-progress-bar:100">
+                              <svg class="circle-progress-svg" width="26" height="26" viewBox="0 0 120 120">
+                                <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none" stroke-width="12"></circle>
+                                <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none" stroke-linecap="round" stroke="#e63757" stroke-width="12"></circle>
+                              </svg>
+                            </div>
+                            <h6 class="mb-0 text-700">Urgent</h6>
+                          </div>
+                          <select class="form-select form-select-sm" aria-label="agents actions" style="width:9.375rem;">
+                            <option>Select Agent</option>
+                            <option>Anindya</option>
+                            <option selected="selected">Nowrin</option>
+                            <option>Khalid</option>
+                            <option>Shajeeb</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm d-md-flex d-xl-inline-block d-xxl-flex align-items-center">
+                        <div>
+                          <p class="fw-semi-bold"><a href="../../app/support-desk/tickets-preview.html">Email Address change | Order #202</a></p>
+                          <div class="d-flex align-items-center">
+                            <h6 class="mb-0 me-3 text-800">20 August, 2022</h6><small class="badge rounded badge-soft-secondary dark__bg-1000">Closed</small>
+                          </div>
+                        </div>
+                        <div class="border-bottom mt-4 mb-x1"></div>
+                        <div class="d-flex justify-content-between ms-auto">
+                          <div class="d-flex align-items-center gap-2 ms-md-4 ms-xl-0 ms-xxl-4" style="width:7.5rem;">
+                            <div style="--falcon-circle-progress-bar:25">
+                              <svg class="circle-progress-svg" width="26" height="26" viewBox="0 0 120 120">
+                                <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none" stroke-width="12"></circle>
+                                <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none" stroke-linecap="round" stroke="#00D27B" stroke-width="12"></circle>
+                              </svg>
+                            </div>
+                            <h6 class="mb-0 text-700">Low</h6>
+                          </div>
+                          <select class="form-select form-select-sm" aria-label="agents actions" style="width:9.375rem;">
+                            <option>Select Agent</option>
+                            <option>Anindya</option>
+                            <option>Nowrin</option>
+                            <option>Khalid</option>
+                            <option selected="selected">Shajeeb</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body tab-pane p-0" id="notes" role="tabpanel" aria-labelledby="contact-notes-tab">
+                    <div class="bg-light d-flex flex-column gap-3 p-x1">
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm">
+                        <div class="row flex-between-center">
+                          <div class="col-12 col-md-7 col-xl-12 col-xxl-8 order-1 order-md-0 order-xl-1 order-xxl-0">
+                            <h5 class="mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-0 mt-xl-x1 mt-xxl-0 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">Not able to access the system</h5>
+                          </div>
+                          <div class="col-12 col-md-auto col-xl-12 col-xxl-auto d-flex flex-between-center">
+                            <select class="form-select form-select-sm me-2 w-auto" aria-label="agents actions">
+                              <option>Select Agent</option>
+                              <option selected="selected">Anindya</option>
+                              <option>Nowrin</option>
+                              <option>Khalid</option>
+                              <option>Shajeeb</option>
+                            </select>
+                            <div class="dropdown font-sans-serif">
+                              <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="notes-dropdown-0" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg><!-- <span class="fas fa-ellipsis-h fs--2"></span> Font Awesome fontawesome.com --></button>
+                              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="notes-dropdown-0"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <h6 class="mb-0 mt-2"><svg class="svg-inline--fa fa-clock fa-w-16 text-primary me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z"></path></svg><!-- <span class="fas fa-clock text-primary me-2"></span> Font Awesome fontawesome.com --><span class="text-600">28 Sep, 2020</span><span class="text-500"> at </span><span class="text-600">12:06 AM</span></h6>
+                        <p class="w-lg-75 w-xl-100 w-xxl-75 mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-4 mt-xl-x1 mt-xxl-4 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">The PS4's hard drive is most likely the source of this CE-34335-8 safe mode error notice. Try these techniques to fix the hard drive issue if your PS4 won't start and won't let you access system storage because of error number CE-34335-8.</p>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm">
+                        <div class="row flex-between-center">
+                          <div class="col-12 col-md-7 col-xl-12 col-xxl-8 order-1 order-md-0 order-xl-1 order-xxl-0">
+                            <h5 class="mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-0 mt-xl-x1 mt-xxl-0 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">No refund was requested</h5>
+                          </div>
+                          <div class="col-12 col-md-auto col-xl-12 col-xxl-auto d-flex flex-between-center">
+                            <select class="form-select form-select-sm me-2 w-auto" aria-label="agents actions">
+                              <option>Select Agent</option>
+                              <option>Anindya</option>
+                              <option>Nowrin</option>
+                              <option selected="selected">Khalid</option>
+                              <option>Shajeeb</option>
+                            </select>
+                            <div class="dropdown font-sans-serif">
+                              <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="notes-dropdown-1" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg><!-- <span class="fas fa-ellipsis-h fs--2"></span> Font Awesome fontawesome.com --></button>
+                              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="notes-dropdown-1"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <h6 class="mb-0 mt-2"><svg class="svg-inline--fa fa-clock fa-w-16 text-primary me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z"></path></svg><!-- <span class="fas fa-clock text-primary me-2"></span> Font Awesome fontawesome.com --><span class="text-600">25 Sep, 2020</span><span class="text-500"> at </span><span class="text-600">03:18 PM</span></h6>
+                        <p class="w-lg-75 w-xl-100 w-xxl-75 mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-4 mt-xl-x1 mt-xxl-4 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">It only takes a little while for a consumer to arrive on your door asking for a refund if you sell things online or in a physical store. And instead of closing that door all the way, think of a different approach.</p>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm">
+                        <div class="row flex-between-center">
+                          <div class="col-12 col-md-7 col-xl-12 col-xxl-8 order-1 order-md-0 order-xl-1 order-xxl-0">
+                            <h5 class="mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-0 mt-xl-x1 mt-xxl-0 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">Use case for online ticket notes</h5>
+                          </div>
+                          <div class="col-12 col-md-auto col-xl-12 col-xxl-auto d-flex flex-between-center">
+                            <select class="form-select form-select-sm me-2 w-auto" aria-label="agents actions">
+                              <option>Select Agent</option>
+                              <option>Anindya</option>
+                              <option selected="selected">Nowrin</option>
+                              <option>Khalid</option>
+                              <option>Shajeeb</option>
+                            </select>
+                            <div class="dropdown font-sans-serif">
+                              <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="notes-dropdown-2" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg><!-- <span class="fas fa-ellipsis-h fs--2"></span> Font Awesome fontawesome.com --></button>
+                              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="notes-dropdown-2"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <h6 class="mb-0 mt-2"><svg class="svg-inline--fa fa-clock fa-w-16 text-primary me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z"></path></svg><!-- <span class="fas fa-clock text-primary me-2"></span> Font Awesome fontawesome.com --><span class="text-600">22 Sep, 2020</span><span class="text-500"> at </span><span class="text-600">10:21 AM</span></h6>
+                        <p class="w-lg-75 w-xl-100 w-xxl-75 mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-4 mt-xl-x1 mt-xxl-4 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">Using the inline ticket notes allows you to take notes while interacting with consumers. You may jot down notes while assisting a customer over live chat or over the phone, for instance. Aside from that.</p>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm">
+                        <div class="row flex-between-center">
+                          <div class="col-12 col-md-7 col-xl-12 col-xxl-8 order-1 order-md-0 order-xl-1 order-xxl-0">
+                            <h5 class="mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-0 mt-xl-x1 mt-xxl-0 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">Github Uploaded of the Conscious Administrator</h5>
+                          </div>
+                          <div class="col-12 col-md-auto col-xl-12 col-xxl-auto d-flex flex-between-center">
+                            <select class="form-select form-select-sm me-2 w-auto" aria-label="agents actions">
+                              <option>Select Agent</option>
+                              <option>Anindya</option>
+                              <option>Nowrin</option>
+                              <option>Khalid</option>
+                              <option selected="selected">Shajeeb</option>
+                            </select>
+                            <div class="dropdown font-sans-serif">
+                              <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="notes-dropdown-3" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg><!-- <span class="fas fa-ellipsis-h fs--2"></span> Font Awesome fontawesome.com --></button>
+                              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="notes-dropdown-3"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <h6 class="mb-0 mt-2"><svg class="svg-inline--fa fa-clock fa-w-16 text-primary me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z"></path></svg><!-- <span class="fas fa-clock text-primary me-2"></span> Font Awesome fontawesome.com --><span class="text-600">15 Sep, 2020</span><span class="text-500"> at </span><span class="text-600">12:21 PM</span></h6>
+                        <p class="w-lg-75 w-xl-100 w-xxl-75 mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-4 mt-xl-x1 mt-xxl-4 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">Are they really that dissimilar, even though those are mock-ups and this is politics? She may simply have my card, I believe.</p>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm">
+                        <div class="row flex-between-center">
+                          <div class="col-12 col-md-7 col-xl-12 col-xxl-8 order-1 order-md-0 order-xl-1 order-xxl-0">
+                            <h5 class="mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-0 mt-xl-x1 mt-xxl-0 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">Selection of a design team</h5>
+                          </div>
+                          <div class="col-12 col-md-auto col-xl-12 col-xxl-auto d-flex flex-between-center">
+                            <select class="form-select form-select-sm me-2 w-auto" aria-label="agents actions">
+                              <option>Select Agent</option>
+                              <option selected="selected">Anindya</option>
+                              <option>Nowrin</option>
+                              <option>Khalid</option>
+                              <option>Shajeeb</option>
+                            </select>
+                            <div class="dropdown font-sans-serif">
+                              <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="notes-dropdown-4" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg><!-- <span class="fas fa-ellipsis-h fs--2"></span> Font Awesome fontawesome.com --></button>
+                              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="notes-dropdown-4"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <h6 class="mb-0 mt-2"><svg class="svg-inline--fa fa-clock fa-w-16 text-primary me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z"></path></svg><!-- <span class="fas fa-clock text-primary me-2"></span> Font Awesome fontawesome.com --><span class="text-600">11 Sep, 2020</span><span class="text-500"> at </span><span class="text-600">10:11 PM</span></h6>
+                        <p class="w-lg-75 w-xl-100 w-xxl-75 mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-4 mt-xl-x1 mt-xxl-4 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">One designer can make up a design team, as can a group of designers who take on various tasks and employ various techniques and tools to reach a single objective. The shared objective can be achieved by creating a website, a mobile application, or any other design project.</p>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm">
+                        <div class="row flex-between-center">
+                          <div class="col-12 col-md-7 col-xl-12 col-xxl-8 order-1 order-md-0 order-xl-1 order-xxl-0">
+                            <h5 class="mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-0 mt-xl-x1 mt-xxl-0 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">Quickness of Reaction</h5>
+                          </div>
+                          <div class="col-12 col-md-auto col-xl-12 col-xxl-auto d-flex flex-between-center">
+                            <select class="form-select form-select-sm me-2 w-auto" aria-label="agents actions">
+                              <option>Select Agent</option>
+                              <option>Anindya</option>
+                              <option>Nowrin</option>
+                              <option>Khalid</option>
+                              <option selected="selected">Shajeeb</option>
+                            </select>
+                            <div class="dropdown font-sans-serif">
+                              <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="notes-dropdown-5" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg><!-- <span class="fas fa-ellipsis-h fs--2"></span> Font Awesome fontawesome.com --></button>
+                              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="notes-dropdown-5"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <h6 class="mb-0 mt-2"><svg class="svg-inline--fa fa-clock fa-w-16 text-primary me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z"></path></svg><!-- <span class="fas fa-clock text-primary me-2"></span> Font Awesome fontawesome.com --><span class="text-600">09 Sep, 2020</span><span class="text-500"> at </span><span class="text-600">12:22 AM</span></h6>
+                        <p class="w-lg-75 w-xl-100 w-xxl-75 mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-4 mt-xl-x1 mt-xxl-4 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">It has been designed particularly for WordPress, as opposed to other Frameworks which attempt to cover everything.</p>
+                      </div>
+                      <div class="bg-white dark__bg-1100 p-x1 rounded-3 shadow-sm">
+                        <div class="row flex-between-center">
+                          <div class="col-12 col-md-7 col-xl-12 col-xxl-8 order-1 order-md-0 order-xl-1 order-xxl-0">
+                            <h5 class="mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-0 mt-xl-x1 mt-xxl-0 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">Cultivate a design-oriented culture</h5>
+                          </div>
+                          <div class="col-12 col-md-auto col-xl-12 col-xxl-auto d-flex flex-between-center">
+                            <select class="form-select form-select-sm me-2 w-auto" aria-label="agents actions">
+                              <option>Select Agent</option>
+                              <option>Anindya</option>
+                              <option>Nowrin</option>
+                              <option selected="selected">Khalid</option>
+                              <option>Shajeeb</option>
+                            </select>
+                            <div class="dropdown font-sans-serif">
+                              <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="notes-dropdown-6" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg><!-- <span class="fas fa-ellipsis-h fs--2"></span> Font Awesome fontawesome.com --></button>
+                              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="notes-dropdown-6"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <h6 class="mb-0 mt-2"><svg class="svg-inline--fa fa-clock fa-w-16 text-primary me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z"></path></svg><!-- <span class="fas fa-clock text-primary me-2"></span> Font Awesome fontawesome.com --><span class="text-600">05 Sep, 2020</span><span class="text-500"> at </span><span class="text-600">10:21 AM</span></h6>
+                        <p class="w-lg-75 w-xl-100 w-xxl-75 mb-0 border-top border-md-0 border-xl-top border-xxl-0 mt-x1 mt-md-4 mt-xl-x1 mt-xxl-4 pt-x1 pt-md-0 pt-xl-x1 pt-xxl-0 border-200 border-xl-200">By teaching your designers to put the needs of the customer first and coordinating design objectives with corporate objectives, you can foster a culture of design strategy. Everything your design team does should be based on a design strategy.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          
+</div>
+</section>

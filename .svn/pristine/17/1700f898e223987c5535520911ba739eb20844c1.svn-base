@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.MberMapper">
+	<select id="select" parameterType="string" resultType="MberVO">
+		SELECT 
+			CST_NO
+			,MBER_ID
+			,MBER_PW
+			,MBER_NM
+			,MBER_HP
+			,MBER_TEL
+			,MBER_ADDR
+			,MBER_BIRTH
+			,MBER_MLG
+			,MBER_SECSN_YN
+			,MBER_MBRSH_YN
+			,MBER_SBSCRB_YMD
+			,MBER_SEXDSTN
+			,MBER_SPCL_NOTE
+		FROM TB_MBER
+		WHERE CST_NO = #{cstNo}		
+	</select>
+	<select id="selectTotalRecord" parameterType="PaginationInfo">
+		SELECT COUNT(*)
+		FROM TB_MBER
+	</select>
+	<select id="selectList" parameterType="PaginationInfo" resultType="MberVO">
+		WITH ORDERD AS(
+			SELECT 
+				CST_NO
+				, MBER_ID
+				, MBER_PW
+				, MBER_NM
+				, MBER_HP
+				, MBER_TEL
+				, MBER_ADDR
+				, MBER_BIRTH
+				, MBER_MLG
+				, MBER_SECSN_YN
+				, MBER_MBRSH_YN
+				, MBER_PROFL_NM
+				, MBER_PROFL_UUID
+				, MBER_REFND_ACNT
+				, MBER_REFND_BANK
+				, MBER_SBSCRB_YMD
+				, MBER_SEXDSTN
+				, MBER_SPCL_NOTE
+			FROM TB_MBER
+				<include refid="searchFrag"></include>   
+			      ORDER BY ROWID DESC
+		   ), RNUMMEMBER AS(
+		      SELECT ORDERD.*, ROWNUM RNUM
+		      FROM ORDERD
+		   )
+		   SELECT *
+		   FROM RNUMMEMBER
+   </select>
+	<sql id="searchFrag">
+		 <where>
+         <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+            <choose>
+               <when test="simpleCondition.searchType eq 'name'">
+                  INSTR(MBER_NM,#{simpleCondition.searchWord}) > 0
+               </when>
+               <when test="simpleCondition.searchType eq 'address'">
+                  INSTR(MBER_ADDR,#{simpleCondition.searchWord}) > 0
+               </when>
+               <otherwise>
+                  INSTR(MBER_NM,#{simpleCondition.searchWord}) > 0
+                  OR
+                  INSTR(MBER_ADDR,#{simpleCondition.searchWord}) > 0
+               </otherwise>
+            </choose>
+         </if>
+      </where>      
+	</sql>
+</mapper>

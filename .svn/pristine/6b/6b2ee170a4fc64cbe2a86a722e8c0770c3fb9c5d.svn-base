@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.EmpFxtrsUseDetailsMapper">
+
+	<sql id="searchFrag">
+		<trim prefix="WHERE" prefixOverrides="OR">
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR RM_NO LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR EMP_NM LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR FXUD_YMD LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+		</trim>
+	</sql>
+
+	<select id="selectTotalRecord" parameterType="PaginationInfo" resultType="int">
+		SELECT  
+		    COUNT(*)
+		FROM TB_FXTRS_USE_DETAILS
+		    INNER JOIN TB_ROOM_MANAGE_LEDGER USING(RMNGL_NO)
+		    INNER JOIN TB_EMP USING(EMP_NO)
+		<include refid="searchFrag" />
+	</select>
+
+	<resultMap type="FxtrsUseDetailsVO" id="fxtrsUDMap" autoMapping="true">
+		<association property="rmManageLedger" javaType="RoomManageLedgerVO" autoMapping="true">
+			<id property="rmnglNo" column="RMNGL_NO"/>
+			<association property="emp" javaType="EmpVO" autoMapping="true">
+				<id property="empNo" column="EMP_NO"/>
+			</association>
+		</association>
+	</resultMap>
+
+	<select id="selectList" resultMap="fxtrsUDMap" parameterType="PaginationInfo">
+		WITH RNUMRSVT AS (
+			SELECT 
+				ROWNUM RNUM, A.*    
+		    FROM (
+				SELECT  
+				    RM_NO
+				    , EMP_NM
+				    , FXUD_YMD
+				FROM TB_FXTRS_USE_DETAILS
+				    INNER JOIN TB_ROOM_MANAGE_LEDGER USING(RMNGL_NO)
+				    INNER JOIN TB_EMP USING(EMP_NO)
+				<include refid="searchFrag" />
+				ORDER BY FXUD_YMD DESC
+			)A
+		)
+		SELECT *
+		FROM RNUMRSVT
+		<![CDATA[
+			WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+</mapper>

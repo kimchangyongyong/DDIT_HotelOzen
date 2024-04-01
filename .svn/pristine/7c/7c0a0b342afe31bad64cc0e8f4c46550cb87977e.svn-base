@@ -1,0 +1,129 @@
+/**
+ * 
+ */
+$(function() {
+	$('#fullpage').fullpage({
+		//options here
+		autoScrolling : true,
+		scrollHorizontally : true,
+		navigation : true,
+		navigationPosition : 'right',
+		scrollingSpeed : 1000,
+		navigationTooltips : ['첫번째','두번째','세번째','네번째']
+	});
+});
+
+
+
+$(document).ready(function(){
+    $('#start_date, #end_date').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true, // 연도와 월을 드롭다운으로 선택할 수 있도록 설정
+        minYear: 2020, // 선택 가능한 최소 연도
+        maxYear: parseInt(moment().format('YYYY'), 10), // 선택 가능한 최대 연도 (현재 연도)
+        locale: {
+            format: 'YYYY-MM-DD', // 날짜 형식 설정
+            separator: ' - ',
+            applyLabel: '적용',
+            cancelLabel: '취소',
+            fromLabel: '시작일',
+            toLabel: '종료일',
+            customRangeLabel: '직접 선택',
+            daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            firstDay: 1 // 달력 시작 요일 설정 (0: 일요일, 1: 월요일)
+        }
+    });
+});
+
+// 인원 수 증가
+function plus(btnId){
+	var cnt = document.getElementById(btnId);
+	var curCnt = parseInt(cnt.value);
+
+	 if (isNaN(curCnt)) {
+        curCnt = 0;
+    }
+	// 최대인원 수 4명
+	if(curCnt < 4){
+	cnt.value = curCnt + 1;		
+	}
+
+	var spanElement = cnt.parentElement.querySelector('span em');
+		document.getElementById(btnId).value = cnt.value;
+		spanElement.innerText = cnt.value;
+}
+
+// 인원 수 감소
+function minus(btnId){
+	var cnt = document.getElementById(btnId);
+	var curCnt = parseInt(cnt.value);
+
+	 if (isNaN(curCnt)) {
+        curCnt = 0;	
+    }
+	// 최소 인원수 0명
+	if(curCnt > 0){
+		cnt.value = curCnt - 1;
+	}
+	
+	// 1번 객실 성인에 한 해 최소 인원 1명
+	if(btnId == 'adultCnt'){
+		if(curCnt < 2){
+			cnt.value = 1;
+		}
+	}
+	var spanElement = cnt.parentElement.querySelector('span em');
+		spanElement.innerText = cnt.value;
+		
+}
+
+
+
+
+// 객실별 인원수 폼 가리기
+function home(){
+	  var roomBoxElement = document.getElementById("roomBox");
+	console.log("클릭");
+roomBoxElement.style.display = "none";
+};
+
+// 객실별 인원수 폼 표출
+function roo(){
+	  var roomBoxElement = document.getElementById("roomBox");
+	console.log("클릭");
+  roomBoxElement.style.display = "block";
+};
+
+// form전송
+$(document).ready(function() {
+	$("#submitBtn").click(function() {
+		$("#submitForm").submit();
+	});
+});
+
+// 날짜 default 지정
+$(document).ready(function(){
+	let date = new Date();
+	
+    let year = date.getFullYear();
+    let month = (1 + date.getMonth());
+    let day = date.getDate();
+
+    month = month >= 10 ? month : `0${month}`; //10미만일 시 앞에 0을 붙혀서 저장
+    day = day >= 10 ? day : `0${day}`; //10미만일 시 앞에 0을 붙혀서 저장
+   
+ 	var today = `${year}-${month}-${day}`; // YYYY/MM/DD 형식으로 리턴
+    var tomorrow = `${year}-${month}-${day + 1 }`;
+
+	document.getElementById('rsvtCheckinYmd').value = today;
+	document.getElementById('rsvtCheckoutYmd').value = tomorrow;
+
+    });
+
+
+
+
+
+
+

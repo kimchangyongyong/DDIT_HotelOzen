@@ -1,0 +1,71 @@
+/**
+ * 
+ */
+const baseURI = window.location.href
+
+let form = document.querySelector("#submitForm")
+
+$("#submitForm").on("submit", (event) => {
+	event.preventDefault();
+	let url = form.action;
+	let method = form.method;
+
+	let formData = new FormData(form);
+	let jsonData = {};
+	formData.forEach((value, key) => {
+		jsonData[key] = value;
+	});
+	let listBody = document.querySelector("#listBody");
+
+	fetch(url, {
+		method: method,
+		headers: {
+			"Content-Type": "application/json",
+			"Accept": "application/json"
+		},
+		body: JSON.stringify(jsonData)
+
+	}).then(resp => {
+		if (resp.ok) {
+			return resp.json();
+		} else {
+			throw new Error("오류발생", { cause: resp })
+		}
+	}).then(jsonObj => {
+		listBody.innerHTML = '';
+		
+		for (let rsvt of jsonObj) {
+			rsvtList.add({
+				'rsvtNo':rsvt['rsvtNo'],
+				'cstNm':rsvt['cstNm'],
+				'rsvtYmd':rsvt['rsvtYmd'],
+				'rsvtCheckinYmd':rsvt['rsvtCheckinYmd'],
+				'rmtTypeCd':rsvt['rmtTypeCd'],
+				'rsvtRoomCnt':rsvt['rsvtRoomCnt'],
+				'rsvtAdultCnt':rsvt['rsvtAdultCnt'],
+				'rsvtChildCnt':rsvt['rsvtChildCnt'],
+				'rsvtSe':rsvt['rsvtSe']
+				});	
+		}
+		//listBody.innerHTML = trTags;
+	}).catch(err => {
+		console.error(err)
+	}).finally(() => {
+		var tdList = document.querySelectorAll('td');
+
+        tdList.forEach(function(td) {
+            if (td.innerHTML.trim() === '') {
+                td.style.display = 'none';
+            }
+        });
+	})
+
+	return false;
+
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+	let options = { "valueNames": ["rsvtNo","cstNm","rsvtYmd","rsvtCheckinYmd","rmtTypeCd","rsvtRoomCnt","rsvtAdultCnt"."rsvtChildCnt","rsvtSe"], "page": 10, "pagination": true } 
+	refndList = new List('refunListTable', options)
+	$("#submitForm").submit();
+});

@@ -1,0 +1,79 @@
+package kr.or.ddit.cstmr.auth.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.global.vo.ClickWrapVO;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.RegistVO;
+import kr.or.ddit.mybatis.mappers.ClickWrapMapper;
+import kr.or.ddit.mybatis.mappers.MberMapper;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class MberAuthServiceImpl implements MberAuthService {
+
+	private final MberMapper dao;
+	private final ClickWrapMapper termsDao;
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public ServiceResult createNewMber(RegistVO newMber) {
+		ServiceResult result = null;
+
+		if (dao.findMberUser(newMber) != null) {
+			
+			result = ServiceResult.USERDUPLICATED;
+			
+		// 중복 통과	
+		} else {
+			try {
+
+				String detailAddr = newMber.getMberDetailAddr();
+				String addr = newMber.getMberAddr();
+				newMber.setMberAddr(addr + detailAddr);
+				
+				String cstNo = dao.selectNewCstNo();
+
+				newMber.setCstNo(cstNo);
+
+				int cstmrInsert = dao.insertCstmr(newMber);
+				int mberInsert = dao.insertMber(newMber);
+
+				if (cstmrInsert != 1 || mberInsert != 1) {
+					throw new RuntimeException();
+				} else {
+					result = ServiceResult.OK;
+				}
+			} catch (RuntimeException e) {
+				result = ServiceResult.FAIL;
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public List<ClickWrapVO> retrieveTerms() {
+		
+		List<ClickWrapVO> termList = termsDao.selectList();
+		
+		return termList;
+	}
+
+	@Override
+	public boolean idDuplicateCheck(String mberId) {
+		boolean result = false;
+		
+		MberVO mber = dao.selectMberByUserName(mberId);
+		
+		if(mber==null) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+}

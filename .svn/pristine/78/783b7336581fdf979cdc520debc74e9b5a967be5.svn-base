@@ -1,0 +1,136 @@
+package kr.or.ddit.cstmr.rsvt.controller;
+
+import java.security.Principal;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.or.ddit.cstmr.rsvt.service.CstmrRsvtService;
+import kr.or.ddit.global.security.MberUser;
+import kr.or.ddit.global.vo.AttatchRmTypeVO;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.RecomRoomVO;
+import kr.or.ddit.global.vo.RoomTypeVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("cstmr/rsvt")
+public class CstmrRsvtRmtRetrieveController {
+
+	@Inject
+	private CstmrRsvtService service;
+
+	@GetMapping("rsvtStep01")
+	public String rsvtStep01(Model model, Principal authentication,
+			@RequestParam(name = "rsvtCheckinYmd") String rsvtCheckinYmd,
+			@RequestParam(name = "rsvtCheckoutYmd") String rsvtCheckoutYmd,
+			@RequestParam(name = "adultCnt") int adultCnt, @RequestParam(name = "childCnt") int childCnt,
+			@RequestParam(name = "rsvtRoomCnt") int rsvtRoomCnt) {
+		int nbrCnt = adultCnt + childCnt;
+		Map<String, Object> rsvtRmtMap = new HashMap<>();
+		rsvtRmtMap.put("rsvtCheckinYmd", rsvtCheckinYmd);
+		rsvtRmtMap.put("rsvtCheckoutYmd", rsvtCheckoutYmd);
+		rsvtRmtMap.put("nbrCnt", nbrCnt);
+		rsvtRmtMap.put("rsvtRoomCnt", rsvtRoomCnt);
+		List<RoomTypeVO> rsvtRmtList = service.retrieveRsvtRmt(rsvtRmtMap);
+		
+		
+		if(!rsvtRmtList.isEmpty()) {
+			Iterator<RoomTypeVO>value = rsvtRmtList.iterator();
+			int idx = 0;
+			List<AttatchRmTypeVO> rmtListType = new ArrayList<>();
+			while(value.hasNext()) {
+				String rmtTypeCd = value.next().getRmtTypeCd();		
+				log.info("rmtTypeCd:{}",rmtTypeCd);
+				AttatchRmTypeVO rmtList = service.retrieveRmt(rmtTypeCd);
+//				model.addAttribute("rmtList"+idx, rmtList);
+//				log.info("rmtList"+idx+": {}", rmtList);
+//				idx++;
+				rmtListType.add(rmtList);
+			}
+			model.addAttribute("rmtListType",rmtListType);
+			
+		}else {
+			
+			model.addAttribute("error","예약하실 수 있는 객실이 없습니다.");
+		}
+		
+		
+		
+
+//		log.info("all:{}", service.retrieveRmt(rmtTypeCd));
+
+		
+		
+		model.addAttribute("rsvtRmtList", rsvtRmtList);
+		return "cstmr/rsvt/rsvtStep01";
+	}
+
+	@GetMapping("recomRsvtList")
+	public String rcrmtList() {
+		return "error/403";
+	}
+
+	@GetMapping("rsvtStep02")
+	public String rsvtSetp02() {
+		return "cstmr/rsvt/rsvtStep02";
+	}
+
+	@GetMapping("rsvtStep03")
+	public String rsvtSetp03() {
+		return "cstmr/rsvt/rsvtStep03";
+	}
+
+	@PostMapping("recomRsvtList")
+	public String rcRmList(String adult, String child, Model model) {
+		int totalNmpr = Integer.parseInt(adult) + Integer.parseInt(child);
+		String cstNo = "M2400019"; // 추후 가져와야됨.
+		CstmrVO cstmr = service.retrieveCstmrAge(cstNo);
+		String age = cstmr.getAge();
+
+		Map<String, Object> customerData = new HashMap<>();
+		customerData.put("age", age);
+		customerData.put("totalNmpr", totalNmpr);
+
+		List<RecomRoomVO> rcRm = service.retrieveRcRm(customerData);
+		model.addAttribute("rcRm", rcRm);
+		log.info("######################rcRm:{}", rcRm);
+
+		String rmType1 = rcRm.get(0).getRermRmtype();
+		String rmType2 = rcRm.get(1).getRermRmtype();
+
+		log.info("##########################rmType1:{}", rmType1);
+
+		AttatchRmTypeVO attRmt1 = service.retrieveRmt(rmType1);
+		AttatchRmTypeVO attRmt2 = service.retrieveRmt(rmType2);
+
+		log.info("##########################attRmt1:{}", attRmt1);
+
+		Map<String, AttatchRmTypeVO> attRmtMap = new HashMap<>();
+		attRmtMap.put("attRmt1", attRmt1);
+		attRmtMap.put("attRmt2", attRmt2);
+
+		log.info("attRmtMap:{}", attRmtMap);
+
+		model.addAttribute("attRmtMap", attRmtMap);
+
+		return "cstmr/rsvt/recomRsvtList";
+	}
+
+}

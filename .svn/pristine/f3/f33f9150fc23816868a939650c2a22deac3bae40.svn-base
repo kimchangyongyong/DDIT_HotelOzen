@@ -1,0 +1,16 @@
+package kr.or.ddit.cstmr.intrcn.room.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/room.do")
+public class CstmrRoomListController {
+	
+	@GetMapping
+	public String roomList() {
+		return "cstmr/intrcn/room/roomList";
+	}
+	
+}

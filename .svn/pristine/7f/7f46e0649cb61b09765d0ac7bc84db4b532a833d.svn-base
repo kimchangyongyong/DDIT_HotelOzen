@@ -1,0 +1,31 @@
+package kr.or.ddit.global.vo;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(of= "cstNo")
+public class MberVO implements Serializable {
+	private int rnum;
+	private String cstNo;
+	private String mberId;
+	private String mberPw;
+	private String mberSpclNote;
+	private String mberMbti;
+	private String mberHomeTel;
+	private String mberAddr;
+	private Integer mberMlg;
+	private boolean mberSecsnYn;
+	private boolean mberMbrshYn;
+	private String mberSbscrbYmd;
+	
+	private List<String> userRoles;
+	
+	private CstmrVO cst;
+	
+	private List<MbrshVO> mbrsh;
+}

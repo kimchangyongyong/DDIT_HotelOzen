@@ -1,0 +1,36 @@
+package kr.or.ddit.mybatis.mappers;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.Test;
+
+import kr.or.ddit.AbstractRootContextTest;
+import kr.or.ddit.global.vo.CarVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+class CarMapperTest extends AbstractRootContextTest{
+
+	@Inject
+	private CarMapper dao;
+	
+	@Test
+	void test() {
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put("cstAge",40);
+		parameterMap.put("cstGen","M");
+		List<CarVO> vo = dao.selectCar(parameterMap);
+		log.info("{}",vo);
+	}
+	
+	@Test
+	void test2() {
+		log.info("{}",dao.selectCstmr("M1800001"));
+	}
+}

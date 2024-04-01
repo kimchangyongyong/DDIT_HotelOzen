@@ -1,0 +1,45 @@
+package kr.or.ddit.mybatis.mappers;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
+
+import kr.or.ddit.AbstractRootContextTest;
+import kr.or.ddit.cstmr.recom.service.CstmrRecomSbrsService;
+import kr.or.ddit.global.vo.SbrsVO;
+import kr.or.ddit.mybatis.mappers.SbrsMapper;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+class SbrsMapperTest extends AbstractRootContextTest {
+
+	@Inject
+	SbrsMapper dao;
+	
+	@Inject
+	CstmrRecomSbrsService service;
+
+	@Test
+	void test2() {
+		log.info("{}",dao.selectSbrs("M1800001"));
+	}
+	
+	@Test
+	void test() {
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put("mbti", "E");
+		parameterMap.put("age", "40-50");
+		parameterMap.put("season", "spring");
+		List<SbrsVO> vo = dao.selectRecomSbrs(parameterMap);
+		log.info("VO {}",vo);
+	}
+	
+	
+
+}

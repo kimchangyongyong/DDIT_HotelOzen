@@ -1,0 +1,22 @@
+package kr.or.ddit.emp.hrm.emply.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/emp/pbl/emply")
+public class HrmEmpListController {
+	
+	@GetMapping
+	public String List() {
+		return "emp/hrm/emply/empList";
+	}
+	
+	@GetMapping("view")
+	public String View() {
+		return "emp/hrm/emply/empView";
+	}
+	
+
+}

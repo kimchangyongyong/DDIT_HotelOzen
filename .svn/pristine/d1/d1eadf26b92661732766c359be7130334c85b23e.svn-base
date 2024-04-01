@@ -1,0 +1,23 @@
+package kr.or.ddit.emp.pos.refund.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/emp/pos/refund")
+public class EmpPosRefundController {
+	
+	@GetMapping
+	public String refundList() {
+		return "emp/pos/refund/refundList";
+	}
+	
+	@GetMapping("{rfndNo}")
+	public String refundView(
+		@PathVariable String rfndNo	
+		) {
+		return "emp/pos/refund/refundView";
+	}
+}

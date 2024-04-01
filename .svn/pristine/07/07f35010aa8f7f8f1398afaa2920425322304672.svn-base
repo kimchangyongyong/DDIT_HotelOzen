@@ -1,0 +1,14 @@
+package kr.or.ddit.cstmr.comm.faq.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("comm/FAQ")
+public class CstmrFAQController {
+	@GetMapping
+	public String FAQPage() {
+		return "cstmr/comm/faq/faqList";
+	}
+}

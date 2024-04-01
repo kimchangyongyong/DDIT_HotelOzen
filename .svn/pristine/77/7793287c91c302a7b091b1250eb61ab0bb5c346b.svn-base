@@ -1,0 +1,199 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<div class="col mb-3">
+   <div class="card h-100">
+      <div class="card-header">
+         <div class="row flex-between-end">
+            <div class="col-auto align-self-center">
+               <h5 class="mb-0" data-anchor="data-anchor" id="share-dataset">
+                  <font style="vertical-align: inherit;"><font
+                     style="vertical-align: inherit;">공지사항 목록</font></font><a
+                     class="anchorjs-link " aria-label="닻" data-anchorjs-icon="#"
+                     href="#share-dataset" style="padding-left: 0.375em;"></a>
+               </h5>
+               </div>
+<div id="tableExample3" data-list='{"valueNames":["cstNo","mberNm","mberId", "mberHp","mberMbrsh", "mberMlg"],"page":10,"pagination":true}'>
+  <div class="row justify-content-end g-0">
+    <div class="col-auto col-sm-5 mb-3">
+      <form id="submitForm" method="post">
+        <div class="input-group">
+          <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Search..." aria-label="search" />
+          <div class="input-group-text bg-transparent"><span class="fa fa-search fs-10 text-600"></span></div>
+        </div>
+      </form>
+        <div class="input-group">
+      <select class="form-select form-select-sm mb-3" aria-label="Bulk actions" data-list-filter="data-list-filter">
+        <option selected="" value="">Select payment status</option>
+        <option value="Pending">Pending</option>
+        <option value="Success">Success</option>
+        <option value="Blocked">Blocked</option>
+      </select>
+    </div>
+    </div>
+  </div>
+  <div class="table-responsive scrollbar">
+<table class="table table-bordered table-striped">
+      <thead class="thead-light text-center">
+        <tr>
+          <th>No</th>
+          <th>FAQ Title</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th>Hit</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr>
+          <td>1</td>
+          <td class="text-left" width="50%">
+			<div class="accordion-item border-0">
+              <div class="card-header p-0" id="faqAccordionHeading1">
+           		 <button class="accordion-button btn btn-link text-decoration-none d-block w-100 py-2 px-3 border-0 text-start rounded-0 shadow-none collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFaqAccordion1" aria-expanded="false" aria-controls="collapseFaqAccordion1"><svg class="svg-inline--fa fa-caret-right fa-w-6 accordion-icon me-3" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" data-fa-i2svg="" style="transform-origin: 0.1875em 0.5em;"><g transform="translate(96 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z" transform="translate(-96 -256)"></path></g></g></svg><!-- <span class="fas fa-caret-right accordion-icon me-3" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --><span class="fw-medium font-sans-serif text-900">How to start working with Falcon?</span></button>
+                   </div>
+                    <div class="accordion-collapse collapse" id="collapseFaqAccordion1" aria-labelledby="faqAccordionHeading1" data-parent="#accordionFaq" style="">
+                      <div class="accordion-body p-0">
+                        <div class="card-body pt-2">
+                          <div class="ps-3 mb-0">
+                            <p><b>You will find HTML pages in the public directory</b>. If you want, you can include the file over there and make the project live. You can write SCSS which is generated to the CSS file in the <code>public/assets</code> directory. We also used a pug template engine to generate all HTML files which one is very helpful for easy customization.</p>
+                            <p class="mb-0"> For detailed documentation, check the following link: <a href="https://prium.github.io/falcon/v3.19.0/documentation/getting-started.html"> https://prium.github.io/falcon/v3.19.0/documentation/getting-started.html</a>.</p>
+                            <p class="d-flex justify-content-end">
+                            	<button class="btn btn-outline-warning btn-sm">수정</button>
+                            	<button class="btn btn-outline-danger btn-sm">삭제</button>
+                            	</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          </td>
+          <td>이용안내</td>
+          <td>2032.01.01</td>
+          <td>84</td>
+        </tr>
+       
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-center mt-3">
+    <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Previous" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+    <ul class="pagination mb-0"></ul>
+    <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Next" data-list-pagination="next"><span class="fas fa-chevron-right"> </span></button>
+  </div>
+  <div class="d-flex justify-content-end"">
+  <button class="btn btn-outline-primary btn-sm">작성</button>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row mt-5">
+
+            <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+              <div class="d-flex mb-4">
+              	<i class="fas fa-pencil-alt"></i>
+                <div class="col">
+                  <h5 class="mb-0 text-primary position-relative"><span class="bg-200 dark__bg-1100 pe-3">Write</span>
+                  	<span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+                  </h5>
+                  <p class="mb-0">공지사항 작성</p>
+                </div>
+              </div>
+              <div class="card theme-wizard mb-5">
+                <div class="card-body py-4">
+                  <div class="tab-content">
+                    <div class="tab-pane active px-sm-3 px-md-5" role="tabpanel" aria-labelledby="bootstrap-wizard-tab1" id="bootstrap-wizard-tab1">
+                      <form novalidate="novalidate" data-wizard-form="1">
+                        <div class="mb-3">
+                          <label class="form-label" for="bootstrap-wizard-wizard-name">Name</label>
+                          <input class="form-control" type="text" name="name" placeholder="John Smith" id="bootstrap-wizard-wizard-name">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label" for="bootstrap-wizard-wizard-email">Email*</label>
+                          <input class="form-control" type="email" name="email" placeholder="Email address" pattern="^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$" required="required" id="bootstrap-wizard-wizard-email" data-wizard-validate-email="true">
+                          <div class="invalid-feedback">You must add email</div>
+                        </div>
+                        <div class="row g-2">
+                          <div class="col-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="bootstrap-wizard-wizard-password">Password*</label>
+                              <input class="form-control" type="password" name="password" placeholder="Password" required="required" id="bootstrap-wizard-wizard-password" data-wizard-password="true">
+                              <div class="invalid-feedback">Please enter password</div>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="bootstrap-wizard-wizard-confirm-password">Confirm Password*</label>
+                              <input class="form-control" type="password" name="confirmPassword" placeholder="Confirm Password" required="required" id="bootstrap-wizard-wizard-confirm-password" data-wizard-confirm-password="true">
+                              <div class="invalid-feedback">Passwords need to match</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" name="terms" required="required" checked="checked" id="bootstrap-wizard-wizard-checkbox">
+                          <label class="form-check-label" for="bootstrap-wizard-wizard-checkbox">I accept the <a href="#!">terms </a>and <a href="#!">privacy policy</a></label>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+              <div class="d-flex mb-4">
+              	<i class="fas fa-edit"></i>
+                <div class="col">
+                  <h5 class="mb-0 text-primary position-relative"><span class="bg-200 dark__bg-1100 pe-3">Edit</span>
+                  	<span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+                  </h5>
+                  <p class="mb-0">공지사항 수정</p>
+                </div>
+              </div>
+              <div class="card theme-wizard mb-5">
+                <div class="card-body py-4">
+                  <div class="tab-content">
+                    <div class="tab-pane active px-sm-3 px-md-5" role="tabpanel" aria-labelledby="bootstrap-wizard-tab1" id="bootstrap-wizard-tab1">
+                      <form novalidate="novalidate" data-wizard-form="1">
+                        <div class="mb-3">
+                          <label class="form-label" for="bootstrap-wizard-wizard-name">Name</label>
+                          <input class="form-control" type="text" name="name" placeholder="John Smith" id="bootstrap-wizard-wizard-name">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label" for="bootstrap-wizard-wizard-email">Email*</label>
+                          <input class="form-control" type="email" name="email" placeholder="Email address" pattern="^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$" required="required" id="bootstrap-wizard-wizard-email" data-wizard-validate-email="true">
+                          <div class="invalid-feedback">You must add email</div>
+                        </div>
+                        <div class="row g-2">
+                          <div class="col-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="bootstrap-wizard-wizard-password">Password*</label>
+                              <input class="form-control" type="password" name="password" placeholder="Password" required="required" id="bootstrap-wizard-wizard-password" data-wizard-password="true">
+                              <div class="invalid-feedback">Please enter password</div>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="bootstrap-wizard-wizard-confirm-password">Confirm Password*</label>
+                              <input class="form-control" type="password" name="confirmPassword" placeholder="Confirm Password" required="required" id="bootstrap-wizard-wizard-confirm-password" data-wizard-confirm-password="true">
+                              <div class="invalid-feedback">Passwords need to match</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" name="terms" required="required" checked="checked" id="bootstrap-wizard-wizard-checkbox">
+                          <label class="form-check-label" for="bootstrap-wizard-wizard-checkbox">I accept the <a href="#!">terms </a>and <a href="#!">privacy policy</a></label>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+<script src="<c:url value='/resources/js/app/emp/crm/cstmrnotice/cstmrNoticeList.js'/>"></script>

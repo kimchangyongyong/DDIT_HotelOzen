@@ -1,0 +1,21 @@
+package kr.or.ddit.emp.crm.cstmr.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/emp/crm/cstmr/membsh")
+public class CrmMembshRecomController {
+	
+//	@GetMapping
+//	public String cstmrList() {
+//		return "emp/crm/cstmr/cstmrList";
+//	}
+	
+	@GetMapping
+	public String cstmrMembsh() {
+		return "emp/crm/cstmr/cstmrMembsh";
+	}
+
+}

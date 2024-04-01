@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+.mbrsh-card{
+	width:354px;
+	height:204px;
+	border-radius:12px;
+}
+
+.second-mbrsh{
+	text-align:right;
+}
+
+
+.benetfitPrev {
+	margin:auto;
+    display: flex;
+}
+
+.benetfitPrevList {
+    width: 200px;
+    margin: 0 50px 14px 0;
+    padding: 17px 0 29px;
+    border-top: 1px solid #bcbcbc;
+}
+
+.benetfitPrevList .tit {
+	margin-bottom:10px;
+    display: block;
+    color: #eee;
+    font: 400 18px notokrL;
+    letter-spacing: -.075em;
+}
+
+.benetfitPrevList .tax {
+    display: block;
+    margin-bottom: 11px;
+    color: #fff;
+    font: 500 36px playfair,gothamB,notokrR;
+    letter-spacing: .075em;
+    font-feature-settings: 'lnum','pnum';
+}
+
+.benetfitPrevList .txt {
+    display: block;
+    color: #aaa;
+    font: 400 16px gothamL,notokrL;
+}

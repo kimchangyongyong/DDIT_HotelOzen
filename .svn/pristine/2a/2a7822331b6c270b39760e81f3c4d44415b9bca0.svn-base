@@ -1,0 +1,15 @@
+@charset "UTF-8";
+.label-box{
+	width: 300px;
+	min-width:300px;
+	height: 90px;
+	justify-content: center;
+}
+.label-box > div {
+	margin-left: 25px;
+}
+.label-box > div > label{
+	margin-bottom: 8px;
+	color: #2F9D27;
+	font-weight: 700;
+}

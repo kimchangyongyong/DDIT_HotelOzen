@@ -1,0 +1,16 @@
+package kr.or.ddit.global.vo;
+
+import java.util.List;
+
+import lombok.Data;
+
+@Data
+public class RoomVO {
+	private String rmNo;
+	private String rmtTypeCd;
+	private String rmAvlblYn;
+	private String rmAvlbDetails;
+	
+	private List<RsvtDetailsVO> rsvtDetails; 
+	private List<RoomTypeVO> roomType;
+}

@@ -1,0 +1,15 @@
+package kr.or.ddit.cstmr.rsvt.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/cstmr/rsvt/rsvt")
+public class CstmrRsvtInsertController {
+
+	@GetMapping
+	public String cstmrInsert() {
+		return "cstmr/rsvt/rsvt";
+	}
+}

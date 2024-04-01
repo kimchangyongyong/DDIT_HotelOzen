@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.HrmYrycMapper">
+
+	<insert id="insert" parameterType="AnnualVO">
+		INSERT INTO TB_ANNUAL_LEAVE_USE (
+			ANL_LEA_USE_NO
+			, EMP_NO
+			, ANL_LEA_BGN_YMD
+			, ANL_LEA_END_YMD
+			, ANL_LEA_RM
+			, ANL_LEA_INFO
+			, ANL_LEA_YMD
+			, EMP_RQ_NO
+			, RQST_SE
+		) VALUES (
+			#{anlLeaUseNo,jdbcType=CHAR}
+			, #{empNo,jdbcType=VARCHAR}
+			, #{anlLeaBgnYmd,jdbcType=DATE}
+			, #{anlLeaEndYmd,jdbcType=DATE}
+			, #{anlLeaRm,jdbcType=VARCHAR}
+			, #{anlLeaInfo,jdbcType=CHAR}
+			, #{anlLeaYmd,jdbcType=DATE}
+			, #{empRqNo,jdbcType=VARCHAR}
+			, #{rqstSe,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<select id="select" parameterType="string">
+		SELECT
+			ANL_LEA_USE_NO
+			, EMP_NO
+			, ANL_LEA_BGN_YMD
+			, ANL_LEA_END_YMD
+			, ANL_LEA_RM
+			, ANL_LEA_INFO
+			, ANL_LEA_YMD
+			, EMP_RQ_NO
+			, RQST_SE
+			, RQST_PURCHS_YMD
+		FROM
+		TB_ANNUAL_LEAVE_USE
+	    WHERE ANL_LEA_USE_NO = #{anlLeaUseNo,jdbcType=CHAR}
+	</select>
+
+	<sql id="searchFrag">
+		<trim prefix="WHERE" prefixOverrides="OR">
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR RQST_NO LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR RQST_SE LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+		</trim>
+	</sql>
+
+	<select id="selectTotalRecord">
+		SELECT COUNT(*)
+		FROM
+		TB_ANNUAL_LEAVE_USE
+		<include refid="searchFrag" />
+	</select>
+
+	<select id="selectList" resultType="AnnualVO" parameterType="PaginationInfo">
+		WITH RNUMYRYC AS (	
+			SELECT 
+				ROWNUM RNUM, A.*
+			FROM (
+				SELECT 
+					ANL_LEA_USE_NO
+					, EMP_NO
+					, ANL_LEA_BGN_YMD
+					, ANL_LEA_END_YMD
+					, ANL_LEA_RM
+					, ANL_LEA_INFO
+					, ANL_LEA_YMD
+					, EMP_RQ_NO
+					, RQST_SE
+					, RQST_PURCHS_YMD
+				FROM
+					TB_ANNUAL_LEAVE_USE
+				<include refid="searchFrag" />
+				ORDER BY 
+					ANL_LEA_USE_NO DESC
+			) A
+		)
+		SELECT *
+		FROM RNUMYRYC
+		<![CDATA[
+		WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+
+	<select id="selectAnlLeaUseNo" resultType="string">
+		SELECT 
+		    NVL2(MAX(ANL_LEA_USE_NO),'AU'||TO_CHAR(SYSDATE,'YY')||LPAD(SUBSTR(MAX(ANL_LEA_USE_NO),-5)+1, 5, 0), 'AU'||TO_CHAR(SYSDATE,'YY')||'00001')
+		FROM TB_ANNUAL_LEAVE_USE
+		WHERE ANL_LEA_USE_NO LIKE 'AU'||TO_CHAR(SYSDATE,'YY')||'%'
+	</select>
+	
+	<select id="selectAnlReciverEmpNo" parameterType="string">
+		 SELECT 
+	        EMP_NO
+			, EMP_NM
+	        , EMP_DEPT
+		FROM
+	    	TB_EMP 
+	    	INNER JOIN 
+	    		(SELECT 
+					EMP_NO
+					, EMP_NM
+			        , EMP_DEPT
+				FROM TB_EMP
+				WHERE EMP_NO = #{empNo,jdbcType=VARCHAR}) A
+	    	USING (EMP_DEPT)
+	    	WHERE EMP_JBGD='DPM'
+	</select>
+
+
+	<update id="updateOfSender">
+		UPDATE TB_ANNUAL_LEAVE_USE
+		SET
+			ANL_LEA_BGN_YMD
+			, ANL_LEA_END_YMD
+			, ANL_LEA_RM
+			, ANL_LEA_INFO
+			, ANL_LEA_YMD
+			, EMP_RQ_NO
+		WHERE
+		    ANL_LEA_USE_NO = #{anlLeaUseNo,jdbcType=CHAR}
+	</update>
+	
+	<update id="updateOfReceiver">
+		UPDATE TB_ANNUAL_LEAVE_USE
+		SET
+		    RQST_SE = #{rqstSe,jdbcType=VARCHAR}
+		    RQST_PURCHS_YMD = #{rqstPurchsYmd,jdbcType=DATE}
+		WHERE
+		    ANL_LEA_USE_NO = #{anlLeaUseNo,jdbcType=CHAR}
+	
+	</update>
+	
+	<delete id="delete">
+	
+	</delete>
+
+</mapper>

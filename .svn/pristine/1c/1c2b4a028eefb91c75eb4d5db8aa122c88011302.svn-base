@@ -1,0 +1,72 @@
+package kr.or.ddit.emp.auth.controller;
+
+import java.util.Arrays;
+import java.util.Random;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.codec.binary.Base32;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.emp.auth.service.EmpAuthFindService;
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.global.vo.EmpVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/emp/auth")
+public class EmpAuthFindController {
+	
+	@Inject
+	private EmpAuthFindService serivce;
+	
+	@GetMapping("/findId.do")
+	public String findId() {
+		return "emp/auth/findId";
+	}
+	
+	@PostMapping(value = "/findId.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String authenticate(
+		@RequestBody EmpVO emp
+		, Model model
+	) {
+		log.info("test ======> {}", emp);
+		
+		ServiceResult result = serivce.checkUser(emp);
+		
+		String message = null;
+		
+		switch (result) {
+			case FAIL:
+				message = "서버 오류 발생!";
+				break;
+			default:
+			    byte[] buffer = new byte[5 + 5 * 5];
+			    new Random().nextBytes(buffer);
+			    Base32 codec = new Base32();
+			    byte[] secretKey = Arrays.copyOf(buffer, 10);  //16자 이상이여하므로 10으로 설정 필요
+			    byte[] bEncodedKey = codec.encode(secretKey);
+			     
+			    //인증키 생성
+			    message = new String(bEncodedKey);
+			    
+				break;
+		}
+		return message;
+	}
+	
+	@GetMapping("/findPwd.do")
+	public String findPwd() {
+		return "emp/auth/findPwd";
+	}
+}

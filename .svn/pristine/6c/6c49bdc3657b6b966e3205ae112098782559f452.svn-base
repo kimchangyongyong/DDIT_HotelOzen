@@ -1,0 +1,141 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<link
+	href="${pageContext.request.contextPath}/resources/css/cstmr/recom/recomSbrs.css"
+	rel="stylesheet">
+<script defer src="<c:url value='/resources/js/app/cstmr/recomCar.js'/>"></script>
+<section>
+	<div>
+		<div class="location-header mx-10">
+			<h1 class="cstmr-title mx-5">추천</h1>
+			<p class="cstmr-content mx-5 mb-5">호텔 오젠 추천</p>
+		</div>
+	</div>
+	<div class="container recom-table text-center mb-5">
+		<div class="btn-group btn-group-lg container text-center" role="group"
+			aria-label="...">
+			<button class="btn btn-outline-dark mb-1 " id="recomCar" type="button">렌터카추천</button>
+			<button class="btn btn-outline-dark mb-1 btn-dark text-white" id="recomSbrs" type="button">부대시설추천</button>
+		</div>
+	</div>
+	<div class="card mb-3 container recom-table">
+		<div class="card-header d-flex align-items-center">
+			<div class="recom-div">
+				<div class="col-auto">
+					<div class="card mt-3 mb-3 container">
+						<div class="card-header">
+							<div class="card-img-top col-5">
+								<img
+									src="${pageContext.request.contextPath}/resources/assets/img/sbrs/in_swimPool01.jpg""
+									alt="ben" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mx-3">
+				<table class="table">
+					<tr>
+						<th>시설명</th>
+						<td>오션어드벤처 실내존</td>
+					</tr>
+					<tr>
+						<th>위치</th>
+						<td>1층</td>
+					</tr>
+					<tr>
+						<th>영업시간</th>
+						<td>10:00-21:00</td>
+					</tr>
+					<tr>
+						<th>가격</th>
+						<td>대인 : 50000원<br>
+						소인: 40000원<br>&nbsp&nbsp&nbsp&nbsp*36개월~초등학생
+						</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+	</div>
+	<div class="card mb-3 container recom-table">
+		<div class="card-header d-flex align-items-center">
+			<div class="recom-div">
+				<div class="col-auto">
+					<div class="card mt-3 mb-3 container">
+						<div class="card-header">
+							<div class="card-img-top col-5">
+								<img
+									src="${pageContext.request.contextPath}/resources/assets/img/sbrs/rooftop01.jpg"
+									alt="ben" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mx-3">
+				<table class="table">
+					<tr>
+						<th>시설명</th>
+						<td>오젠 루프탑</td>
+					</tr>
+					<tr>
+						<th>위치</th>
+						<td>15층</td>
+					</tr>
+					<tr>
+						<th>영업시간</th>
+						<td>09:00-22:00</td>
+					</tr>
+					<tr>
+						<th>가격</th>
+						<td>-</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+	</div>
+	<div class="card mb-3 container recom-table">
+		<div class="card-header d-flex align-items-center">
+			<div class="recom-div">
+				<div class="col-auto">
+					<div class="card mt-3 mb-3 container">
+						<div class="card-header">
+							<div class="card-img-top col-5">
+								<img
+									src="${pageContext.request.contextPath}/resources/assets/img/sbrs/health01.jpg"
+									alt="ben" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mx-3">
+				<table class="table">
+					<tr>
+						<th>시설명</th>
+						<td>피트니스 센터</td>
+					</tr>
+					<tr>
+						<th>위치</th>
+						<td>3층</td>
+					</tr>
+					<tr>
+						<th>영업시간</th>
+						<td>08:00-24:00</td>
+					</tr>
+					<tr>
+						<th>가격</th>
+						<td>대인 : 30000원</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+	</div>
+
+</section>

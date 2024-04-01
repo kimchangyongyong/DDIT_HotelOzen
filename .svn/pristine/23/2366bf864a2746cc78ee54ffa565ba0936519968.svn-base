@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+/* 페이지 제목 */
+.cstmr-title{
+	font-size: 4rem;
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: 0.06em;
+	margin-top: 5rem;
+	color: #000000;
+}
+/* 제목 부가설명 */
+.cstmr-content {
+	font-size: 1rem;
+	font-weight: 400;
+	letter-spacing: -0.025em;
+	line-height: 1.4;
+	color: #000000
+}
+.hr-detail {
+	border-top: 0.5px solid #808080;
+}
+.detail-notice_title {
+	font-size : 1.3rem;
+	font-weight : bold;
+	line-height : 1.1;
+	letter-spacing : -0.025em;
+	color : #000000;
+}

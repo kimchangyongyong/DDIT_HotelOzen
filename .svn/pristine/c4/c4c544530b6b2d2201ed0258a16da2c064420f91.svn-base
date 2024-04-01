@@ -1,0 +1,23 @@
+package kr.or.ddit.global.validate.constraints;
+
+import java.time.LocalDate;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public class AdultValidator implements ConstraintValidator<Adult, LocalDate>{
+	
+	private Adult annotaion;
+	
+	@Override
+	public void initialize(Adult constraintAnnotation) {
+		this.annotaion = constraintAnnotation;
+	}
+	
+	@Override
+	public boolean isValid(LocalDate value, ConstraintValidatorContext context) {
+		LocalDate currentDate = LocalDate.now();
+		
+		return currentDate.minusYears(18).isAfter(value);
+	}
+}

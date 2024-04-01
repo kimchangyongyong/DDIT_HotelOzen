@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.RecomSbrs">
+<!-- <resultMap type="SbrsVO" id="SbrsMap" autoMapping="true">
+	<association property="recomSbrsVO" javaType="RecomSbrsVO" autoMapping="true">
+		<id property="recomRank" column="RECOM_RANK"/>
+	</association>
+
+</resultMap>
+
+	<select id="select" parameterType="CstmrVO" resultType="SbrsMap">
+	SELECT
+		RECOM_AGE
+		, RECOM_SEASON
+		, MBTI
+        , SBRS_CD
+		, RECOM_RANK
+	FROM 
+		TB_SBRS INNER JOIN TB_RECOM_SBRS USING (SBRS_CD)
+	WHERE 
+		RECOM_AGE = '#{cstBirth}'  AND RECOM_SEASON = '#{recinSeason}' AND MBTI = '#{}'
+    GROUP BY 
+    	RECOM_AGE, RECOM_SEASON, MBTI,  SBRS_CD, RECOM_RANK
+	ORDER BY 
+		RECOM_RANK
+	</select> -->
+</mapper>

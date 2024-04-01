@@ -1,0 +1,33 @@
+package kr.or.ddit.emp.hrm.empnotice.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HrmEmpNoticeController {
+
+	@RequestMapping("/emp/hrm/empNotice/insert")
+	public String insertEmpNotice() {
+		return "emp/hrm/empnotice/empNoticeForm";
+	}
+	
+	@RequestMapping("/emp/hrm/empNotice/update")
+	public String updateEmpNotice() {
+		return "emp/hrm/empnotice/empNoticeEdit";
+	}
+	
+	@RequestMapping("/emp/hrm/empNotice/delete")
+	public String deleteEmpNotice() {
+		return "emp/hrm/empnotice/empNoticeList";
+	}
+	
+	@RequestMapping("/emp/hrm/empNotice/view")
+	public String viewEmpNotice() {
+		return "emp/hrm/empnotice/empNoticeView";
+	}
+	
+	@RequestMapping("/emp/pbl/empNotice/view")
+	public String viewPblEmpNotice() {
+		return "emp/hrm/empnotice/empNoticeView";
+	}
+}

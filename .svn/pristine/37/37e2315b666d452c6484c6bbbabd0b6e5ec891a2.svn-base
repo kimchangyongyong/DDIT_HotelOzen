@@ -1,0 +1,17 @@
+package kr.or.ddit.mybatis.mappers;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.or.ddit.global.vo.SbrsVO;
+
+@Mapper
+public interface SbrsMapper{
+	public List<SbrsVO> selectRecomSbrs(Map<String, Object> cstmrMap);
+	
+	public Map<String, String> selectSbrs(String cstNo);
+	
+	public int insertSbrsScrap();
+}

@@ -1,0 +1,27 @@
+package kr.or.ddit.emp.myinfo.recom.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.global.vo.CertVO;
+import kr.or.ddit.global.vo.EmpVO;
+import kr.or.ddit.mybatis.mappers.EmpMapper;
+import kr.or.ddit.mybatis.mappers.RecomCertMapper;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class EmpMyinfoRecomServiceImpl implements EmpMyinfoRecomService {
+	
+	private final EmpMapper empdao;
+	private final RecomCertMapper certdao;
+	
+	@Override
+	public List<CertVO> retrieveRecomCertList(String username) {
+		EmpVO user = empdao.selectEmpDeptAndAnnual(username);
+		List<CertVO> recomCertList = certdao.selectRecomCert(user);
+		return recomCertList;
+	}
+
+}

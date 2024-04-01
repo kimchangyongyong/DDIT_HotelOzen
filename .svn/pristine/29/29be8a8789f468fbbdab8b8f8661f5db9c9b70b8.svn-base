@@ -1,0 +1,9 @@
+package kr.or.ddit.mybatis.mappers;
+
+import java.util.Map;
+
+import kr.or.ddit.global.vo.WorkSchdlVO;
+
+public interface HrmWorkSchdlMapper extends AbstractCommonMapper<WorkSchdlVO, Map<String, Object>>{
+
+}

@@ -1,0 +1,29 @@
+/**
+ * 
+ */
+
+
+/*
+	document.addEventListener("DOMContentLoaded", () => {
+		//let options = { "valueNames": ["cstNo", "mberNm", "mberId", "mberHp", "mberMbrsh", "mberMlg"], "page": 10, "pagination": true }
+		
+		let options = {"valueNames":["rnum","empNtYmd","empNtCnt", "empNtClassification"],"page":3,"pagination":true, "filter":{"key":"empNtClassification"}}
+		empNoticeList = new List('empNoticeList', options);
+		
+		var listFilter = document.querySelector('[data-list-filter]');
+		var key = options.filter.key;
+		listFilter.addEventListener("change", function(e){
+			console.log("change test")
+			var filterValue = listFilter.value;
+			console.log(filterValue)
+			empNoticeList.filter(function(item){
+	              if (e.target.value === '') {
+	                return true;
+	              }
+	              return item.values()[key].toLowerCase().includes(e.target.value.toLowerCase());
+	            });			
+			})
+	//	$("#submitForm").submit();
+	});
+	
+*/

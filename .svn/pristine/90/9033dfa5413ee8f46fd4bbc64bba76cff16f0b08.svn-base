@@ -1,0 +1,198 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<script type="module"
+	src="<c:url value='/resources/js/app/common/line-share-dataset-chart.js'/>"></script>
+<%-- <script type="module" src="${pageContext.request.contextPath}/resources/js/app/common/chart-combo.js"></script> --%>
+
+<div class="col mb-3">
+	<div class="card h-100">
+		<div class="card-header">
+			<div class="row flex-between-end">
+				<div class="col-auto align-self-center">
+					<h5 class="mb-0" data-anchor="data-anchor" id="share-dataset">
+						<font style="vertical-align: inherit;"><font
+							style="vertical-align: inherit;">분기 매출현황</font></font>
+					</h5>
+				</div>
+				<div class="col-auto ms-auto">
+					<div class="nav nav-pills nav-pills-falcon flex-grow-1"
+						role="tablist">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-body bg-light">
+			<div class="tab-content">
+				<div class="tab-pane preview-tab-pane active show" role="tabpanel"
+					aria-labelledby="tab-dom-97be5be5-80a3-458b-b1f1-2aca49bd46a1"
+					id="dom-97be5be5-80a3-458b-b1f1-2aca49bd46a1">
+					<!-- Find the JS file for the following chart at: src/js/charts/echarts/examples/line-share-dataset-chart.js-->
+					<!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/echarts-example.js-->
+					<div class="echart-line-share-dataset-chart-example"
+						style="min-height: 500px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"
+						data-echart-responsive="true"
+						_echarts_instance_="ec_1707881662016">
+						<div
+							style="position: relative; width: 468px; height: 500px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
+							<canvas data-zr-dom-id="zr_0" width="585" height="625"
+								style="position: absolute; left: 0px; top: 0px; width: 468px; height: 500px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
+						</div>
+						<div class=""></div>
+					</div>
+				</div>
+				<div class="tab-pane code-tab-pane" role="tabpanel"
+					aria-labelledby="tab-dom-57940b80-378e-4023-a865-445ff8e64b5c"
+					id="dom-57940b80-378e-4023-a865-445ff8e64b5c">
+					<pre class="scrollbar rounded-1 language-html"
+						style="max-height: 420px" tabindex="0">
+						<code class="language-html">
+						<span class="token tag"><span class="token tag"><span
+									class="token punctuation">&lt;</span>div</span> <span
+								class="token attr-name">class</span><span
+								class="token attr-value"><span
+									class="token punctuation attr-equals">=</span><span
+									class="token punctuation">"</span>echart-line-share-dataset-chart-example<span
+									class="token punctuation">"</span></span> <span
+								class="token special-attr"><span class="token attr-name">style</span><span
+									class="token attr-value"><span
+										class="token punctuation attr-equals">=</span><span
+										class="token punctuation">"</span><span
+										class="token value css language-css"><span
+											class="token property">min-height</span><span
+											class="token punctuation">:</span> 500px<span
+											class="token punctuation">;</span></span><span
+										class="token punctuation">"</span></span></span> <span
+								class="token attr-name">data-echart-responsive</span><span
+								class="token attr-value"><span
+									class="token punctuation attr-equals">=</span><span
+									class="token punctuation">"</span>true
+								<span class="token punctuation">"</span></span>
+								<span class="token punctuation">&gt;</span></span>
+								<span class="token tag">
+								<span class="token tag">
+								<span class="token punctuation">&lt;/</span>div</span>
+								<span class="token punctuation">&gt;</span>
+							</span>
+						</code>
+					</pre>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="card mb-2">
+	<div class="card-header">
+		<div>
+			<div class="col-auto align-self-center">
+				<h5 data-anchor="data-anchor">수익상세정보</h5>
+				<div id="tableExample3"
+					data-list='{"valueNames":["num","day","cost","paym"],"page":10,"pagination":true}'>
+					<div class="row justify-content-end g-0">
+						<div class="col-auto col-sm-5 mb-3">
+							<form>
+								<div class="input-group">
+									<input class="form-control form-control-sm shadow-none search"
+										type="search" placeholder="Search..." aria-label="search" />
+									<div class="input-group-text bg-transparent">
+										<span class="fa fa-search fs--1 text-600"></span>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="table-responsive scrollbar">
+						<table class="table table-bordered table-striped fs--1 mb-0">
+							<thead class="bg-200 text-900">
+								<tr>
+									<th class="sort" data-sort="num">번호</th>
+									<th class="sort" data-sort="day">날짜</th>
+									<th class="sort" data-sort="cost">금액</th>
+									<th class="sort" data-sort="paym">수입원</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody class="list">
+								<tr>
+									<td class="num">1</td>
+									<td class="day">2024.02.14</td>
+									<td class="cost">1,800,000</td>
+									<td class="paym">호텔예약</td>
+									<td><button class="btn btn-primary" type="button"
+											data-bs-toggle="modal" data-bs-target="#error-modal">상세정보</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="d-flex justify-content-center mt-3">
+						<button class="btn btn-sm btn-falcon-default me-1" type="button"
+							title="Previous" data-list-pagination="prev">
+							<span class="fas fa-chevron-left"></span>
+						</button>
+						<ul class="pagination mb-0"></ul>
+						<button class="btn btn-sm btn-falcon-default ms-1" type="button"
+							title="Next" data-list-pagination="next">
+							<span class="fas fa-chevron-right"> </span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+	aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document"
+		style="max-width: 1000px">
+		<div class="modal-content position-relative">
+			<div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+				<button
+					class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+					data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			
+			<div class="modal-body p-0">
+				<div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+					<h4 class="mb-1" id="modalExampleDemoLabel">상세정보</h4>
+				</div>
+				<div class="p-4 pb-3">
+					<form>
+					
+						<table class="table table-bordered table-striped fs--1 mb-0">
+							<thead class="bg-200 text-900">
+								<tr>
+									<th>번호</th>
+									<th>날짜</th>
+									<th>시간</th>
+									<th>금액</th>
+									<th>결제방식</th>
+									<th>수입원</th>
+								</tr>
+							</thead>
+							<tbody class="list">
+								<tr>
+									<td>1</td>
+									<td>2024.02.14</td>
+									<td>18:00</td>
+									<td>1,800,000</td>
+									<td>카드</td>
+									<td>호텔예약</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button"
+					data-bs-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<script
+	src="<c:url value='/resources/js/app/common/echarts-example.js'/>"></script>
+<script src="vendors/list.js/list.min.js"></script>

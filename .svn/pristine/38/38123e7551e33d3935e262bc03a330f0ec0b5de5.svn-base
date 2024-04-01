@@ -1,0 +1,11 @@
+#log4jdbc \uc5d0 \ub9de\uac8c \ubcc0\uacbd
+driverClassName=net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+url=jdbc:log4jdbc:oracle:thin:@112.220.114.130:1521/XE
+user=TEAM1_202308F
+password=java
+
+#connection pooling policy
+initialSize=2
+maxIdle=2
+maxTotal=3
+maxWait=2000

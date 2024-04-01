@@ -1,0 +1,19 @@
+package kr.or.ddit.mybatis.mappers;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.or.ddit.global.vo.AttatchRmTypeVO;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.RecomRoomVO;
+import kr.or.ddit.global.vo.RsvtVO;
+
+@Mapper
+public interface CstmrRsvtMapper extends AbstractCommonMapper<CstmrVO, String>{
+
+	List<RecomRoomVO> selectRcRm(Map<String, Object> parameterMap);
+	
+	AttatchRmTypeVO selectRmt(String rmType);
+}

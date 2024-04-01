@@ -1,0 +1,22 @@
+package kr.or.ddit.global.vo;
+
+import java.util.List;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(of="refndNo")
+public class RefndVO {
+
+	private String refndNo;
+	private String setleNo;
+	private String refndPlcyNo;
+	private String refndCncdeYmd;
+	private Integer refndAmnt;
+	private String refndYmd;
+	private String refndSttus;
+			
+	private SetleVO setleVO;
+	private CstmrVO cstmrVO;
+}

@@ -1,0 +1,15 @@
+package kr.or.ddit.emp.pbl.schdl.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("emp/pbl/schdl")
+public class EmpSchdlController {
+	@GetMapping
+	public String schdlList() {
+		return "emp/pbl/schdl/schdlList";
+	}
+
+}

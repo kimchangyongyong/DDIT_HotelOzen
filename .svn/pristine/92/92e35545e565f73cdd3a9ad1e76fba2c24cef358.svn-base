@@ -1,0 +1,47 @@
+/**
+ * 
+ */
+$(function() {
+	$('#fullpage').fullpage({
+		//options here
+		autoScrolling : true,
+		scrollHorizontally : true,
+		navigation : true,
+		navigationPosition : 'right',
+		scrollingSpeed : 1000,
+		navigationTooltips : ['첫번째','두번째','세번째','네번째']
+	});
+});
+
+
+$(document).ready(function(){
+    $('#start_date, #end_date').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true, // 연도와 월을 드롭다운으로 선택할 수 있도록 설정
+        minYear: 2020, // 선택 가능한 최소 연도
+        maxYear: parseInt(moment().format('YYYY'), 10), // 선택 가능한 최대 연도 (현재 연도)
+        locale: {
+            format: 'YYYY-MM-DD', // 날짜 형식 설정
+            separator: ' - ',
+            applyLabel: '적용',
+            cancelLabel: '취소',
+            fromLabel: '시작일',
+            toLabel: '종료일',
+            customRangeLabel: '직접 선택',
+            daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            firstDay: 1 // 달력 시작 요일 설정 (0: 일요일, 1: 월요일)
+        }
+    });
+});
+$("#plusBtn").click(function(){
+	var roomCnt = parseInt(document.getElementById("rsvtRoomCnt").value);
+	document.getElementById("rsvtRoomCnt").value = roomCnt + 1 ;
+});
+
+$("#minBtn").click(function(){
+	var roomCnt = parseInt(document.getElementById("rsvtRoomCnt").value);
+	document.getElementById("rsvtRoomCnt").value = roomCnt - 1 ;
+});
+
+

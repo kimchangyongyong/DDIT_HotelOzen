@@ -1,0 +1,85 @@
+/**
+ * 
+ */
+const baseURI = window.location.href
+
+let form = document.querySelector("#submitForm")
+
+$("#submitForm").on("submit", (event) => {
+	event.preventDefault();
+	let url = form.action;
+	let method = form.method;
+
+	let formData = new FormData(form);
+	let jsonData = {};
+	formData.forEach((value, key) => {
+		jsonData[key] = value;
+	});
+	let listBody = document.querySelector("#listBody");
+
+	fetch(url, {
+		method: method,
+		headers: {
+			"Content-Type": "application/json",
+			"Accept": "application/json"
+		},
+		body: JSON.stringify(jsonData)
+
+	}).then(resp => {
+		if (resp.ok) {
+			return resp.json();
+		} else {
+			throw new Error("오류발생", { cause: resp })
+		}
+	}).then(jsonObj => {
+		listBody.innerHTML = '';
+		
+		for (let rsvt of jsonObj) {
+			rsvtList.add({
+				'rnum':rsvt['rnum'],
+				'rsvtNo':rsvt['rsvtNo'],
+				'cstNm':rsvt.cstmr['cstNm'],
+				'rsvtYmd':rsvt['rsvtYmd'],
+				'rsvtCheckinYmd':rsvt['rsvtCheckinYmd'],
+				'rmtTypeCd':rsvt.rsvtDetails[0]['rmtTypeCd'],
+				'rsvtRoomCnt':rsvt['rsvtRoomCnt'],
+				'rsvtAdultCnt':rsvt['rsvtAdultCnt'],
+				'rsvtChildCnt':rsvt['rsvtChildCnt'],
+				'rsvtSe':rsvt.rsvtDetails[0]['rsvtSe']
+				});	
+				console.log(rsvt.rsvtDetails[0])
+		}
+		//listBody.innerHTML = trTags;
+	}).catch(err => {
+		console.error(err)
+	}).finally(() => {
+		var tdList = document.querySelectorAll('td');
+
+        tdList.forEach(function(td) {
+            if (td.innerHTML.trim() === '') {
+                td.style.display = 'none';
+            }
+        });
+	})
+
+	return false;
+
+})
+
+function fnCommFetch(url, options, fnResolve) {
+	fetch(url, options)
+		.then(resp => {
+			if (resp.ok) {
+				return resp.json()
+			} else {
+				throw new Error(`상태코드 ${resp.status} 수신`, { cause: resp })
+			}
+		}).then(fnResolve).catch(err => console.error(err));
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+	let options = { "valueNames": ["rnum","rsvtNo","cstNm","rsvtYmd","rsvtCheckinYmd","rmtTypeCd","rsvtRoomCnt","rsvtAdultCnt","rsvtChildCnt","rsvtSe"], "page": 10, "pagination": true } 
+	rsvtList = new List('tableExample3', options)
+	$("#submitForm").submit();
+});

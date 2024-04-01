@@ -1,0 +1,15 @@
+package kr.or.ddit.mybatis.mappers;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.MberNoticeVO;
+
+@Mapper
+public interface MberNoticeMapper extends AbstractCommonMapper<MberNoticeVO, String>{
+	
+	MberNoticeVO mberNoticeView(String mberNtNo);
+
+}

@@ -1,0 +1,30 @@
+package kr.or.ddit.cstmr.recom.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/cstmr/recom")
+public class CstmrIntrcnRecomController {
+
+	@GetMapping("recomTrstSpot")
+	public String recomTrstSpot() {
+		return "cstmr/recom/recomTrstSpot";
+	}
+	@GetMapping("recomSbrs")
+	public String recomSbrs() {
+		return "cstmr/recom/recomSbrs";
+	}
+	@GetMapping("recomRmService")
+	public String recomRmService() {
+		return "cstmr/recom/recomRmService";
+	}
+	
+	@GetMapping("{recom}")
+	public String recomType(@PathVariable String recom) {
+		
+		return "cstmr/recom/recomView";
+	}
+}

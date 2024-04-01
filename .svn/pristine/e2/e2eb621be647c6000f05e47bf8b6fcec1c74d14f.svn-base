@@ -1,0 +1,37 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
+<link href="${pageContext.request.contextPath}/resources/css/cstmr/intrcn/room/roomList.css" rel="stylesheet">
+
+<section>
+	<div>
+		<div class="location-header mx-10">
+			<h1 class="cstmr-title mx-5">ROOM</h1>
+			<div class="room-meun-tab acco">
+				<ul class="nav nav-tabs">
+					<li class="current"><a id="standardMove">STANDARD</a></li>
+					<li><a id="deluxeMove">DELUXE</a></li>
+					<li><a id="suiteMove">SUITE</a></li>
+				</ul>
+			</div>
+			
+			<div class="roomList-tab">
+			    <ul class="nav nav-tabs">
+			        <li class="row">
+			            <div class="col-sm-6" id="std-room" style="border:1px solid #cccccc; text-align:center">
+			                <!-- 이미지를 추가 -->
+			                <img src="image-url.jpg" alt="이미지">
+			            </div>
+			            <div class="col-sm-6">
+			                <!-- 텍스트를 추가 -->
+			                <p>글 내용을 여기에 입력하세요.</p>
+			            </div>
+			        </li>
+			    </ul>
+			</div>
+		</div>
+	</div>
+</section>

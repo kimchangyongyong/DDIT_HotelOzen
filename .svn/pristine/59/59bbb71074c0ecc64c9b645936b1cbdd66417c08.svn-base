@@ -1,0 +1,23 @@
+package kr.or.ddit.cstmr.comm.notice.service;
+
+import java.util.List;
+
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.MberNoticeVO;
+
+public interface MberNoticeService {
+
+	/**
+	 * 공지사항 조회
+	 * @param paging
+	 * @return
+	 */
+	public List<MberNoticeVO> retrieveNoticeList(PaginationInfo paging);
+	
+	/**
+	 * 공지사항 상세조회
+	 * @param mberNtNo
+	 * @return
+	 */
+	public MberNoticeVO retrieveNoticeView(String mberNtNo);
+}

@@ -1,0 +1,184 @@
+package kr.or.ddit.cstmr.rsvt.controller;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.cstmr.rsvt.service.CstmrRsvtRetrieveService;
+import kr.or.ddit.cstmr.rsvt.service.RefundService;
+import kr.or.ddit.global.security.MberVOWrapper;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.RsvtDetailsVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import kr.or.ddit.global.vo.SetleVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("cstmr/rsvt")
+public class CstmrRsvtRetrieveController {
+
+	@Inject
+	private CstmrRsvtRetrieveService service;
+
+	@Inject
+	private RefundService refundService;
+	
+	/**
+	 * 회원일 시 예약조회 페이지 이동, 비회원은 입력 폼 이동
+	 * 
+	 * @param model
+	 * @param authentication
+	 * @return
+	 */
+	@GetMapping("rsvtList")
+	public String rsvtList(Model model, Authentication authentication) {
+		// 비회과 회원을 구분하기 위해 authentication으로 인증유무 확인, 현재 사용자의 정보를 가져와 mberVo의 인스턴스인지 확인
+		if (authentication != null && authentication.getPrincipal() instanceof MberVOWrapper) {
+			MberVO mber = ((MberVOWrapper) authentication.getPrincipal()).getMberUser();
+
+			if (mber != null) {
+				LocalDate checkin;
+				LocalDate checkout;
+				long rsvtDay;
+
+				String cstNo = mber.getCstNo();
+				List<RsvtVO> mberRsvtList = service.retrieveMberRsvt(cstNo);
+				List<RsvtVO> mberEndRsvtList = service.retrieveMberEndRsvt(cstNo);
+				List<RsvtVO> mberCancelRsvtList = service.retrieveMberCancelRsvt(cstNo);
+
+				List<RsvtDetailsVO> rsvtDetailList;
+				String rsvtNo;
+				int rsvtCnt = mberRsvtList.size();
+				int endRsvtCnt = mberEndRsvtList.size();
+				int cancelRsvtCnt = mberCancelRsvtList.size();
+
+				for (int i = 0; i < rsvtCnt; i++) {
+					checkin = mberRsvtList.get(i).getRsvtCheckinYmd();
+					checkout = mberRsvtList.get(i).getRsvtCheckoutYmd();
+					rsvtDay = ChronoUnit.DAYS.between(checkin, checkout);
+
+					mberRsvtList.get(i).setRsvtDay(rsvtDay);
+					rsvtNo = mberRsvtList.get(i).getRsvtNo();
+					rsvtDetailList = service.retrieveRsvtDetails(rsvtNo);
+
+					mberRsvtList.get(i).setRsvtDetails(rsvtDetailList);
+					log.info("@@@@@mberRsvtList:{}", mberRsvtList);
+					model.addAttribute("mberRsvtList", mberRsvtList);
+				}
+
+				for (int j = 0; j < endRsvtCnt; j++) {
+					checkin = mberEndRsvtList.get(j).getRsvtCheckinYmd();
+					checkout = mberEndRsvtList.get(j).getRsvtCheckoutYmd();
+					rsvtDay = ChronoUnit.DAYS.between(checkin, checkout);
+
+					mberEndRsvtList.get(j).setRsvtDay(rsvtDay);
+					rsvtNo = mberEndRsvtList.get(j).getRsvtNo();
+					rsvtDetailList = service.retrieveEndRsvtDetails(rsvtNo);
+
+					mberEndRsvtList.get(j).setRsvtDetails(rsvtDetailList);
+
+					model.addAttribute("mberEndRsvtList", mberEndRsvtList);
+					log.info("@@@@@mberEndRsvtList:{}", mberEndRsvtList);
+				}
+
+				for (int k = 0; k < cancelRsvtCnt; k++) {
+					checkin = mberCancelRsvtList.get(k).getRsvtCheckinYmd();
+					checkout = mberCancelRsvtList.get(k).getRsvtCheckoutYmd();
+					rsvtDay = ChronoUnit.DAYS.between(checkin, checkout);
+
+					mberCancelRsvtList.get(k).setRsvtDay(rsvtDay);
+					rsvtNo = mberCancelRsvtList.get(k).getRsvtNo();
+					rsvtDetailList = service.retrieveEndRsvtDetails(rsvtNo);
+
+					mberCancelRsvtList.get(k).setRsvtDetails(rsvtDetailList);
+
+					model.addAttribute("mberCancelRsvtList", mberCancelRsvtList);
+					log.info("@@@@@mbercancel:{}", mberCancelRsvtList);
+				}
+
+				return "cstmr/rsvt/rsvtMberView";
+			}
+		}
+		return "cstmr/rsvt/rsvtList";
+	}
+
+	@GetMapping("rsvtMberView")
+	public String rsvtMberView() {
+		return "cstmr/rsvt/rsvtMberView";
+	}
+
+	/**
+	 * 비회원 예약조회
+	 * 
+	 * @param cstmrVO
+	 * @param model
+	 * @return
+	 */
+	@PostMapping("rsvtNberView")
+	public String rsvtNberView(@ModelAttribute CstmrVO cstmrVO, Model model) {
+		RsvtVO nberRsvtList = null;
+
+		nberRsvtList = service.retrieveNberRsvt(cstmrVO);
+
+		LocalDate checkin = nberRsvtList.getRsvtCheckinYmd();
+		LocalDate checkout = nberRsvtList.getRsvtCheckoutYmd();
+		long rsvtDay = ChronoUnit.DAYS.between(checkin, checkout);
+
+		nberRsvtList.setRsvtDay(rsvtDay);
+		String rsvtNo = nberRsvtList.getRsvtNo();
+		String setleNo = nberRsvtList.getRsvtSetleNo();
+		List<RsvtDetailsVO> rsvtDetailList = service.retrieveRsvtDetails(rsvtNo);
+		SetleVO setleVO = service.retrieveSetle(setleNo);
+
+		nberRsvtList.setRsvtDetails(rsvtDetailList);
+
+		log.info("nberRsvtList@@@@:{}", nberRsvtList);
+		log.info("setleVO@@@@:{}", setleVO);
+
+		model.addAttribute("nberRsvtList", nberRsvtList);
+		model.addAttribute("setleVO", setleVO);
+		return "cstmr/rsvt/rsvtNberView";
+	}
+
+	public static final String KEY = "2321751576818553";
+	public static final String SECRET = "blhkWoYeaswfXI5HHqu7apes10sIdWTwsUk8cqZgQJcf3aQnZ4eKtFCz5fc20VZ50J2eqnUBIwsLljqI";
+
+	/**
+	 * 결제취소 메소드
+	 * @throws IOException
+	 */
+	@PostMapping(value = "rsvtCancel", consumes = MediaType.APPLICATION_JSON_VALUE, produces =MediaType.APPLICATION_JSON_VALUE )
+	@ResponseBody
+	public String rsvtCancel(
+	        @RequestBody Map<String, Object> requestData
+	) throws IOException {
+	    log.info("@@@@@@setleVO:{}", requestData.get("setleMerchantUid"));
+	    log.info("@@@@@@setleVO:{}", requestData.get("refndAmnt"));
+	    log.info("@@@@@@setleVO:{}", requestData.get("reason"));
+	    log.info("@@@@@@setleVO:{}", requestData.get("cstNo"));
+	    
+	    String merchantUid = requestData.get("setleMerchantUid").toString();
+	    
+		String token = refundService.getToken(KEY, SECRET);
+		refundService.refundRequest(token, merchantUid, "예약취소");
+		
+		return "redirect:rsvtCancel";
+	}
+}

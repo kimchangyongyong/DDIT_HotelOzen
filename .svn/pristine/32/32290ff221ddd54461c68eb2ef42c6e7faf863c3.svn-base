@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+.sbrs_wrap {
+	max-width : 1280px;
+	margin : 0 auto;
+}
+.sbrs_wrap .sbrs_inner {
+	display : block;
+	font-size : 0;
+	margin : 0 -5px;
+}
+.sbrs_wrap .sbrs_inner .sbrsImg {
+	display : inline-block;
+	width : 50%;
+	padding : 0 5px;
+	vertical-align : middle;
+	text-align : center;
+	box-sizing : border-box; 
+}
+.sbrs_wrap .sbrs_inner .sbrsImg .sbrsImginner {
+	height : 200px;
+}

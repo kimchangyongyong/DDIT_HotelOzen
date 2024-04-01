@@ -1,0 +1,20 @@
+package kr.or.ddit.cstmr.auth.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/auth")
+public class CstmrAuthFindController {
+	
+	@GetMapping("/findId.do")
+	public String findId() {
+		return "cstmr/auth/findId";
+	}
+	
+	@GetMapping("/findPwd.do")
+	public String findPwd() {
+		return "cstmr/auth/findPwd";
+	}
+}

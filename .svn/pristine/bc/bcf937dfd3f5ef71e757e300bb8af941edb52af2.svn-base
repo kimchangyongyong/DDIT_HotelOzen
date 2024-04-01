@@ -1,0 +1,14 @@
+package kr.or.ddit.cstmr.auth.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/auth/Login.do")
+public class CstmrAuthLoginController {
+	@GetMapping
+	public String loginPage() {
+		return "cstmr/auth/login";
+	}
+}

@@ -1,0 +1,25 @@
+package kr.or.ddit.mybatis.mappers;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.Test;
+
+import kr.or.ddit.AbstractRootContextTest;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+class ScrapMapperTest extends AbstractRootContextTest {
+	
+	@Inject
+	ScrapMapper dao;
+
+	@Test
+	void sbrstest() {
+		log.info("{}", dao.selectScrapSbrs("M2300002"));
+	}
+
+	@Test
+	void cartest() {
+		log.info("{}", dao.selectScrapCar("M2300003"));
+	}
+}

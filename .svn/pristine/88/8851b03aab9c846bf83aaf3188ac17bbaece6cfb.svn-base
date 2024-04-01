@@ -1,0 +1,10 @@
+package kr.or.ddit.emp.auth.service;
+
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.global.vo.EmpVO;
+
+public interface EmpAuthFindService {
+	
+	public ServiceResult checkUser(EmpVO emp);
+	
+}

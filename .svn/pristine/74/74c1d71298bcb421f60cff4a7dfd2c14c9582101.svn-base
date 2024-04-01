@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.EmpFxtrsUseMapper">
+
+	<sql id="searchFrag">
+		<trim prefix="WHERE" prefixOverrides="OR">
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR RM_NO LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR EMP_NM LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR FXUD_YMD LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+		</trim>
+	</sql>
+
+	<select id="selectTotalRecord" parameterType="PaginationInfo" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			TB_FXTRS_USE
+		<include refid="searchFrag" />
+	</select>
+
+	<resultMap type="FxtrsUseVO" id="fxtrsUMap" autoMapping="true">
+		<id property="fxuseNo" column="FXUSE_NO"></id>
+		<association property="rmManageLedger" javaType="RoomManageLedgerVO" autoMapping="true">
+			<id property="rmnglNo" column="RMNGL_NO"/>
+			<association property="emp" javaType="EmpVO" autoMapping="true">
+				<id property="empNo" column="EMP_NO"/>
+			</association>
+		</association>
+	</resultMap>
+
+	<select id="selectList" resultMap="fxtrsUMap" parameterType="PaginationInfo">
+		WITH RNUMFXTRSU AS (
+			SELECT 
+				ROWNUM RNUM, A.*    
+		    FROM (
+				SELECT  
+				   FXUSE_NO
+				   , EMP_NM
+				   , FXUSE_YMD
+				   , RM_NO
+				FROM TB_FXTRS_USE
+				    INNER JOIN TB_FXTRS_USE_DETAILS USING (FXUSE_NO)
+				    INNER JOIN TB_ROOM_MANAGE_LEDGER USING(RMNGL_NO)
+				    INNER JOIN TB_EMP USING(EMP_NO)
+				<include refid="searchFrag" />
+				GROUP BY 
+				   FXUSE_NO
+				   , EMP_NM
+				   , FXUSE_YMD
+				   , RM_NO
+				ORDER BY 
+				    FXUSE_NO DESC
+			)A
+		)
+		SELECT *
+		FROM RNUMFXTRSU
+		<![CDATA[
+			WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+</mapper>

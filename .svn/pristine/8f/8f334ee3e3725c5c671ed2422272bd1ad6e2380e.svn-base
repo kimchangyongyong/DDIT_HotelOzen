@@ -1,0 +1,42 @@
+package kr.or.ddit.global.preparer;
+
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.apache.tiles.AttributeContext;
+import org.apache.tiles.preparer.ViewPreparer;
+import org.apache.tiles.request.Request;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import kr.or.ddit.global.security.EmpVOWrapper;
+import kr.or.ddit.global.vo.EmpVO;
+import kr.or.ddit.mybatis.mappers.EmpMapper;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Preparer("profilePreparer")
+public class ProfilePreparer implements ViewPreparer {
+
+	@Inject
+	EmpMapper dao;
+	
+	@Override
+	public void execute(Request tilesContext, AttributeContext attributeContext) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		EmpVOWrapper principal = (EmpVOWrapper) authentication.getPrincipal();
+	
+		EmpVO realUser = principal.getEmpUser();
+		
+		log.info("콘솔 출력 확인>>>{}", realUser);
+		
+		EmpVO empUser = dao.select(realUser.getEmpNo());
+		
+		Map<String, Object> requestScope = tilesContext.getContext(Request.REQUEST_SCOPE);
+		
+		requestScope.put("empUser", empUser);
+		
+	}
+}

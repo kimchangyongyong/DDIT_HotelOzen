@@ -1,0 +1,959 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+직원 스케줄 조회
+<div class="content">
+	<div class="card overflow-hidden">
+	  <div class="card-header">
+	    <div class="row gx-0 align-items-center">
+	      <div class="col-auto d-flex justify-content-end order-md-1">
+	        <button class="btn icon-item icon-item-sm shadow-none p-0 me-1 ms-md-2" type="button" data-event="prev" data-bs-toggle="tooltip" title="Previous"><span class="fas fa-arrow-left"></span></button>
+	        <button class="btn icon-item icon-item-sm shadow-none p-0 me-1 me-lg-2" type="button" data-event="next" data-bs-toggle="tooltip" title="Next"><span class="fas fa-arrow-right"></span></button>
+	      </div>
+	      <div class="col-auto col-md-auto order-md-2">
+	        <h4 class="mb-0 fs-9 fs-sm-8 fs-lg-7 calendar-title"></h4>
+	      </div>
+	      <div class="col col-md-auto d-flex justify-content-end order-md-3">
+	        <button class="btn btn-falcon-primary btn-sm" type="button" data-event="today">오늘</button>
+	      </div>
+	      <div class="col-md-auto d-md-none">
+	        <hr />
+	      </div>
+	      <div class="col-auto d-flex order-md-0">
+	        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addEventModal"> <span class="fas fa-plus me-2"></span>일정추가</button>
+	      </div>
+	      <div class="col d-flex justify-content-end order-md-2">
+	        <div class="dropdown font-sans-serif me-md-2">
+	          <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="email-filter" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span data-view-title="data-view-title">월</span><span class="fas fa-sort ms-2 fs-10"></span></button>
+	          <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="email-filter"><a class="active dropdown-item d-flex justify-content-between" href="#!" data-fc-view="dayGridMonth">월<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridWeek">주<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridDay">일<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listWeek">List View<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listYear">Year View<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="card-body p-0 scrollbar">
+			<div
+				class="calendar-outline fc fc-media-screen fc-direction-ltr fc-theme-standard"
+				id="appCalendar" style="height: 800px;">
+				<div aria-labelledby=""
+					class="fc-view-harness fc-view-harness-active">
+					<div class="fc-daygrid fc-dayGridMonth-view fc-view">
+						<table role="grid" class="fc-scrollgrid  fc-scrollgrid-liquid">
+							<thead role="rowgroup">
+								<tr role="presentation"
+									class="fc-scrollgrid-section fc-scrollgrid-section-header ">
+									<th role="presentation"><div class="fc-scroller-harness">
+											<div class="fc-scroller" style="overflow: hidden;">
+												<table role="presentation" class="fc-col-header "
+													style="width: 316px;">
+													<colgroup></colgroup>
+													<thead role="presentation">
+														<tr role="row">
+															<th role="columnheader"
+																class="fc-col-header-cell fc-day fc-day-sun"><div
+																	class="fc-scrollgrid-sync-inner">
+																	<a aria-label="Sunday"
+																		class="fc-col-header-cell-cushion ">Sun</a>
+																</div></th>
+															<th role="columnheader"
+																class="fc-col-header-cell fc-day fc-day-mon"><div
+																	class="fc-scrollgrid-sync-inner">
+																	<a aria-label="Monday"
+																		class="fc-col-header-cell-cushion ">Mon</a>
+																</div></th>
+															<th role="columnheader"
+																class="fc-col-header-cell fc-day fc-day-tue"><div
+																	class="fc-scrollgrid-sync-inner">
+																	<a aria-label="Tuesday"
+																		class="fc-col-header-cell-cushion ">Tue</a>
+																</div></th>
+															<th role="columnheader"
+																class="fc-col-header-cell fc-day fc-day-wed"><div
+																	class="fc-scrollgrid-sync-inner">
+																	<a aria-label="Wednesday"
+																		class="fc-col-header-cell-cushion ">Wed</a>
+																</div></th>
+															<th role="columnheader"
+																class="fc-col-header-cell fc-day fc-day-thu"><div
+																	class="fc-scrollgrid-sync-inner">
+																	<a aria-label="Thursday"
+																		class="fc-col-header-cell-cushion ">Thu</a>
+																</div></th>
+															<th role="columnheader"
+																class="fc-col-header-cell fc-day fc-day-fri"><div
+																	class="fc-scrollgrid-sync-inner">
+																	<a aria-label="Friday"
+																		class="fc-col-header-cell-cushion ">Fri</a>
+																</div></th>
+															<th role="columnheader"
+																class="fc-col-header-cell fc-day fc-day-sat"><div
+																	class="fc-scrollgrid-sync-inner">
+																	<a aria-label="Saturday"
+																		class="fc-col-header-cell-cushion ">Sat</a>
+																</div></th>
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div></th>
+								</tr>
+							</thead>
+							<tbody role="rowgroup">
+								<tr role="presentation"
+									class="fc-scrollgrid-section fc-scrollgrid-section-body  fc-scrollgrid-section-liquid">
+									<td role="presentation"><div
+											class="fc-scroller-harness fc-scroller-harness-liquid">
+											<div class="fc-scroller fc-scroller-liquid-absolute"
+												style="overflow: hidden auto;">
+												<div class="fc-daygrid-body fc-daygrid-body-unbalanced "
+													style="width: 316px;">
+													<table role="presentation" class="fc-scrollgrid-sync-table"
+														style="width: 316px; height: 689px;">
+														<colgroup></colgroup>
+														<tbody role="presentation">
+															<tr role="row">
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sun fc-day-past fc-day-other"
+																	data-date="2024-01-28" aria-labelledby="fc-dom-2"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-2" class="fc-daygrid-day-number"
+																				aria-label="January 28, 2024">28</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-mon fc-day-past fc-day-other"
+																	data-date="2024-01-29" aria-labelledby="fc-dom-4"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-4" class="fc-daygrid-day-number"
+																				aria-label="January 29, 2024">29</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-tue fc-day-past fc-day-other"
+																	data-date="2024-01-30" aria-labelledby="fc-dom-6"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-6" class="fc-daygrid-day-number"
+																				aria-label="January 30, 2024">30</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-wed fc-day-past fc-day-other"
+																	data-date="2024-01-31" aria-labelledby="fc-dom-8"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-8" class="fc-daygrid-day-number"
+																				aria-label="January 31, 2024">31</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-thu fc-day-past"
+																	data-date="2024-02-01" aria-labelledby="fc-dom-10"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-10" class="fc-daygrid-day-number"
+																				aria-label="February 1, 2024">1</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div
+																				class="fc-daygrid-event-harness fc-daygrid-event-harness-abs"
+																				style="top: 0px; left: 0px; right: -90.7969px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-draggable fc-event-start fc-event-end fc-event-past bg-success-subtle"
+																					tabindex="0"><div class="fc-event-main">
+																						<div class="fc-event-main-frame">
+																							<div class="fc-event-time">10 AM</div>
+																							<div class="fc-event-title-container">
+																								<div class="fc-event-title fc-sticky">Boot
+																									Camp</div>
+																							</div>
+																						</div>
+																					</div></a>
+																			</div>
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 31px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-fri fc-day-past"
+																	data-date="2024-02-02" aria-labelledby="fc-dom-12"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-12" class="fc-daygrid-day-number"
+																				aria-label="February 2, 2024">2</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 31px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sat fc-day-past"
+																	data-date="2024-02-03" aria-labelledby="fc-dom-14"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-14" class="fc-daygrid-day-number"
+																				aria-label="February 3, 2024">3</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 31px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+															</tr>
+															<tr role="row">
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sun fc-day-past"
+																	data-date="2024-02-04" aria-labelledby="fc-dom-16"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-16" class="fc-daygrid-day-number"
+																				aria-label="February 4, 2024">4</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-mon fc-day-past"
+																	data-date="2024-02-05" aria-labelledby="fc-dom-18"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-18" class="fc-daygrid-day-number"
+																				aria-label="February 5, 2024">5</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-tue fc-day-past"
+																	data-date="2024-02-06" aria-labelledby="fc-dom-20"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-20" class="fc-daygrid-day-number"
+																				aria-label="February 6, 2024">6</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-wed fc-day-past"
+																	data-date="2024-02-07" aria-labelledby="fc-dom-22"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-22" class="fc-daygrid-day-number"
+																				aria-label="February 7, 2024">7</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-event-harness"
+																				style="margin-top: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-dot-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-past"
+																					tabindex="0"><div class="fc-daygrid-event-dot"></div>
+																					<div class="fc-event-time">10 AM</div>
+																					<div class="fc-event-title">Meeting</div></a>
+																			</div>
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-thu fc-day-past"
+																	data-date="2024-02-08" aria-labelledby="fc-dom-24"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-24" class="fc-daygrid-day-number"
+																				aria-label="February 8, 2024">8</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-fri fc-day-past"
+																	data-date="2024-02-09" aria-labelledby="fc-dom-26"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-26" class="fc-daygrid-day-number"
+																				aria-label="February 9, 2024">9</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sat fc-day-past"
+																	data-date="2024-02-10" aria-labelledby="fc-dom-28"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-28" class="fc-daygrid-day-number"
+																				aria-label="February 10, 2024">10</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+															</tr>
+															<tr role="row">
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sun fc-day-past"
+																	data-date="2024-02-11" aria-labelledby="fc-dom-30"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-30" class="fc-daygrid-day-number"
+																				aria-label="February 11, 2024">11</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-event-harness"
+																				style="margin-top: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-past bg-primary-subtle"
+																					tabindex="0"><div class="fc-event-main">
+																						<div class="fc-event-main-frame">
+																							<div class="fc-event-title-container">
+																								<div class="fc-event-title fc-sticky">Crain's
+																									New York Business</div>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="fc-event-resizer fc-event-resizer-end"></div></a>
+																			</div>
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-mon fc-day-past"
+																	data-date="2024-02-12" aria-labelledby="fc-dom-32"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-32" class="fc-daygrid-day-number"
+																				aria-label="February 12, 2024">12</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-tue fc-day-past"
+																	data-date="2024-02-13" aria-labelledby="fc-dom-34"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-34" class="fc-daygrid-day-number"
+																				aria-label="February 13, 2024">13</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-wed fc-day-today "
+																	data-date="2024-02-14" aria-labelledby="fc-dom-36"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-36" class="fc-daygrid-day-number"
+																				aria-label="February 14, 2024">14</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-event-harness"
+																				style="margin-top: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-today bg-success-subtle"
+																					tabindex="0"><div class="fc-event-main">
+																						<div class="fc-event-main-frame">
+																							<div class="fc-event-title-container">
+																								<div class="fc-event-title fc-sticky">Conference</div>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="fc-event-resizer fc-event-resizer-end"></div></a>
+																			</div>
+																			<div class="fc-daygrid-event-harness"
+																				style="margin-top: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-dot-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-today"
+																					tabindex="0"><div class="fc-daygrid-event-dot"></div>
+																					<div class="fc-event-time">10 AM</div>
+																					<div class="fc-event-title">Contest</div></a>
+																			</div>
+																			<div
+																				class="fc-daygrid-event-harness fc-daygrid-event-harness-abs"
+																				style="visibility: hidden; top: 0px; left: 0px; right: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-dot-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-today event-bg-success-subtle"
+																					tabindex="0"><div class="fc-daygrid-event-dot"></div>
+																					<div class="fc-event-time">11 AM</div>
+																					<div class="fc-event-title">Reporting</div></a>
+																			</div>
+																			<div
+																				class="fc-daygrid-event-harness fc-daygrid-event-harness-abs"
+																				style="visibility: hidden; top: 0px; left: 0px; right: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-dot-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-today event-bg-success-subtle"
+																					tabindex="0"><div class="fc-daygrid-event-dot"></div>
+																					<div class="fc-event-time">2 PM</div>
+																					<div class="fc-event-title">Lunch</div></a>
+																			</div>
+																			<div
+																				class="fc-daygrid-event-harness fc-daygrid-event-harness-abs"
+																				style="visibility: hidden; top: 0px; left: 0px; right: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-dot-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-today event-bg-success-subtle"
+																					tabindex="0"><div class="fc-daygrid-event-dot"></div>
+																					<div class="fc-event-time">4 PM</div>
+																					<div class="fc-event-title">Contest</div></a>
+																			</div>
+																			<div
+																				class="fc-daygrid-event-harness fc-daygrid-event-harness-abs"
+																				style="visibility: hidden; top: 0px; left: 0px; right: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-dot-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-today event-bg-success-subtle"
+																					tabindex="0"><div class="fc-daygrid-event-dot"></div>
+																					<div class="fc-event-time">10 PM</div>
+																					<div class="fc-event-title">Dinner</div></a>
+																			</div>
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;">
+																				<a class="fc-daygrid-more-link fc-more-link"
+																					title="Show 4 more events" aria-expanded="false"
+																					aria-controls="" tabindex="0">+4 more</a>
+																			</div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-thu fc-day-future"
+																	data-date="2024-02-15" aria-labelledby="fc-dom-38"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-38" class="fc-daygrid-day-number"
+																				aria-label="February 15, 2024">15</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-fri fc-day-future"
+																	data-date="2024-02-16" aria-labelledby="fc-dom-40"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-40" class="fc-daygrid-day-number"
+																				aria-label="February 16, 2024">16</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div
+																				class="fc-daygrid-event-harness fc-daygrid-event-harness-abs"
+																				style="top: 0px; left: 0px; right: -45.6562px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-draggable fc-event-start fc-event-future bg-warning-subtle"
+																					tabindex="0"><div class="fc-event-main">
+																						<div class="fc-event-main-frame">
+																							<div class="fc-event-time">10 AM</div>
+																							<div class="fc-event-title-container">
+																								<div class="fc-event-title fc-sticky">ICT
+																									Expo 2024 - Product Release</div>
+																							</div>
+																						</div>
+																					</div></a>
+																			</div>
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 31px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sat fc-day-future"
+																	data-date="2024-02-17" aria-labelledby="fc-dom-42"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-42" class="fc-daygrid-day-number"
+																				aria-label="February 17, 2024">17</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 31px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+															</tr>
+															<tr role="row">
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sun fc-day-future"
+																	data-date="2024-02-18" aria-labelledby="fc-dom-44"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-44" class="fc-daygrid-day-number"
+																				aria-label="February 18, 2024">18</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-event-harness"
+																				style="margin-top: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-draggable fc-event-end fc-event-future bg-warning-subtle"
+																					tabindex="0"><div class="fc-event-main">
+																						<div class="fc-event-main-frame">
+																							<div class="fc-event-time">10 AM</div>
+																							<div class="fc-event-title-container">
+																								<div class="fc-event-title fc-sticky">ICT
+																									Expo 2024 - Product Release</div>
+																							</div>
+																						</div>
+																					</div></a>
+																			</div>
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-mon fc-day-future"
+																	data-date="2024-02-19" aria-labelledby="fc-dom-46"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-46" class="fc-daygrid-day-number"
+																				aria-label="February 19, 2024">19</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-tue fc-day-future"
+																	data-date="2024-02-20" aria-labelledby="fc-dom-48"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-48" class="fc-daygrid-day-number"
+																				aria-label="February 20, 2024">20</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-wed fc-day-future"
+																	data-date="2024-02-21" aria-labelledby="fc-dom-50"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-50" class="fc-daygrid-day-number"
+																				aria-label="February 21, 2024">21</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-thu fc-day-future"
+																	data-date="2024-02-22" aria-labelledby="fc-dom-52"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-52" class="fc-daygrid-day-number"
+																				aria-label="February 22, 2024">22</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-fri fc-day-future"
+																	data-date="2024-02-23" aria-labelledby="fc-dom-54"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-54" class="fc-daygrid-day-number"
+																				aria-label="February 23, 2024">23</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-event-harness"
+																				style="margin-top: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-future bg-success-subtle"
+																					href="http://google.com"><div
+																						class="fc-event-main">
+																						<div class="fc-event-main-frame">
+																							<div class="fc-event-title-container">
+																								<div class="fc-event-title fc-sticky">Event
+																									With Url</div>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="fc-event-resizer fc-event-resizer-end"></div></a>
+																			</div>
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sat fc-day-future"
+																	data-date="2024-02-24" aria-labelledby="fc-dom-56"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-56" class="fc-daygrid-day-number"
+																				aria-label="February 24, 2024">24</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+															</tr>
+															<tr role="row">
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sun fc-day-future"
+																	data-date="2024-02-25" aria-labelledby="fc-dom-58"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-58" class="fc-daygrid-day-number"
+																				aria-label="February 25, 2024">25</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-mon fc-day-future"
+																	data-date="2024-02-26" aria-labelledby="fc-dom-60"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-60" class="fc-daygrid-day-number"
+																				aria-label="February 26, 2024">26</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-event-harness"
+																				style="margin-top: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-future bg-danger-subtle"
+																					tabindex="0"><div class="fc-event-main">
+																						<div class="fc-event-main-frame">
+																							<div class="fc-event-title-container">
+																								<div class="fc-event-title fc-sticky">Competition</div>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="fc-event-resizer fc-event-resizer-end"></div></a>
+																			</div>
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-tue fc-day-future"
+																	data-date="2024-02-27" aria-labelledby="fc-dom-62"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-62" class="fc-daygrid-day-number"
+																				aria-label="February 27, 2024">27</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-wed fc-day-future"
+																	data-date="2024-02-28" aria-labelledby="fc-dom-64"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-64" class="fc-daygrid-day-number"
+																				aria-label="February 28, 2024">28</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-thu fc-day-future"
+																	data-date="2024-02-29" aria-labelledby="fc-dom-66"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-66" class="fc-daygrid-day-number"
+																				aria-label="February 29, 2024">29</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-fri fc-day-future fc-day-other"
+																	data-date="2024-03-01" aria-labelledby="fc-dom-68"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-68" class="fc-daygrid-day-number"
+																				aria-label="March 1, 2024">1</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sat fc-day-future fc-day-other"
+																	data-date="2024-03-02" aria-labelledby="fc-dom-70"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-70" class="fc-daygrid-day-number"
+																				aria-label="March 2, 2024">2</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+															</tr>
+															<tr role="row">
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sun fc-day-future fc-day-other"
+																	data-date="2024-03-03" aria-labelledby="fc-dom-72"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-72" class="fc-daygrid-day-number"
+																				aria-label="March 3, 2024">3</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-mon fc-day-future fc-day-other"
+																	data-date="2024-03-04" aria-labelledby="fc-dom-74"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-74" class="fc-daygrid-day-number"
+																				aria-label="March 4, 2024">4</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-tue fc-day-future fc-day-other"
+																	data-date="2024-03-05" aria-labelledby="fc-dom-76"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-76" class="fc-daygrid-day-number"
+																				aria-label="March 5, 2024">5</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-event-harness"
+																				style="margin-top: 0px;">
+																				<a
+																					class="fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-future bg-primary-subtle"
+																					tabindex="0"><div class="fc-event-main">
+																						<div class="fc-event-main-frame">
+																							<div class="fc-event-title-container">
+																								<div class="fc-event-title fc-sticky">Birthday
+																									Party</div>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="fc-event-resizer fc-event-resizer-end"></div></a>
+																			</div>
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-wed fc-day-future fc-day-other"
+																	data-date="2024-03-06" aria-labelledby="fc-dom-78"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-78" class="fc-daygrid-day-number"
+																				aria-label="March 6, 2024">6</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-thu fc-day-future fc-day-other"
+																	data-date="2024-03-07" aria-labelledby="fc-dom-80"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-80" class="fc-daygrid-day-number"
+																				aria-label="March 7, 2024">7</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-fri fc-day-future fc-day-other"
+																	data-date="2024-03-08" aria-labelledby="fc-dom-82"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-82" class="fc-daygrid-day-number"
+																				aria-label="March 8, 2024">8</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+																<td role="gridcell"
+																	class="fc-daygrid-day fc-day fc-day-sat fc-day-future fc-day-other"
+																	data-date="2024-03-09" aria-labelledby="fc-dom-84"><div
+																		class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+																		<div class="fc-daygrid-day-top">
+																			<a id="fc-dom-84" class="fc-daygrid-day-number"
+																				aria-label="March 9, 2024">9</a>
+																		</div>
+																		<div class="fc-daygrid-day-events">
+																			<div class="fc-daygrid-day-bottom"
+																				style="margin-top: 0px;"></div>
+																		</div>
+																		<div class="fc-daygrid-day-bg"></div>
+																	</div></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- 모달  -->
+	
+        <div class="modal fade" id="eventDetailsModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border"></div>
+          </div>
+        </div>
+        <div class="modal fade" id="addEventModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content border">
+              <form id="addEventForm" autocomplete="off">
+                <div class="modal-header px-x1 bg-body-tertiary border-bottom-0">
+                  <h5 class="modal-title">일정 등록</h5>
+                  <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-x1">
+                  <div class="mb-3">
+                    <label class="fs-9" for="eventTitle">제목</label>
+                    <input class="form-control" id="eventTitle" type="text" name="title" required="required" />
+                  </div>
+                  <div class="mb-3">
+                    <label class="fs-9" for="eventStartDate">시작 날짜</label>
+                    <input class="form-control datetimepicker" id="eventStartDate" type="text" required="required" name="startDate" placeholder="yyyy/mm/dd hh:mm" data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}' />
+                  </div>
+                  <div class="mb-3">
+                    <label class="fs-9" for="eventEndDate">종료 날짜</label>
+                    <input class="form-control datetimepicker" id="eventEndDate" type="text" name="endDate" placeholder="yyyy/mm/dd hh:mm" data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}' />
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="eventAllDay" name="allDay" />
+                    <label class="form-check-label" for="eventAllDay">하루종일
+                    </label>
+                  </div>
+                  <!-- <div class="mb-3">
+                    <label class="fs-9">Schedule Meeting</label>
+                    <div><a class="btn badge-subtle-success btn-sm" href="#!"><span class="fas fa-video me-2"></span>Add video conference link</a></div>
+                  </div> -->
+                  <div class="mb-3">
+                    <label class="fs-9" for="eventDescription">내용</label>
+                    <textarea class="form-control" rows="3" name="description" id="eventDescription"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label class="fs-9" for="eventLabel">Label</label>
+                    <select class="form-select" id="eventLabel" name="label">
+                      <option value="" selected="selected">None</option>
+                      <option value="primary">Business</option>
+                      <option value="danger">Important</option>
+                      <option value="success">Personal</option>
+                      <option value="warning">Must Attend</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-end align-items-center bg-body-tertiary border-0"><a class="me-3 text-600" href="../app/events/create-an-event.html">More options</a>
+                  <button class="btn btn-primary px-4" type="submit">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+</div>

@@ -1,0 +1,75 @@
+package kr.or.ddit.emp.hrm.empnotice.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.emp.hrm.empnotice.exception.EmpNoticeException;
+import kr.or.ddit.emp.hrm.empnotice.exception.WriterAuthenticationException;
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.AtchmnflEmpNoticeVO;
+import kr.or.ddit.global.vo.EmpNoticeVO;
+import kr.or.ddit.mybatis.mappers.EmpNoticeMapper;
+
+@Service
+public class HrmEmpNoticeServiceImpl implements HrmEmpNoticeSevice {
+	
+	@Inject
+	private EmpNoticeMapper mapper;
+
+	@Override
+	public String createEmpNotice(EmpNoticeVO empNt) {
+		String newEmpNtNo = mapper.selectNewEmpNtNo();
+		empNt.setEmpNtNo(newEmpNtNo);
+		mapper.insert(empNt);
+		return newEmpNtNo;
+		
+
+	}
+
+	@Override
+	public EmpNoticeVO retrieveEmpNotice(String empNtNo) throws EmpNoticeException {
+		EmpNoticeVO target = mapper.select(empNtNo);
+		if(target ==null) throw new EmpNoticeException(String.format("코드 %s번 글 없음.",empNtNo));
+		return target;
+	}
+
+	@Override
+	public List<EmpNoticeVO> retrieveEmpNoticeList(PaginationInfo paging) {
+		int totalRecord = mapper.selectTotalRecord(paging);
+		paging.setTotalRecord(totalRecord);
+		return mapper.selectList(paging);
+	}
+
+	@Override
+	public EmpNoticeVO writerAutenticate(EmpNoticeVO target) throws WriterAuthenticationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void modifyEmpNotice(EmpNoticeVO empNt) {
+		 mapper.update(empNt);
+	}
+
+	@Override
+	public void removeEmpNotice(EmpNoticeVO empNt) {
+		mapper.delete(empNt.getEmpNtNo());
+	}
+
+	@Override
+	public AtchmnflEmpNoticeVO downloadAtch(int attNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void removeAtch(int attNo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	
+}

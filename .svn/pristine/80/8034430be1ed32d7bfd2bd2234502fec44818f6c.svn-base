@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.EmpStayChkinMapper">
+
+	<sql id="searchFrag">
+		AND
+		<trim prefix="(" suffix=")" prefixOverrides="OR">
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR CST_NM LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	            OR RSVT_NO LIKE '%${simpleCondition.searchWord}%'
+	        </if>
+        </trim>
+	</sql>
+	
+	<sql id="chkinList">
+		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+			WHERE RSVT_SE = '예약중' AND TRUNC(RSVT_CHECKIN_YMD) = TRUNC(SYSDATE)
+			<include refid="searchFrag" />
+        </if>
+		<if test="!@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+	    	WHERE RSVT_SE = '예약중' AND TRUNC(RSVT_CHECKIN_YMD) = TRUNC(SYSDATE)
+	    </if>
+	</sql>
+
+	<select id="selectTotalRecord" parameterType="PaginationInfo" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			TB_RSVT
+		    INNER JOIN TB_RSVT_DETAILS USING(RSVT_NO)
+		    INNER JOIN TB_CSTMR USING(CST_NO)
+		<include refid="chkinList" />
+	</select>
+
+	<resultMap type="RsvtVO" id="chkinMap" autoMapping="true">
+	    <id property="rsvtNo" column="RSVT_NO"/>
+	    <association property="cstmr" javaType="CstmrVO" autoMapping="true">
+	        <id property="cstNo" column="CST_NO"/>
+	    </association>
+	    <collection property="rsvtDetails" javaType="list" ofType="RsvtDetailsVO" autoMapping="true">
+	        <id property="rmtTypeCd" column="RMT_TYPE_CD"/>
+	    </collection>
+	</resultMap>
+
+	<select id="selectList" resultMap="chkinMap" parameterType="PaginationInfo">
+		WITH RNUMRSVT AS (
+		    SELECT 
+		        ROWNUM RNUM, A.*    
+		    FROM (
+		        SELECT 
+		            RSVT_NO
+		            , CST_NM
+		            , RSVT_YMD
+		            , RSVT_CHECKIN_YMD
+		            , RMT_TYPE_CD
+		            , RSVT_ROOM_CNT
+		            , RSVT_ADULT_CNT
+		            , RSVT_CHILD_CNT
+		            , RSVT_SE
+		            , CST_NO
+		            , RSVT_AMNT
+		            , RSVT_CNCL_YN
+		            , RSVT_SETLE_NO
+		        FROM 
+		            TB_RSVT
+		            INNER JOIN TB_RSVT_DETAILS USING(RSVT_NO)
+		            INNER JOIN TB_CSTMR USING(CST_NO)
+		        <include refid="chkinList" />
+		        ORDER BY RSVT_NO DESC
+		    )A
+		)
+		SELECT *
+		FROM RNUMRSVT
+		<![CDATA[
+			WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+</mapper>

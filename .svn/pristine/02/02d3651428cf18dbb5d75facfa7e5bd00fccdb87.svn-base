@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.MberNoticeMapper">
+
+	<sql id="searchFrag">
+		<trim prefix="WHERE" prefixOverrides="AND">
+		    <trim prefix="(" suffix=")" prefixOverrides="OR">
+		        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+		            OR RM_NO LIKE '%${simpleCondition.searchWord}%'
+		        </if>
+		        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+		            OR RMT_TYPE_CD LIKE '%${simpleCondition.searchWord}%'
+		        </if>
+		    </trim>
+		    <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.selectOneSearchWord)">
+		        AND RM_AVLBL_DETAILS = '${simpleCondition.selectOneSearchWord}'
+		    </if>
+		    <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.selectTwoSearchWord)">
+		        AND RM_CLEAN = '${simpleCondition.selectTwoSearchWord}'
+		    </if>
+		</trim>
+	</sql>
+
+	<select id="selectTotalRecord" parameterType="PaginationInfo" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			TB_MBER_NOTICE
+		<include refid="searchFrag" />
+	</select>
+
+	<select id="selectList" resultType="MberNoticeVO" parameterType="PaginationInfo">
+		WITH RNUMNOTICE AS(
+			SELECT
+				ROWNUM RNUM, A.*
+			FROM(
+				SELECT 
+				    MBER_NT_NO
+				    , MBER_NT_NM
+				    , MBER_NT_YMD
+				    , MBER_NT_CNT
+				    , MBER_NT_CN
+				FROM 
+					TB_MBER_NOTICE
+				<include refid="searchFrag" />
+			)A
+		)
+		SELECT *
+		FROM RNUMNOTICE
+		<![CDATA[
+			WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+
+</mapper>

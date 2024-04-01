@@ -1,0 +1,29 @@
+package kr.or.ddit.cstmr.recom.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.global.vo.CarVO;
+import kr.or.ddit.mybatis.mappers.CarMapper;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class CstmrIntrcnRecomServiceImpl implements CstmrIntrcnRecomCarService{
+
+	private final CarMapper dao;
+	
+	@Override
+	public CarVO retrieveCar(CarVO car) {
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put("cstBirth", 40);
+		parameterMap.put("cstGen", "M");
+		
+		List<CarVO> recomCar = dao.select(parameterMap);
+		return null;
+	}
+
+}

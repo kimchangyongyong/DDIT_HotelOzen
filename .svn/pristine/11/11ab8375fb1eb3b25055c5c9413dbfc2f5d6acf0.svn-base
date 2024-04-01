@@ -1,0 +1,41 @@
+package kr.or.ddit.global.vo;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(of = "rsvtNo")
+public class RsvtVO {
+	
+	private int rnum;
+	
+	private String rsvtNo;
+	private String cstNo;
+	private LocalDate rsvtYmd;
+	private Integer rsvtAmnt;
+	private String rsvtCnclYn;
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate rsvtCheckinYmd;
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate rsvtCheckoutYmd;
+	private Integer rsvtRoomCnt;
+	private Integer rsvtAdultCnt;
+	private Integer rsvtChildCnt;
+	private String rsvtSetleNo;
+	private Integer rsvtNberCnt;
+	private long rsvtDay;
+	
+	
+	private CstmrVO cstmr; 
+	private List<RsvtDetailsVO> rsvtDetails;
+	
+	private RecomRoomVO rcrm;
+	private RoomVO room;
+	
+}

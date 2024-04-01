@@ -1,0 +1,192 @@
+package kr.or.ddit.cstmr.rsvt.controller;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.or.ddit.cstmr.rsvt.service.CstmrRsvtRetrieveService;
+import kr.or.ddit.global.security.MberVOWrapper;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.RsvtDetailsVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import kr.or.ddit.global.vo.SetleVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("cstmr/rsvt")
+public class CstmrRsvtRetrieveController {
+
+	@Inject
+	private CstmrRsvtRetrieveService service;
+
+	@GetMapping("rsvtList")
+	public String rsvtList(Model model, Authentication authentication) {
+		// 비회과 회원을 구분하기 위해 authentication으로 인증유무 확인, 현재 사용자의 정보를 가져와 mberVo의 인스턴스인지 확인
+		if (authentication != null && authentication.getPrincipal() instanceof MberVOWrapper) {
+			MberVO mber = ((MberVOWrapper) authentication.getPrincipal()).getMberUser();
+
+			if (mber != null) {
+				LocalDate checkin;
+				LocalDate checkout;
+				long rsvtDay;
+
+				String cstNo = mber.getCstNo();
+				List<RsvtVO> mberRsvtList = service.retrieveMberRsvt(cstNo);
+				List<RsvtVO> mberEndRsvtList = service.retrieveMberEndRsvt(cstNo);
+				List<RsvtVO> mberCancelRsvtList = service.retrieveMberCancelRsvt(cstNo);
+
+				List<RsvtDetailsVO> rsvtDetailList;
+				String rsvtNo;
+				int rsvtCnt = mberRsvtList.size();
+				int endRsvtCnt = mberEndRsvtList.size();
+				int cancelRsvtCnt = mberCancelRsvtList.size();
+
+				for (int i = 0; i < rsvtCnt; i++) {
+					checkin = mberRsvtList.get(i).getRsvtCheckinYmd();
+					checkout = mberRsvtList.get(i).getRsvtCheckoutYmd();
+					rsvtDay = ChronoUnit.DAYS.between(checkin, checkout);
+
+					mberRsvtList.get(i).setRsvtDay(rsvtDay);
+					rsvtNo = mberRsvtList.get(i).getRsvtNo();
+					rsvtDetailList = service.retrieveRsvtDetails(rsvtNo);
+
+					mberRsvtList.get(i).setRsvtDetails(rsvtDetailList);
+					log.info("@@@@@mberRsvtList:{}", mberRsvtList);
+					model.addAttribute("mberRsvtList", mberRsvtList);
+				}
+
+				for (int j = 0; j < endRsvtCnt; j++) {
+					checkin = mberEndRsvtList.get(j).getRsvtCheckinYmd();
+					checkout = mberEndRsvtList.get(j).getRsvtCheckoutYmd();
+					rsvtDay = ChronoUnit.DAYS.between(checkin, checkout);
+
+					mberEndRsvtList.get(j).setRsvtDay(rsvtDay);
+					rsvtNo = mberEndRsvtList.get(j).getRsvtNo();
+					rsvtDetailList = service.retrieveEndRsvtDetails(rsvtNo);
+
+					mberEndRsvtList.get(j).setRsvtDetails(rsvtDetailList);
+
+					model.addAttribute("mberEndRsvtList", mberEndRsvtList);
+					log.info("@@@@@mberEndRsvtList:{}", mberEndRsvtList);
+				}
+
+				for (int k = 0; k < cancelRsvtCnt; k++) {
+					checkin = mberCancelRsvtList.get(k).getRsvtCheckinYmd();
+					checkout = mberCancelRsvtList.get(k).getRsvtCheckoutYmd();
+					rsvtDay = ChronoUnit.DAYS.between(checkin, checkout);
+
+					mberCancelRsvtList.get(k).setRsvtDay(rsvtDay);
+					rsvtNo = mberCancelRsvtList.get(k).getRsvtNo();
+					rsvtDetailList = service.retrieveEndRsvtDetails(rsvtNo);
+
+					mberCancelRsvtList.get(k).setRsvtDetails(rsvtDetailList);
+
+					model.addAttribute("mberCancelRsvtList", mberCancelRsvtList);
+					log.info("@@@@@mbercancel:{}", mberCancelRsvtList);
+				}
+
+				return "cstmr/rsvt/rsvtMberView";
+			}
+		}
+		return "cstmr/rsvt/rsvtList";
+	}
+
+	@GetMapping("rsvtMberView")
+	public String rsvtMberView() {
+		return "cstmr/rsvt/rsvtMberView";
+	}
+
+	@PostMapping("rsvtNberView")
+	public String rsvtNberView(@ModelAttribute CstmrVO cstmrVO, Model model) {
+		RsvtVO nberRsvtList = null;
+
+		nberRsvtList = service.retrieveNberRsvt(cstmrVO);
+
+		LocalDate checkin = nberRsvtList.getRsvtCheckinYmd();
+		LocalDate checkout = nberRsvtList.getRsvtCheckoutYmd();
+		long rsvtDay = ChronoUnit.DAYS.between(checkin, checkout);
+
+		nberRsvtList.setRsvtDay(rsvtDay);
+		String rsvtNo = nberRsvtList.getRsvtNo();
+		String setleNo = nberRsvtList.getRsvtSetleNo();
+		List<RsvtDetailsVO> rsvtDetailList = service.retrieveRsvtDetails(rsvtNo);
+		SetleVO setleVO = service.retrieveSetle(setleNo);
+
+		nberRsvtList.setRsvtDetails(rsvtDetailList);
+
+		log.info("nberRsvtList@@@@:{}", nberRsvtList);
+		log.info("setleVO@@@@:{}", setleVO);
+
+		model.addAttribute("nberRsvtList", nberRsvtList);
+		model.addAttribute("setleVO", setleVO);
+
+		return "cstmr/rsvt/rsvtNberView";
+	}
+
+	public static final String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken";
+	public static final String IMPORT_CANCEL_URL = "https://api.iamport.kr/payments/cancel";
+	public static final String KEY = "2321751576818553";
+	public static final String SECRET = "blhkWoYeaswfXI5HHqu7apes10sIdWTwsUk8cqZgQJcf3aQnZ4eKtFCz5fc20VZ50J2eqnUBIwsLljqI";
+
+	// 아임포트 인증(토큰)을 받아주는 함수
+	public String getImportToken() {
+		String result = "";
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost(IMPORT_TOKEN_URL);
+		Map<String, String> m = new HashMap<String, String>();
+		m.put("imp_key", KEY);
+		m.put("imp_secret", SECRET);
+		try {
+			List<NameValuePair> params = new ArrayList<>();
+			for (Map.Entry<String, String> entry : m.entrySet()) {
+				params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+			}
+			post.setEntity(new UrlEncodedFormEntity(params));
+			HttpResponse res = client.execute(post);
+			ObjectMapper mapper = new ObjectMapper();
+			String body = EntityUtils.toString(res.getEntity());
+			JsonNode rootNode = mapper.readTree(body);
+			JsonNode resNode = rootNode.get("response");
+			result = resNode.get("access_token").asText();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		log.info("#################################################### TOKEN :" + result);
+		return result;
+	}
+
+	String token = getImportToken();
+
+	@PostMapping("rsvtCancel")
+	public int rsvtCancel(String token, String mid) throws IOException {
+		return 1;
+	}
+}

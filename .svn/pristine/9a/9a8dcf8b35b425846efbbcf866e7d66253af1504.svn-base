@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.EmpNoticeMapper">
+
+<!-- <select> -->
+<!-- select emp_notice_seq.nextval -->
+<!-- from dual -->
+<!-- </select> -->
+
+
+<insert id="insert" parameterType="EmpNoticeVO">
+<!-- <selectKey keyProperty="empNtNo" resultType="string" order="before"> -->
+	
+<!-- </selectKey> -->
+  INSERT INTO TB_EMP_NOTICE (
+    EMP_NT_NO
+    , EMP_NO
+    , EMP_NT_NM
+    , EMP_NT_YMD
+    , EMP_NT_CN
+    , EMP_NT_CLASSIFICATION
+) VALUES (
+    #{empNtNo,jdbcType=VARCHAR}
+	, #{empNo,jdbcType=VARCHAR}
+	, #{empNtNm,jdbcType=VARCHAR}
+	, SYSDATE
+	, #{empNtCn,jdbcType=CLOB}
+	, #{empNtClassification,jdbcType=VARCHAR}
+)
+
+</insert>
+
+<select id="select" parameterType="string" resultType="EmpNoticeVO">
+	SELECT
+	    EMP_NT_NO
+	  , EMP_NO
+	  , EMP_NT_NM
+	  , EMP_NT_YMD
+	  , EMP_NT_CNT
+	  , EMP_NT_CN
+	  , EMP_NT_CLASSIFICATION
+	FROM
+	    TB_EMP_NOTICE 
+    WHERE EMP_NT_NO = #{empNtNo,jdbcType=VARCHAR}
+</select>
+
+<sql id="searchFrag">
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="not detailCondition.empty">
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(detailCondition.empNtNm)">
+					INSTR(EMP_NT_NM, TRIM(#{detailCondition.empNtNm})) > 0 AND 
+				</if>
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(detailCondition.empNo)">
+					INSTR(EMP_NO, TRIM(#{detailCondition.empNo})) > 0 AND 
+				</if>
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(detailCondition.empNtCn)">
+					INSTR(EMP_NT_CN, TRIM(#{detailCondition.empNtCn})) > 0 AND 
+				</if>
+			</if>
+		</trim>
+</sql>
+
+<!-- 	<where> -->
+<!-- 		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondtion.searchType)"> -->
+<!-- 			<choose> -->
+<!-- 				<when test="simpleCodition.searchType eq 'empNtNm'"> -->
+<!-- 					INSTR(EMP_NT_NM, #{simpleCondtion.searchWord}) > 0 -->
+<!-- 				</when> -->
+<!-- 				<when test="simpleCodition.searchType eq 'empNo'"> -->
+<!-- 					INSTR(EMP_NO, #{simpleCondtion.searchWord}) > 0 -->
+<!-- 				</when> -->
+<!-- 				<when test="simpleCodition.searchType eq 'empNtCn'"> -->
+<!-- 					INSTR(EMP_NT_CN, #{simpleCondtion.searchWord}) > 0 -->
+<!-- 				</when> -->
+<!-- 				<otherwise> -->
+<!-- 					INSTR(EMP_NT_NM, #{simpleCondtion.searchWord}) > 0 -->
+<!-- 					OR -->
+<!-- 					INSTR(EMP_NO, #{simpleCondtion.searchWord}) > 0 -->
+<!-- 					OR -->
+<!-- 					INSTR(EMP_NT_CN, #{simpleCondtion.searchWord}) > 0 -->
+<!-- 				</otherwise> -->
+<!-- 			</choose>	 -->
+<!-- 		</if> -->
+<!-- 	</where> -->
+
+<select id="selectTotalRecord" parameterType="PaginationInfo" resultType="int">
+	SELECT COUNT(*)
+	FROM TB_EMP_NOTICE
+	<include refid="searchFrag" />
+</select>
+
+<select id="selectList" parameterType="PaginationInfo" resultType="EmpNoticeVO">
+	SELECT B.*
+	FROM (
+			SELECT A.*, ROWNUM RNUM
+			FROM ( 
+				SELECT
+				    EMP_NT_NO
+				    , EMP_NO
+				    , EMP_NT_NM
+				    , EMP_NT_YMD
+				    , EMP_NT_CNT
+				    , EMP_NT_CN
+				    , EMP_NT_CLASSIFICATION
+				FROM TB_EMP_NOTICE
+				<include refid="searchFrag" />
+			) A
+		) B
+		<where>
+			<if test="startRow gt 0 and endRow gt 0">
+				RNUM BETWEEN #{startRow} AND #{endRow}			
+			</if>
+		</where>
+</select>
+
+<select id="selectNewEmpNtNo" resultType="string">
+	SELECT 
+			<![CDATA[
+			'ENT'|| CASE WHEN NUM < 10 THEN '000'|| NUM
+	        WHEN NUM >= 10 AND NUM < 100 THEN '00'|| NUM
+	        WHEN NUM >= 100 AND NUM <1000 THEN '0'|| NUM
+	        WHEN NUM >= 1000 THEN '' || NUM
+	        ]]>
+	        END AS CODE
+	FROM (
+		SELECT MAX(TO_NUMBER(RESULT,'9999')+1) NUM
+		FROM(
+			SELECT EMP_NT_NO, REGEXP_SUBSTR(EMP_NT_NO,'[1-9]+[0-9]*') AS RESULT
+			FROM TB_EMP_NOTICE))
+</select>
+
+<update id="update" parameterType="EmpNoticeVO">
+	UPDATE TB_EMP_NOTICE
+	SET  
+		EMP_NT_NM =  #{empNtNm,jdbcType=VARCHAR}
+		, EMP_NT_CN = #{empNtCn,jdbcType=CLOB}
+		, EMP_NT_CLASSIFICATION = #{empNtClassification,jdbcType=VARCHAR}
+	WHERE EMP_NT_NO = #{empNtNo}
+</update>
+
+
+<delete id="delete" parameterType="string">
+	DELETE FROM TB_EMP_NOTICE
+	WHERE EMP_NT_NO = #{empNtNo,jdbcType=VARCHAR}
+</delete>
+
+</mapper>

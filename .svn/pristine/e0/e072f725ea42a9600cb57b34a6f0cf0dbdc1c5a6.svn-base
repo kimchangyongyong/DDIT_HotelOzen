@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+.center {
+	text-align: center;
+}
+
+.onfi {
+	max-width: 1000px;
+}
+
+.wdf {
+	width: 150px;
+}
+.twid {
+	width: 1000px;
+}
+.bg-oran {
+	border-top: 2px solid #000000;
+	border-bottom: 1px solid #000000;
+}
+

@@ -1,0 +1,79 @@
+package kr.or.ddit.cstmr.rsvt.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.cstmr.rsvt.service.CstmrRsvtRetrieveService;
+import kr.or.ddit.cstmr.rsvt.service.CstmrRsvtService;
+import kr.or.ddit.global.security.MberUser;
+import kr.or.ddit.global.security.MberVOWrapper;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("cstmr/rsvt")
+public class CstmrRsvtRetrieveController {
+
+	@Inject
+	private CstmrRsvtRetrieveService service;
+	
+	@GetMapping("rsvtList")
+	public String rsvtList(
+			Model model
+			, Authentication authentication
+			) {
+		// 비회과 회원을 구분하기 위해 authentication으로 인증유무 확인, 현재 사용자의 정보를 가져와 mberVo의 인스턴스인지 확인
+		  if (authentication != null && authentication.getPrincipal() instanceof MberVOWrapper) {
+		        MberVO mber = ((MberVOWrapper) authentication.getPrincipal()).getMberUser();
+
+		        if (mber != null) {
+		            String cstNo = mber.getCstNo();
+		        	List<RsvtVO> mberRsvtList = service.retrieveMberRsvt(cstNo);
+		    		
+		    		model.addAttribute("mberRsvtList",mberRsvtList);
+		            
+		            return "cstmr/rsvt/rsvtView";
+		        }
+		    }
+		return "cstmr/rsvt/rsvtList";
+	}
+	
+	@GetMapping("rsvtView")
+	public String rsvtView() {
+		return "cstmr/rsvt/rsvtView";
+	}
+	
+	@PostMapping("rsvtView")
+	public String rsvtView(
+			@ModelAttribute CstmrVO cstmrVO
+			,Model model
+		) {
+	
+		String cstHp = cstmrVO.getCstHp();
+		String rsvtNo = cstmrVO.getRsvt().get(0).getRsvtNo();
+		
+		RsvtVO nberRsvt = service.retrieveNberRsvt(cstmrVO);
+
+		model.addAttribute("nberRsvt", nberRsvt);
+	
+		
+		return "redirect:rsvtView";
+	}
+}

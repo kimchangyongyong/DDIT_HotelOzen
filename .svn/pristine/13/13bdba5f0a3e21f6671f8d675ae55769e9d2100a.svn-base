@@ -1,0 +1,167 @@
+package kr.or.ddit.cstmr.rsvt.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.global.vo.AttatchRmTypeVO;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.RecomRoomVO;
+import kr.or.ddit.global.vo.RoomTypeVO;
+import kr.or.ddit.global.vo.RsvtDetailsVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import kr.or.ddit.global.vo.SetleVO;
+import kr.or.ddit.mybatis.mappers.CstmrRsvtMapper;
+import kr.or.ddit.mybatis.mappers.MberMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class CstmrRsvtServiceImpl implements CstmrRsvtService {
+
+	private final CstmrRsvtMapper dao;
+
+	private final MberMapper mdao;
+
+	@Override
+	public CstmrVO retrieveCstmrAge(String cstNo) {
+		CstmrVO cstmr = dao.select(cstNo);
+		return cstmr;
+	}
+
+	@Override
+	public List<RecomRoomVO> retrieveRcRm(Map<String, Object> customerData) {
+		List<RecomRoomVO> rcRm = dao.selectRcRm(customerData);
+		return rcRm;
+	}
+
+	@Override
+	public AttatchRmTypeVO retrieveRmt(String rmType) {
+		AttatchRmTypeVO attRmt = dao.selectRmt(rmType);
+		return attRmt;
+	}
+
+	@Override
+	public List<RoomTypeVO> retrieveRsvtRmt(RsvtVO rsvtVO) {
+
+		List<RoomTypeVO> rsvtRmt = dao.selectRsvtRmt(rsvtVO);
+		
+		return rsvtRmt;
+	}
+
+	@Override
+	public MberVO retrieveMber(String cstNo) {
+		return mdao.select(cstNo);
+	}
+
+	@Override
+	public ServiceResult createNewRsvt(Map<String, Object> rsvtData) {
+		ServiceResult result = null;
+		// 객실 타입 정보
+		AttatchRmTypeVO roomType = (AttatchRmTypeVO) rsvtData.get("roomType");
+		// 고객 정보
+		CstmrVO rsvtCstmr = (CstmrVO) rsvtData.get("rsvtCstmr");
+		// 결제 정보
+		SetleVO rsvtSetle = (SetleVO) rsvtData.get("setle");
+		// 예약 정보
+		RsvtVO rsvtVO = (RsvtVO) rsvtData.get("rsvtVO");
+
+		String cstNo = rsvtCstmr.getCstNo();
+		// 비회원일시
+		if (cstNo.isEmpty()) {
+			// 회원번호 발급
+			cstNo = dao.selectNewNberCstNo();
+
+			rsvtCstmr.setCstNo(cstNo);
+			
+			// 성별 데이터 처리
+			String cstGen = rsvtCstmr.getCstGen();
+			if(cstGen.equals("MALE")) {	
+				rsvtCstmr.setCstGen("M");
+			}
+			if(cstGen.equals("FEMALE")) {
+				rsvtCstmr.setCstGen("F");
+			}
+			
+			// 회원정보 저장
+			int insertNber = dao.insertNber(rsvtCstmr);
+			if (insertNber != 1) {
+				throw new RuntimeException();
+			} else {
+				result = ServiceResult.OK;
+			}
+
+		}
+		// 결제번호 발급
+		String setleNo = dao.selectNewSelteNo();
+		int amnt = rsvtSetle.getSetleAmnt();
+		rsvtSetle.setSetleNo(setleNo);
+		rsvtSetle.setCstNo(cstNo);
+		// 결제정보 저장
+		int insertSetle = dao.insertSetle(rsvtSetle);
+
+		// 예약번호 발급
+		String rsvtNo = dao.selectNewRsvtNo();
+		rsvtVO.setRsvtAmnt(amnt);
+		rsvtVO.setRsvtNo(rsvtNo);
+		rsvtVO.setCstNo(cstNo);
+		rsvtVO.setRsvtSetleNo(setleNo);
+		// 예약정보 저장
+		int insertRsvt = dao.insertRsvt(rsvtVO);
+
+		int insertRsvtDetails;
+
+		String rsvtDetailNo;
+		
+		for (int i = 0; i < rsvtVO.getRsvtRoomCnt(); i++) {
+
+			// 예약상세 번호 발급
+			rsvtDetailNo = dao.selectRsvtDetailNo();
+			log.info("@@@@@rsvtDetailNo:{}",rsvtDetailNo);
+			log.info("@@@@@rsvtDetail:{}",rsvtVO.getRsvtDetails());
+			rsvtVO.getRsvtDetails().get(i).setRsvtDtlNo(rsvtDetailNo);
+			rsvtVO.getRsvtDetails().get(i).setRsvtNo(rsvtNo);
+			rsvtVO.getRsvtDetails().get(i).setRmtTypeCd(roomType.getRmtTypeCd());
+
+			// 예약상세 정보 저장
+			insertRsvtDetails = dao.insertRsvtDetails(rsvtVO.getRsvtDetails().get(i));
+			if (insertRsvtDetails != 1) {
+				throw new RuntimeException();
+			} else {
+				result = ServiceResult.OK;
+			}
+		}
+
+		if (insertSetle != 1 || insertRsvt != 1) {
+				throw new RuntimeException();
+		} else {
+			result = ServiceResult.OK;
+		}
+
+		return result;
+	}
+
+	@Override
+	public ServiceResult createNewSetle(RsvtVO newSetle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResult createNewRsvtDetail(RsvtDetailsVO newRsvtDetail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResult createNewNber(CstmrVO newNber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

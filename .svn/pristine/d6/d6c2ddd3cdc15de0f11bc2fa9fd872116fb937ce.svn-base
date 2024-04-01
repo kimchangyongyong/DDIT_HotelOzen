@@ -1,0 +1,64 @@
+package kr.or.ddit.mybatis.mappers;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.RsvtDetailsVO;
+import kr.or.ddit.global.vo.RsvtVO;
+
+@Mapper
+public interface CstmrRsvtRetrieveMapper extends AbstractCommonMapper<RsvtVO, String>{
+
+	/**
+	 * 비회원 단건 예약조회
+	 * @param rsvtData
+	 * @return
+	 */
+	RsvtVO selectNberRsvt(CstmrVO cstmrVO);
+	
+	/**
+	 * 회원 예약진행중 리스트 조회
+	 * @param cstNo
+	 * @return
+	 */
+	List<RsvtVO> selectMberRsvtList(String cstNo);
+	
+	/**
+	 * 예약진행중 상세 조회
+	 * @param rsvtNo
+	 * @return
+	 */
+	List<RsvtDetailsVO> selectRsvtDetailsList(String rsvtNo);
+	
+	
+	/**
+	 * 회원 투숙완료 리스트 조회
+	 * @param cstNo
+	 * @return
+	 */
+	List<RsvtVO> selectMberEndRsvtList(String cstNo);
+	
+	/**
+	 * 투숙완료 상세 조회
+	 * @param rsvtNo
+	 * @return
+	 */
+	List<RsvtDetailsVO> selectEndRsvtDetailsList(String rsvtNo);
+	
+	/**
+	 * 회원 예약취소 리스트 조회
+	 * @param cstNo
+	 * @return
+	 */
+	List<RsvtVO> selectMberCancelRsvtList(String cstNo);
+	
+	/**
+	 * 예약취소 상세 조회
+	 * @param rsvtNo
+	 * @return
+	 */
+	List<RsvtDetailsVO> selectCancelRsvtDetailsList(String rsvtNo);
+}

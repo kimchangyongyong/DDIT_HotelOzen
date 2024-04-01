@@ -1,0 +1,34 @@
+package kr.or.ddit.cstmr.comm.notice.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.MberNoticeVO;
+import kr.or.ddit.mybatis.mappers.MberNoticeMapper;
+
+@Service
+public class MberNoticeServiceImpl implements MberNoticeService {
+
+	@Inject
+	private MberNoticeMapper dao;
+	
+	@Override
+	public List<MberNoticeVO> retrieveNoticeList(PaginationInfo paging) {
+		int totalRecode = dao.selectTotalRecord(paging);
+		paging.setTotalRecord(totalRecode);
+		
+		List<MberNoticeVO> mberNoticeList = dao.selectList(paging);
+		return mberNoticeList;
+	}
+
+	@Override
+	public MberNoticeVO retrieveNoticeView(String mberNtNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

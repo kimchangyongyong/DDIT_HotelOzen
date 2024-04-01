@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.MbrshMapper">
+	
+	<select id="selectDetail" resultType="MbrshVO">
+		
+	</select>
+	<select id="selectList" resultType="MbrshVO">
+		
+	</select>
+	
+	<select id="selectBenefit" resultType="MbrshVO">
+		SELECT 
+			MBS_GRD_CD
+			, SUM(CPN_PRV_CNT*CPN_DSCNT_PRICE) AS DISCOUNT
+		    , SUM(cpn_prv_cnt) AS total_coupon 
+		FROM TB_MBRSH_BNF INNER JOIN TB_COUPON USING (CPNK_NO)
+		WHERE MBS_GRD_CD LIKE '%' || #{grd}
+		AND CPNK_NM IS NULL
+		GROUP BY MBS_GRD_CD
+		ORDER BY 
+		CASE 
+		    WHEN MBS_GRD_CD LIKE 'B%' THEN 1
+		    WHEN MBS_GRD_CD LIKE 'L%' THEN 2
+		    WHEN MBS_GRD_CD LIKE 'D%' THEN 3
+		    ELSE 4
+		END
+	</select>
+</mapper>

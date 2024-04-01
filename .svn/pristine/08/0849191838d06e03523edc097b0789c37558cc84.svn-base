@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+/* 페이지 제목 */
+.cstmr-title{
+	font-size: 4rem;
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: 0.06em;
+	margin-top: 5rem;
+	color: #000000;
+}
+/* 제목 부가설명 */
+.cstmr-content {
+	font-size: 1rem;
+	font-weight: 400;
+	letter-spacing: -0.025em;
+	line-height: 1.4;
+	color: #000000
+}
+
+caption {
+	overflow : hidden;
+}
+.table th,
+.table td {
+	padding: 20px; /* 테이블 셀의 안쪽 여백 조절 */
+	font-size: 20px; /* 테이블 글꼴 크기 조절 */
+	border : none;
+	border-top : 1px solid rgba(0,0,0,.15);
+	color : #000000;
+}
+.input-group {
+	width : 270px;
+}
+.notice-list_number {
+	width : 140rem;
+}
+.notice-list_title {
+	width : auto;
+}
+.notice-list_file
+.notice-list_cnt {
+	width : 80rem;
+}
+.notice-list_date {
+	width : 132rem;
+	text-align : left;
+}

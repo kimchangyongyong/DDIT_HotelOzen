@@ -1,0 +1,67 @@
+package kr.or.ddit.cstmr.recom.controller;
+
+import java.security.Principal;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.cstmr.recom.service.CstmrIntrcnRecomCarService;
+import kr.or.ddit.global.security.MberUser;
+import kr.or.ddit.global.security.MberVOWrapper;
+import kr.or.ddit.global.vo.CarVO;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import lombok.extern.slf4j.Slf4j;
+import sun.print.resources.serviceui;
+
+@Slf4j
+@Controller
+@RequestMapping("/recom")
+public class CstmrIntrcnRecomController {
+
+	@Inject
+	private CstmrIntrcnRecomCarService service;
+
+	@GetMapping
+	public String getCurrentUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		MberVOWrapper principal = (MberVOWrapper) authentication.getPrincipal();
+		MberVO realUser = principal.getMberUser();
+		if (realUser == null) {
+		}
+		log.info("현재 로그인 되어 있는 사용자 : {}", realUser.getCstNo());
+		String user = realUser.getCstNo();
+		return user;
+	}
+
+	@GetMapping("recomCar")
+	public String recomTrstSpot(Model model, @MberUser MberVO mber
+			, Principal authentication1
+			) {
+		log.info("현재 로그인한 사용자 : {}", authentication1.getName());
+		String realUser = authentication1.getName();
+		
+		List<CarVO> recomCarList = service.retrieveCar(realUser);
+		log.info("{recomCarList : }",recomCarList);
+		model.addAttribute("recomCarList",recomCarList);
+		return "cstmr/recom/recomCar";
+	}
+
+	@GetMapping("recomSbrs")
+	public String recomSbrs() {
+		return "cstmr/recom/recomSbrs";
+	}
+
+}

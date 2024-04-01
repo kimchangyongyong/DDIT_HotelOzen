@@ -1,0 +1,107 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form"  prefix="form"%>
+<%@taglib uri="http://www.springframework.org/tags"  prefix="spring"%>
+
+<div class="content">
+<div class="card">
+                <div class="card-header bg-light d-flex flex-between-center py-2">
+                  <h6 class="mb-0">얼굴데이터 조회</h6>
+                  <div>
+                    <select class="form-select form-select-sm">
+                      <option value="" selected="selected">Sort by</option>
+                      <option value="oldest">Oldest</option>
+                      <option value="newest">Newest</option>
+                      <option value="name">Name</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3">
+<%--                   <c:forEach var=i begin="1" end="11"> --%>
+                    <article class="col-md-4 col-xxl-4">
+                      <div class="card h-100 overflow-hidden">
+                        <div class="card-body p-0 d-flex flex-column justify-content-between">
+                          <div>
+                            <div class="hoverbox text-center"><a class="text-decoration-none" href="${pageContext.request.contextPath}/resources/assets/img/generic/hotel01.jpg" data-gallery="attachment-bg"><img class="w-100 h-100 fit-cover" src="${pageContext.request.contextPath}/resources/assets/img/maungmung.jpg" alt=""></a>
+                              <div class="hoverbox-content flex-center pe-none bg-holder overlay overlay-2"><img class="z-index-1" src="../../assets/img/icons/play.svg" width="60" alt=""></div>
+                            </div>
+                            <div class="p-3">
+                              <h5 class="fs-0 mb-2"><a class="text-dark" href="../../app/e-learning/course/course-details.html">Script Writing Masterclass: Introdution to Industry Cliches</a></h5>
+                              <h5 class="fs-0"><a href="../../app/e-learning/trainer-profile.html">Bill Finger</a></h5>
+                            </div>
+                          </div>
+                          <div class="row g-0 mb-3 align-items-end">
+                            <div class="col ps-3">
+                              <h4 class="fs-1 text-warning d-flex align-items-center"> <span>$69.50</span>
+                                <del class="ms-2 fs--1 text-700">$139.90</del>
+                              </h4>
+                              <p class="mb-0 fs--1 text-800">92,632 Learners Enrolled</p>
+                            </div>
+                            <div class="col-auto pe-3"><a class="btn btn-sm btn-falcon-default me-2 hover-danger" href="#!" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Add to Wishlist" data-bs-original-title="Add to Wishlist"><svg class="svg-inline--fa fa-heart fa-w-16" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="far" data-icon="heart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.625em;"><g transform="translate(256 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="far fa-heart" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></a><a class="btn btn-sm btn-falcon-default hover-primary" href="#!" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Add to Cart" data-bs-original-title="Add to Cart"><svg class="svg-inline--fa fa-cart-plus fa-w-18" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cart-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg="" style="transform-origin: 0.5625em 0.625em;"><g transform="translate(288 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M504.717 320H211.572l6.545 32h268.418c15.401 0 26.816 14.301 23.403 29.319l-5.517 24.276C523.112 414.668 536 433.828 536 456c0 31.202-25.519 56.444-56.824 55.994-29.823-.429-54.35-24.631-55.155-54.447-.44-16.287 6.085-31.049 16.803-41.548H231.176C241.553 426.165 248 440.326 248 456c0 31.813-26.528 57.431-58.67 55.938-28.54-1.325-51.751-24.385-53.251-52.917-1.158-22.034 10.436-41.455 28.051-51.586L93.883 64H24C10.745 64 0 53.255 0 40V24C0 10.745 10.745 0 24 0h102.529c11.401 0 21.228 8.021 23.513 19.19L159.208 64H551.99c15.401 0 26.816 14.301 23.403 29.319l-47.273 208C525.637 312.246 515.923 320 504.717 320zM408 168h-48v-40c0-8.837-7.163-16-16-16h-16c-8.837 0-16 7.163-16 16v40h-48c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h48v40c0 8.837 7.163 16 16 16h16c8.837 0 16-7.163 16-16v-40h48c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z" transform="translate(-288 -256)"></path></g></g></svg><!-- <span class="fas fa-cart-plus" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></a></div>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+<%--                     </c:forEach> --%>
+                    
+                  
+                    <article class="col-md-6 col-xxl-4">
+                      <div class="card h-100 overflow-hidden">
+                        <div class="card-body p-0 d-flex flex-column justify-content-between">
+                          <div>
+                            <div class="hoverbox text-center"><a class="text-decoration-none" href="../../assets/video/beach.mp4" data-gallery="attachment-bg"><img class="w-100 h-100 fit-cover" src="../../assets/img/elearning/courses/course4.png" alt=""></a>
+                              <div class="hoverbox-content flex-center pe-none bg-holder overlay overlay-2"><img class="z-index-1" src="../../assets/img/icons/play.svg" width="60" alt=""></div>
+                            </div>
+                            <div class="p-3">
+                              <h5 class="fs-0 mb-2"><a class="text-dark" href="../../app/e-learning/course/course-details.html">Comic Page Layout: Analysing The Classics</a></h5>
+                              <h5 class="fs-0"><a href="../../app/e-learning/trainer-profile.html">Bill Finger</a></h5>
+                            </div>
+                          </div>
+                          <div class="row g-0 mb-3 align-items-end">
+                            <div class="col ps-3">
+                              <h4 class="fs-1 text-warning d-flex align-items-center"> <span>$49.50</span>
+                                <del class="ms-2 fs--1 text-700">$139.90</del>
+                              </h4>
+                              <p class="mb-0 fs--1 text-800">32,106 Learners Enrolled</p>
+                            </div>
+                            <div class="col-auto pe-3"><a class="btn btn-sm btn-falcon-default me-2 hover-danger" href="#!" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Add to Wishlist" data-bs-original-title="Add to Wishlist"><svg class="svg-inline--fa fa-heart fa-w-16" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="far" data-icon="heart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.625em;"><g transform="translate(256 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="far fa-heart" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></a><a class="btn btn-sm btn-primary" href="#!" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Remove from Cart" data-bs-original-title="Remove from Cart"><svg class="svg-inline--fa fa-shopping-cart fa-w-18" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="shopping-cart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg="" style="transform-origin: 0.5625em 0.625em;"><g transform="translate(288 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z" transform="translate(-288 -256)"></path></g></g></svg><!-- <span class="fas fa-shopping-cart" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></a></div>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                    <article class="col-md-6 col-xxl-4">
+                      <div class="card h-100 overflow-hidden">
+                        <div class="card-body p-0 d-flex flex-column justify-content-between">
+                          <div>
+                            <div class="hoverbox text-center"><a class="text-decoration-none" href="../../assets/video/beach.mp4" data-gallery="attachment-bg"><img class="w-100 h-100 fit-cover" src="../../assets/img/elearning/courses/course5.png" alt=""></a>
+                              <div class="hoverbox-content flex-center pe-none bg-holder overlay overlay-2"><img class="z-index-1" src="../../assets/img/icons/play.svg" width="60" alt=""></div>
+                            </div>
+                            <div class="p-3">
+                              <h5 class="fs-0 mb-2"><a class="text-dark" href="../../app/e-learning/course/course-details.html">Abstract Painting: Zero to Mastery in Traditional Medium</a></h5>
+                              <h5 class="fs-0"><a href="../../app/e-learning/trainer-profile.html">J. H. Williams III</a></h5>
+                            </div>
+                          </div>
+                          <div class="row g-0 mb-3 align-items-end">
+                            <div class="col ps-3">
+                              <h4 class="fs-1 text-warning d-flex align-items-center"> <span>$69.50</span>
+                                <del class="ms-2 fs--1 text-700">$139.90</del>
+                              </h4>
+                              <p class="mb-0 fs--1 text-800">2,304 Learners Enrolled</p>
+                            </div>
+                            <div class="col-auto pe-3"><a class="btn btn-sm btn-falcon-default me-2 hover-danger" href="#!" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Add to Wishlist" data-bs-original-title="Add to Wishlist"><svg class="svg-inline--fa fa-heart fa-w-16" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="far" data-icon="heart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.625em;"><g transform="translate(256 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="far fa-heart" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></a><a class="btn btn-sm btn-falcon-default hover-primary" href="#!" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Add to Cart" data-bs-original-title="Add to Cart"><svg class="svg-inline--fa fa-cart-plus fa-w-18" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cart-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg="" style="transform-origin: 0.5625em 0.625em;"><g transform="translate(288 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M504.717 320H211.572l6.545 32h268.418c15.401 0 26.816 14.301 23.403 29.319l-5.517 24.276C523.112 414.668 536 433.828 536 456c0 31.202-25.519 56.444-56.824 55.994-29.823-.429-54.35-24.631-55.155-54.447-.44-16.287 6.085-31.049 16.803-41.548H231.176C241.553 426.165 248 440.326 248 456c0 31.813-26.528 57.431-58.67 55.938-28.54-1.325-51.751-24.385-53.251-52.917-1.158-22.034 10.436-41.455 28.051-51.586L93.883 64H24C10.745 64 0 53.255 0 40V24C0 10.745 10.745 0 24 0h102.529c11.401 0 21.228 8.021 23.513 19.19L159.208 64H551.99c15.401 0 26.816 14.301 23.403 29.319l-47.273 208C525.637 312.246 515.923 320 504.717 320zM408 168h-48v-40c0-8.837-7.163-16-16-16h-16c-8.837 0-16 7.163-16 16v40h-48c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h48v40c0 8.837 7.163 16 16 16h16c8.837 0 16-7.163 16-16v-40h48c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z" transform="translate(-288 -256)"></path></g></g></svg><!-- <span class="fas fa-cart-plus" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></a></div>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                   
+                  </div>
+                </div>
+                <div class="card-footer py-2 bg-light d-flex justify-content-end">
+                  <button class="btn btn-falcon-default btn-sm me-2" type="button" disabled="disabled" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Prev" data-bs-original-title="Prev"><svg class="svg-inline--fa fa-chevron-left fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"></path></svg><!-- <span class="fas fa-chevron-left"></span> Font Awesome fontawesome.com --></button><a class="btn btn-sm btn-falcon-default text-primary me-2" href="#!">1</a><a class="btn btn-sm btn-falcon-default me-2" href="#!">2</a><a class="btn btn-sm btn-falcon-default me-2" href="#!">3</a>
+                  <button class="btn btn-falcon-default btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Next" data-bs-original-title="Next"><svg class="svg-inline--fa fa-chevron-right fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"></path></svg><!-- <span class="fas fa-chevron-right"></span> Font Awesome fontawesome.com --></button>
+                </div>
+              </div>
+
+</div>

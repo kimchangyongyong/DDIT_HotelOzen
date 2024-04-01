@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.membershipCashList {
+    border-top: 1px solid #000;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.membershipCashList .noData {
+    margin: -1px 0;
+    background: #fff;
+}

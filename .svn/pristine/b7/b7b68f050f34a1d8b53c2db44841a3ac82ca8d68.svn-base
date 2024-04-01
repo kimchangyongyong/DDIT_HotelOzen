@@ -1,0 +1,201 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+<link href="${pageContext.request.contextPath}/resources/css/emp/roomSvc/roomSvcCss.css" rel="stylesheet">
+
+<div class="col mb-3">
+	<div class="card h-100">
+		<div class="card-header">
+			<div class="row flex-between-end">
+				<div class="col-auto align-self-center">
+					<h5 class="mb-0" data-anchor="data-anchor" id="share-dataset">
+						<font style="vertical-align: inherit;"> <font
+							style="vertical-align: inherit;">룸서비스 주문 조회</font>
+						</font>
+					</h5>
+				</div>
+
+				<div id="tableExample4"
+					data-list='{"valueNames":["name","email","age"],"page":10,"pagination":true}'>
+					<div class="row justify-content-end g-0">
+						<div class="col-auto px-3">
+							<select class="form-select form-select-sm mb-3"
+								aria-label="Bulk actions" data-list-filter="data-list-filter">
+								<option selected="" value="">== 상태 ==</option>
+								<option value="결재중">결재중</option>
+								<option value="요청중">요청중</option>
+								<option value="완료">완료</option>
+							</select>
+						</div>
+						<div class="col-auto col-sm-5 mb-3">
+							<form>
+								<div class="input-group">
+									<input class="form-control form-control-sm shadow-none search"
+										type="search" placeholder="Search..." aria-label="search" />
+									<div class="input-group-text bg-transparent">
+										<span class="fa fa-search fs-10 text-600"></span>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="table-responsive scrollbar">
+						<table
+							class="table table-bordered table-striped fs-10 mb-0 bg-light">
+							<thead class="bg-200 border border-bottom">
+								<tr>
+									<th class="text-900 sort" data-sort="no">번호</th>
+									<th class="text-900 sort" data-sort="rmsvcNo">룸 서비스 주문번호</th>
+									<th class="text-900 sort" data-sort="rmsvcCd">룸서비스 코드</th>
+									<th class="text-900 sort" data-sort="rmNo">객실번호</th>
+									<th class="text-900 sort" data-sort="cstNm">고객이름</th>
+									<th class="text-900 sort" data-sort="cstNm">상태</th>
+								</tr>
+							</thead>
+							<tbody class="list" id="table-purchase-body">
+								<c:forEach var="i" begin="1" end="30">
+									<tr class="btn-reveal-trigger">
+										<td class="align-middle white-space-nowrap no">${i }</td>
+										<td class="align-middle white-space-nowrap rmSvcNo"><a
+											href="#rmsvc-select" data-bs-toggle="modal">RSL24010001</a></td>
+										<td class="align-middle white-space-nowrap rmType">RS001</td>
+										<td class="align-middle white-space-nowrap rmcnt">R501</td>
+										<td class="align-middle white-space-nowrap rmcnt">김창용</td>
+										<td
+											class="align-middle text-center fs-9 white-space-nowrap status">
+											<span class="badge badge  rounded-pill badge-subtle-warning"> 결재중 
+												<span class="ms-1 fas fa-plus" data-fa-transform="shrink-2"></span> 
+										</span>
+											<span class="badge badge  rounded-pill badge-subtle-secondary"> 요청중
+												<span class="ms-1 fas fa-sync" data-fa-transform="shrink-2"></span>
+										</span>
+											<span class="badge badge rounded-pill badge-subtle-info">준비중
+												<span class="ms-1 fas fa-utensils" data-fa-transform="shrink-2"></span>
+										</span>
+											<span class="badge badge rounded-pill badge-subtle-success">완료
+												<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span>
+										</span>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					<div class="d-flex justify-content-center mt-3">
+						<button class="btn btn-sm btn-falcon-default me-1" type="button"
+							title="Previous" data-list-pagination="prev">
+							<span class="fas fa-chevron-left"></span>
+						</button>
+						<ul class="pagination mb-0"></ul>
+						<button class="btn btn-sm btn-falcon-default ms-1" type="button"
+							title="Next" data-list-pagination="next">
+							<span class="fas fa-chevron-right"></span>
+						</button>
+					</div>
+				</div>
+
+				<!-- 예약 상세 조회 -->
+				<div class="modal fade" id="rmsvc-select" tabindex="-1"
+					role="dialog" aria-labelledby="authentication-modal-label"
+					aria-hidden="true">
+					<div class="modal-dialog modal-lg mt-6" role="document">
+						<div class="modal-content border-0">
+							<div class="modal-header px-5 position-relative bg-secondary  ">
+								<div class="position-relative z-1">
+									<h4 class="mb-0 text-white" id="authentication-modal-label">
+									룸서비스 상세내역 조회</h4>
+								</div>
+								<button
+									class="btn-close position-absolute top-0 end-0 mt-2 me-2"
+									data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body py-4 px-5">
+								<form>
+									<div class="row gx-2">
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-no">객실 번호</label> <input
+												class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-no" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-name">고객 이름</label>
+											<input class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-name" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-name">고객 전화번호</label>
+											<input class="form-control" type="text" autocomplete="on"
+												id="model-rsvt-name" />
+										</div>
+									</div>
+									<div class="row gx-2">
+										<div class="mb-3 col-sm-6">
+											<label class="form-label" for="model-rsvt-no">룸 서비스주문번호</label> 
+											<input class="form-control" type="text"
+												autocomplete="on" id="model-rsvt-no" />
+										</div>
+										<div class="mb-3 col-sm-6">
+											<label class="form-label" for="model-rsvt-name">룸 서비스 주문 수량</label> 
+											<input class="form-control" type="text"
+												autocomplete="on" id="model-rsvt-name" />
+										</div>
+									</div>
+									<div class="row gx-2 mb-3 " id="rmsvc-cnt">
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-no">룸 서비스 코드</label> 
+											<input class="form-control" type="text"
+												autocomplete="on" id="model-rsvt-no" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-name">메뉴 명</label> 
+											<input class="form-control" type="text"
+												autocomplete="on" id="model-rsvt-name" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-name">가격</label> 
+											<input class="form-control" type="text"
+												autocomplete="on" id="model-rsvt-name" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-no">룸 서비스 코드</label> 
+											<input class="form-control" type="text"
+												autocomplete="on" id="model-rsvt-no" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-name">메뉴 명</label> 
+											<input class="form-control" type="text"
+												autocomplete="on" id="model-rsvt-name" />
+										</div>
+										<div class="mb-3 col-sm-4">
+											<label class="form-label" for="model-rsvt-name">가격</label> 
+											<input class="form-control" type="text"
+												autocomplete="on" id="model-rsvt-name" />
+										</div>
+									</div>
+									<div class="grid gap-3 ">
+										<div class="row p-2 g-col-6" id="rmsvc-cnt">
+											<div class=" col-sm-2 ">
+												<label class="form-label" for="model-rsvt-name">총 가격</label> 
+											</div>
+											<div class=" col-sm-10 ">
+												<input class="form-control" type="text"
+													autocomplete="on" id="model-rsvt-name" />
+											</div>
+										</div>
+										<div class="mb-3 p-2 g-col-6">
+											<button class="btn btn-secondary d-block w-100"
+												type="submit" name="submit">요청</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,49 @@
+/**
+ * 
+ */
+
+document.addEventListener("DOMContentLoaded",()=>{
+	cstHp.addEventListener("keyup", function(e){
+		convertPhoneNumber(e.target);
+	});
+});
+
+
+let checkUserByIdForm = document.querySelector("#checkUserByIdForm");
+
+checkUserByIdForm.addEventListener("submit", function(){
+	event.preventDefault();
+	let mberId = document.getElementById("mberId").value;
+	let cstNm = document.getElementById("cstNm").value;
+	let cstHp = document.getElementById("cstHp").value;
+	
+	let jsonData = {
+		'cstNm':cstNm,
+		'cstHp':cstHp,
+		'mber':{
+			'mberId':mberId
+		}
+	}
+	console.log(jsonData);
+	
+	let url = checkUserByIdForm.action;
+	let method = checkUserByIdForm.method;
+	
+	fetch(url, {
+		method:method,
+		headers:{
+			"Content-Type":"application/json",
+			"Accept":"application/json"
+		},
+		body:JSON.stringify(jsonData)
+	}).then(resp=>{
+		if(resp.ok){
+			return resp.json();
+		}else{
+			throw new Error("오류", {cause:resp})
+		}
+	}).then(jsonObj=>{
+		console.log(jsonObj)
+	})
+	
+});

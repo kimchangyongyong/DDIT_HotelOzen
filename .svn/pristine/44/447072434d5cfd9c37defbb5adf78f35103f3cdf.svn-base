@@ -1,0 +1,17 @@
+package kr.or.ddit.global.vo;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(of="cstNo")
+public class CstmrVO {
+
+	private String cstNo;
+	private String cstClsfcCd;
+	private String cstNm;
+	private String cstPh;
+	private String cstRefndAcnt;
+	private String cstRefndBank;
+	
+}

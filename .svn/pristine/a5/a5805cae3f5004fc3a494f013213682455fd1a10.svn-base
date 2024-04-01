@@ -1,0 +1,30 @@
+package kr.or.ddit.emp.auth.service;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.global.vo.EmpVO;
+import kr.or.ddit.mybatis.mappers.EmpMapper;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class EmpAuthFindServiceImpl implements EmpAuthFindService {
+
+	private final EmpMapper dao;
+	
+	@Override
+	public ServiceResult checkUser(EmpVO emp) {
+		ServiceResult result = null;
+		
+		EmpVO foundEmp = dao.findEmpUser(emp);
+		
+		if(foundEmp != null) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
+}

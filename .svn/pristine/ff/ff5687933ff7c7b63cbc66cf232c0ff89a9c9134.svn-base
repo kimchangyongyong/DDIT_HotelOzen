@@ -1,0 +1,19 @@
+package kr.or.ddit.emp.pms.parking.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/emp/pms/parking")
+public class ParkingController {
+	@GetMapping("parking.do")
+	public String parking() {
+		return "emp/pms/parking/parking";
+	}
+	
+	@GetMapping("carList.do")
+	public String carList() {
+		return "emp/pms/parking/carList";
+	}
+}

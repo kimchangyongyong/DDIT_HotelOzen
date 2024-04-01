@@ -1,0 +1,40 @@
+package kr.or.ddit.mybatis.mappers;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.global.vo.CarVO;
+import kr.or.ddit.global.vo.ChkinVO;
+import kr.or.ddit.global.vo.ChkoutVO;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.RoomVO;
+
+@Mapper
+public interface EmpRsvtAddMapper{
+
+	public List<RoomVO> selectList(String rmType);
+	
+	public int selectRsvtCnt(String rmType);
+	
+	public String selectSetleNo();
+	
+	public int insertSetle(Map<String, Object> setles);
+	
+	public String selectCstmrNo();
+	
+	public String selectCarNo(String carNm);
+	
+	public int insertCstmr(CstmrVO cstmr);
+	
+	public String selectChkinNo();
+	
+	public int insertChkin(ChkinVO chkin);
+	
+	public int updateRoom(String roomNo);
+	
+	//체크아웃 insert문
+	public int inserChkout(String chkinNo);
+}

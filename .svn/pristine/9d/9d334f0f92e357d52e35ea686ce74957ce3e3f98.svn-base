@@ -1,0 +1,74 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cstmr/index.css">
+
+<div id="fullpage">
+
+	<div class="section s0">
+		<div>
+			<form:form id="submitForm" method="post" 
+				action="${pageContext.request.contextPath}/cstmr/rsvt/rsvtStep01">
+			    <div class="first mx-10">
+			        <div class="first_inner">
+			            <input type="submit" value="전송" id="submitBtn"/>
+			        </div>
+			        <div>
+			            <input type="number" name="adultCnt" />
+			            <input type="number" name="childCnt" />                  
+			            <input type="date" name="rsvtCheckinYmd" />                  
+			            <input type="date" name="rsvtCheckoutYmd" />                  
+			            <input type="number" name="rsvtRoomCnt" />                  
+			        </div>
+			    </div>
+	
+			</form:form>
+		</div>
+	</div>
+
+	<div class="section">
+		<h1>section 2</h1>
+	</div>
+	<div class="section">
+		<h1>section 3</h1>
+	</div>
+	<footer class="section h0 fp-auto-height">
+		<div class="footer-video">
+			<video muted autoplay loop>
+				<source src="${pageContext.request.contextPath}/resources/assets/img/ozen.mp4">
+			</video>
+			<h1 class="footer_text"></h1>
+			<div class="text-overlay">
+		        <h1>FOOTER</h1>
+		        <p>Additional text goes here</p>
+		        <hr>
+		    </div>
+		</div>
+	</footer>
+</div>
+
+
+<script>
+	$(function() {
+		$('#fullpage').fullpage({
+			//options here
+			autoScrolling : true,
+			scrollHorizontally : true,
+			navigation : true,
+			navigationPosition : 'right',
+			scrollingSpeed : 1500
+
+		});
+	});
+
+</script>
+<script>
+    $(document).ready(function() {
+        $("#submitBtn").click(function() {
+            $("#submitForm").submit();
+        });
+    });
+</script>

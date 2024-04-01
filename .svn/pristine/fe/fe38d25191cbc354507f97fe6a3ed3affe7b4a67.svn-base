@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.MberMapper">
+	<select id="select" parameterType="string" resultType="MberVO">
+		SELECT 
+			CST_NO
+			,MBER_ID
+			,MBER_PW
+			,MBER_TEL
+			,MBER_ADDR
+			,MBER_BIRTH
+			,MBER_MLG
+			,MBER_SECSN_YN
+			,MBER_MBRSH_YN
+			,MBER_SBSCRB_YMD
+			,MBER_SEXDSTN
+			,MBER_SPCL_NOTE
+		FROM TB_MBER
+		WHERE CST_NO = #{cstNo}		
+	</select>
+	<select id="selectList" resultType="MberVO">
+		WITH ORDERD AS(
+			SELECT 
+				CST_NO
+				, MBER_ID
+				, MBER_PW
+				, MBER_TEL
+				, MBER_ADDR
+				, MBER_BIRTH
+				, MBER_MLG
+				, MBER_SECSN_YN
+				, MBER_MBRSH_YN
+				, MBER_PROFL_NM
+				, MBER_PROFL_UUID
+				, MBER_SBSCRB_YMD
+				, MBER_SEXDSTN
+				, MBER_SPCL_NOTE
+			FROM TB_MBER
+			      ORDER BY ROWID DESC
+		   ), RNUMMEMBER AS(
+		      SELECT ORDERD.*, ROWNUM RNUM
+		      FROM ORDERD
+		   )
+		   SELECT *
+		   FROM RNUMMEMBER
+   </select>
+
+</mapper>

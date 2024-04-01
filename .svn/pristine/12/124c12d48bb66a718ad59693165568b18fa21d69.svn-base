@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.CstmrRsvtRetrieveMapper">
+
+<select id="selectNberRsvt" parameterType="CstmrVO" resultType="RsvtVO">
+	SELECT 
+		RSVT_NO
+		, RSVT_AMNT
+		, RSVT_YMD
+		, RSVT_CHECKIN_YMD
+		, RSVT_CHECKOUT_YMD
+		, RSVT_CNCL_YN
+		, RSVT_ROOM_CNT
+		, RSVT_ADULT_CNT
+		, RSVT_CHILD_CNT
+		, RMT_TYPE_CD
+	FROM TB_RSVT INNER JOIN TB_CSTMR USING (CST_NO)
+				 INNER JOIN TB_RSVT_DETAILS USING (RSVT_NO)
+    WHERE RSVT_NO = #{rsvt[0].rsvtNo}
+			AND CST_HP = #{cstHp}
+	GROUP BY RSVT_NO
+			, RSVT_AMNT
+			, RSVT_YMD
+			, RSVT_CHECKIN_YMD
+			, RSVT_CHECKOUT_YMD
+			, RSVT_CNCL_YN
+			, RSVT_ROOM_CNT
+			, RSVT_ADULT_CNT
+			, RSVT_CHILD_CNT
+			, RMT_TYPE_CD
+</select>
+
+<select id="selectMberRsvtList" parameterType="CstmrVO" resultType="RsvtVO">
+	SELECT 
+		RSVT_NO
+		, RSVT_AMNT
+		, RSVT_YMD
+		, RSVT_CHECKIN_YMD
+		, RSVT_CHECKOUT_YMD
+		, RSVT_CNCL_YN
+		, RSVT_ROOM_CNT
+		, RSVT_ADULT_CNT
+		, RSVT_CHILD_CNT
+		, RMT_TYPE_CD
+	FROM TB_RSVT INNER JOIN TB_CSTMR USING (CST_NO)
+				 INNER JOIN TB_RSVT_DETAILS USING (RSVT_NO)
+    WHERE CST_NO = #{cstNo}
+		
+</select>
+
+<select id="selectRsvtDetailsList" parameterType="RsvtVO" resultType="RsvtVO">
+		SELECT
+        RSVT_NO
+        , RSVT_DTL_NO
+		, RSVT_AMNT
+		, RSVT_YMD
+		, RSVT_CHECKIN_YMD
+		, RSVT_CHECKOUT_YMD
+		, RSVT_ROOM_CNT
+		, RSVT_DTL_AMNT
+		, RSVT_DTL_ADULT_CNT
+		, RSVT_DTL_CHILD_CNT
+		, RSVT_SE
+		, RMT_TYPE_CD
+	FROM TB_RSVT INNER JOIN TB_RSVT_DETAILS USING (RSVT_NO)
+				 INNER JOIN TB_CSTMR USING (CST_NO)
+				 
+	WHERE RSVT_NO = #{rsvtNo}
+
+</select>
+
+</mapper>

@@ -1,0 +1,29 @@
+package kr.or.ddit.emp.pms.roomsvc.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.RmserviceOrderVO;
+import kr.or.ddit.mybatis.mappers.EmpRmServiceOrderMapper;
+
+@Service
+public class EmpPmsRmServiceOrderListServiceImpl implements EmpPmsRmServiceOrderListService {
+
+	@Inject
+	private EmpRmServiceOrderMapper dao;
+	
+	@Override
+	public List<RmserviceOrderVO> retieveRmServiceOrderList(PaginationInfo paging) {
+		
+		int totalRecod = dao.selectTotalRecord(paging);
+		paging.setTotalRecord(totalRecod);
+		
+		List<RmserviceOrderVO> rmSOrderList = dao.selectList(paging);
+		return rmSOrderList;
+	}
+
+}

@@ -1,0 +1,32 @@
+package kr.or.ddit.cstmr.intrcn.mbrsh.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.global.vo.MbrshGrdVO;
+import kr.or.ddit.mybatis.mappers.MbrshMapper;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class CstmrMbrshServiceImpl implements CstmrMbrshService {
+
+	@Inject
+	MbrshMapper dao;
+	
+	@Override
+	public List<MbrshGrdVO> retrieveMbrsh(String mbrshCd) {
+		
+		return dao.selectBenefit(mbrshCd);
+	}
+
+	@Override
+	public List<MbrshGrdVO> retrieveMbrshList() {
+
+		return dao.selectList();
+	}
+
+}

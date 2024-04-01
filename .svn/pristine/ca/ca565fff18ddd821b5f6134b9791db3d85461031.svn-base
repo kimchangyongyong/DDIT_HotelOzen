@@ -1,0 +1,15 @@
+package kr.or.ddit.mybatis.mappers;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.or.ddit.global.vo.CarVO;
+
+@Mapper
+public interface CarMapper extends AbstractCommonMapper<CarVO, String>{
+
+	List<CarVO> select(Map<String, Object> parameterMap);
+
+}

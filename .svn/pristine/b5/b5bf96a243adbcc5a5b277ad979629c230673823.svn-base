@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.MberMapper">
+	<resultMap type="MberVO" id="mberMap" autoMapping="true">
+		<id property="cstNo" column="CST_NO"/>
+		<association property="cst" javaType="CstmrVO" autoMapping="true"></association>
+		<collection property="mbrsh" javaType="list" ofType="MberMbrshVO" autoMapping="true">
+			<id property="mbsNo" column="MBS_NO"/>
+		</collection>
+		<collection property="userRoles" ofType="string">
+			<result column="USER_ROLE"/>
+		</collection>
+	</resultMap>
+	<select id="select" parameterType="string" resultMap="mberMap">
+		SELECT
+		    CST_NO
+		  , MBER_ID
+		  , MBER_PW
+		  , MBER_HOME_TEL
+		  , MBER_ADDR
+		  , MBER_MLG
+		  , MBER_SECSN_YN
+		  , MBER_MBRSH_YN
+		  , MBER_SBSCRB_YMD
+		  , MBER_SPCL_NOTE
+		  , MBER_MBTI
+		  , MBER_PROFL_UUID
+		  , MBER_PROFL_FNM
+		  , USER_ROLE
+		  , CST_NM
+		  , CST_HP
+		  , CST_GEN
+		  , CST_REFND_ACNT
+		  , CST_REFND_BANK
+		  , CST_BIRTH
+		  , MBS_GRD_CD
+		  , MBS_SBSCRB_YMD
+		  , MBS_EXPRT_YMD
+		FROM
+		    TB_MBER
+		    INNER JOIN TB_CSTMR USING (CST_NO)
+		    LEFT OUTER JOIN TB_MBER_MBRSH USING (CST_NO)
+		WHERE CST_NO = #{cstNo}	
+	</select>
+	<select id="selectList" resultMap="mberMap">
+		WITH ORDERD AS(
+			SELECT
+			    TB_MBER.CST_NO
+			  , TB_MBER.MBER_ID
+			  , TB_MBER.MBER_PW
+			  , TB_MBER.MBER_HOME_TEL
+			  , TB_MBER.MBER_ADDR
+			  , TB_MBER.MBER_MLG
+			  , TB_MBER.MBER_SECSN_YN
+			  , TB_MBER.MBER_MBRSH_YN
+			  , TB_MBER.MBER_SBSCRB_YMD
+			  , TB_MBER.MBER_SPCL_NOTE
+			  , TB_MBER.MBER_MBTI
+			  , TB_MBER.MBER_PROFL_UUID
+			  , TB_MBER.MBER_PROFL_FNM
+			  , TB_MBER.USER_ROLE
+			  , TB_CSTMR.CST_NM
+			  , TB_CSTMR.CST_HP
+			  , TB_CSTMR.CST_GEN
+			  , TB_CSTMR.CST_REFND_ACNT
+			  , TB_CSTMR.CST_REFND_BANK
+			  , TB_CSTMR.CST_BIRTH
+			  , TB_MBER_MBRSH.MBS_GRD_CD
+			  , TB_MBER_MBRSH.MBS_SBSCRB_YMD
+			  , TB_MBER_MBRSH.MBS_EXPRT_YMD
+			FROM
+			    TB_MBER
+			    INNER JOIN TB_CSTMR ON TB_MBER.CST_NO = TB_CSTMR.CST_NO
+			    LEFT OUTER JOIN TB_MBER_MBRSH ON (TB_MBER.CST_NO = TB_MBER_MBRSH.CST_NO)
+                AND TB_MBER_MBRSH.MBS_EXPRT_YMD > SYSDATE
+                ORDER BY tb_mber.mber_sbscrb_ymd DESC
+		   ), RNUMMEMBER AS(
+		      SELECT ORDERD.*, ROWNUM RNUM
+		      FROM ORDERD
+		   )
+		   SELECT *
+		   FROM RNUMMEMBER
+   </select>
+   
+	<select id="selectMberByUserName" parameterType="string" resultMap="mberMap">
+		SELECT CST_NO, MBER_ID, MBER_PW, CST_NM, USER_ROLE
+		FROM TB_MBER
+			INNER JOIN TB_CSTMR USING (CST_NO)
+		WHERE MBER_ID = #{username}
+	</select>
+</mapper>

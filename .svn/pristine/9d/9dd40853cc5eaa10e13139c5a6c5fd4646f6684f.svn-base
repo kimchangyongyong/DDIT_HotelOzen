@@ -1,0 +1,78 @@
+package kr.or.ddit.cstmr.rsvt.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.cstmr.rsvt.service.CstmrRsvtService;
+import kr.or.ddit.global.vo.AttatchRmTypeVO;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.RecomRoomVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("cstmr/rsvt")
+public class CstmrRsvtRmtRetrieveController {
+	
+	@Inject
+	private CstmrRsvtService service;
+
+	@GetMapping("rmtList")
+	public String rmtList() {
+		return "cstmr/rsvt/rmtList";
+	}
+	
+	@GetMapping("recomRsvtList")
+	public String rcrmtList() {
+		return "error/403";
+	}
+	
+	@PostMapping("recomRsvtList")
+	public Map<String, AttatchRmTypeVO> rcRmList(
+		 String adult, String child
+		 , Model model
+	) {
+		int totalNmpr = Integer.parseInt(adult)+Integer.parseInt(child);
+		String cstNo = "M2400019"; //추후 가져와야됨.
+		CstmrVO cstmr = service.retrieveCstmrAge(cstNo);
+		String age = cstmr.getAge();
+		
+		Map<String, Object> customerData = new HashMap<>();
+        customerData.put("age", age);
+        customerData.put("totalNmpr", totalNmpr);
+		
+		List<RecomRoomVO> rcRm = service.retrieveRcRm(customerData);
+		model.addAttribute("rcRm", rcRm);
+		log.info("######################rcRm:{}", rcRm);
+		
+		String rmType1 = rcRm.get(0).getRermRmtype();
+		String rmType2 = rcRm.get(1).getRermRmtype();
+		
+		log.info("##########################rmType1:{}", rmType1);
+		
+		AttatchRmTypeVO attRmt1 = service.retrieveRmt(rmType1);
+		AttatchRmTypeVO attRmt2 = service.retrieveRmt(rmType2);
+
+		log.info("##########################attRmt1:{}", attRmt1);
+		
+		Map<String, AttatchRmTypeVO> attRmtMap = new HashMap<>();
+		attRmtMap.put("attRmt1", attRmt1);
+		attRmtMap.put("attRmt2", attRmt2);
+
+		log.info("attRmtMap:{}", attRmtMap);
+		
+		model.addAttribute("attRmtMap", attRmtMap);
+
+		return attRmtMap;
+	}
+}

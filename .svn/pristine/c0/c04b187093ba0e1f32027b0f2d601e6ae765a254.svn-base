@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.MberNoticeMapper">
+
+<sql id="searchFrag">
+	<trim prefix="WHERE" suffixOverrides="AND">
+		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+			<choose>
+				<when test="simpleCondition.searchType eq 'empNm'">
+					INSTR(EMP_NM, #{simpleCondition.searchWord}) > 0
+				</when>
+				<when test="simpleCondition.searchType eq 'mberNtNm'">
+					INSTR(MBER_NT_NM, #{simpleCondition.searchWord}) > 0
+				</when>
+				<when test="simpleCondition.searchType eq 'mberNtCtgry'">
+					INSTR(MBER_NT_CTGRY, #{simpleCondition.searchWord}) > 0
+				</when>
+				<when test="simpleCondition.searchType eq 'mberNtCn'">
+					INSTR(MBER_NT_CN, #{simpleCondition.searchWord}) > 0
+				</when>
+				<otherwise>
+					INSTR(EMP_NM, #{simpleCondition.searchWord}) > 0
+					OR
+					INSTR(MBER_NT_NM, #{simpleCondition.searchWord}) > 0
+					OR
+					INSTR(MBER_NT_CTGRY, #{simpleCondition.searchWord}) > 0
+					OR
+					INSTR(MBER_NT_CN, #{simpleCondition.searchWord}) > 0
+				</otherwise>
+			</choose>
+		</if>
+	</trim>
+</sql>
+
+	<select id="selectTotalRecord" parameterType="PaginationInfo" resultType="int">
+		SELECT COUNT(*)
+		FROM 
+		TB_MBER_NOTICE
+	</select>
+
+	<select id="selectList" parameterType="PaginationInfo" resultType="MberNoticeVO">
+		WITH RNUMNOTI AS (
+		    SELECT 
+		        ROWNUM RNUM, A.*
+		    FROM(
+		        SELECT
+		            MBER_NT_NO
+		            , MBER_NT_NM
+		            , EMP_NO
+		            , EMP_NM
+		            , MBER_NT_YMD
+		            , MBER_NT_CNT
+		            , MBER_NT_CN
+		            , MBER_NT_CTGRY
+		        FROM
+		            TB_MBER_NOTICE
+		            INNER JOIN TB_EMP USING (EMP_NO)
+		        <include refid="searchFrag" />
+		        ORDER BY MBER_NT_NO DESC
+		    ) A
+		)
+		SELECT *
+		FROM RNUMNOTI
+		<![CDATA[
+			WHERE RNUM >=#{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+
+	<select id="select" parameterType="string" resultType="MberNoticeVO">
+		SELECT
+			MBER_NT_NO
+		    , MBER_NT_NM
+		    , MBER_NT_YMD
+		    , MBER_NT_CNT
+		    , MBER_NT_CN
+		FROM TB_MBER_NOTICE
+		WHERE MBER_NT_NO = #{mberNtNo}
+	</select>
+	
+	<insert id="insert" parameterType="MberNoticeVO">
+		INSERT INTO TB_MBER_NOTICE
+		
+	</insert>
+	
+	<update id="noticeCount" parameterType="string" >
+		UPDATE 
+		    TB_MBER_NOTICE
+		SET
+		    MBER_NT_CNT = MBER_NT_CNT + 1
+		WHERE
+		    MBER_NT_NO = #{mberNtNo}
+	</update>
+</mapper>

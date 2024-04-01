@@ -1,0 +1,31 @@
+package kr.or.ddit.mybatis.mappers;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.ChkoutVO;
+
+@Mapper
+public interface EmpStayChkoutMapper{
+
+	public int selectTotalRecord(PaginationInfo paging);
+	
+	public List<ChkoutVO> selectList(PaginationInfo paging);
+	
+	public ChkoutVO select(String chkinNo);
+	
+	public List<ChkoutVO> selectRms(String chkinNo);
+	
+	//예약 상세 조회
+	public ChkoutVO selectRsvtDTL(String chkinNo);
+	
+	//결제 일련번호 생성
+	public String selectSetleNo();
+	
+	//결제 테이블 insert
+	public int insertSetle(Map<String, Object> setles);
+	
+}

@@ -1,0 +1,87 @@
+package kr.or.ddit.emp.pos.acnt.selling.controller;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.apache.commons.collections.map.HashedMap;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.emp.pos.acnt.selling.service.EmpPosSellingService;
+import kr.or.ddit.global.vo.SellingVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/emp/pos/acnt/selling")
+public class EmpPosSellingController {
+
+	@Inject
+	private EmpPosSellingService service;
+
+	@GetMapping
+	public String sellingList(Model model) {
+		LocalDate currentDate = LocalDate.now();
+		String currentYear = String.valueOf(currentDate.getYear());
+
+		// 연도별 매출
+		List<SellingVO> yearSelling = service.retrieveYearSetle(currentYear);
+
+		// 월별 매출
+		List<SellingVO> monthSelling = service.retrieveMonthSetle(currentDate.toString());
+
+		// 주별 매출
+		List<SellingVO> weekSelling = service.retrieveWeekSetle(currentDate.toString());
+
+		for (int i = 0; i < yearSelling.size(); i++) {
+			if(!yearSelling.get(i).getSetleAdd().isEmpty()) {
+				
+			}
+		}
+
+		log.info("yearSelling : {}", yearSelling);
+		model.addAttribute("yearSelling", yearSelling);
+		model.addAttribute("monthSelling", monthSelling);
+		model.addAttribute("weekSelling", weekSelling);
+
+		return "emp/pos/acnt/selling/sellingList";
+	}
+
+	@PostMapping
+	public Map<String, List<SellingVO>> sellingList(Model model, @ModelAttribute String yearDate,
+			@ModelAttribute String monthDate, @ModelAttribute String weekDate) {
+		List<SellingVO> yearSelling = service.retrieveYearSetle("2024");
+
+		// 월별 매출
+		List<SellingVO> monthSelling = service.retrieveMonthSetle("2024-03-14");
+
+		// 주별 매출
+		List<SellingVO> weekSelling = service.retrieveWeekSetle("2024-03-14");
+
+		Map<String, List<SellingVO>> result = new HashedMap();
+
+		result.put("yearSelling", yearSelling);
+		result.put("monthSelling", monthSelling);
+		result.put("weekSelling", weekSelling);
+		log.info("yearSelling : {}", yearSelling);
+		model.addAttribute("yearSelling", yearSelling);
+		model.addAttribute("monthSelling", monthSelling);
+		model.addAttribute("weekSelling", weekSelling);
+
+		return result;
+	}
+
+	@GetMapping("{cd}")
+	public String sellingView(@PathVariable String cd) {
+		return "emp/pos/acnt/selling/sellingView";
+	}
+
+}

@@ -1,0 +1,33 @@
+package kr.or.ddit.global.vo;
+
+import java.time.LocalDate;
+
+import lombok.Data;
+
+/**
+ * 인사관리에서 사용하는 연차VO
+ *
+ */
+@Data
+public class HrmAnnualVO {
+	private String rnum;
+	
+	private String empRqNo;
+	private String rqstSe;
+	private LocalDate rqstPurchsYmd;
+	private String anlLeaUseNo;
+	private String empNo;
+	private LocalDate anlLeaBgnYmd;
+	private LocalDate anlLeaEndYmd;
+	private String anlLeaRm;
+	private String anlLeaInfo;
+	private LocalDate anlLeaYmd;
+	
+	private String empNm;
+	private String empRqNm;
+	
+	private int anlLeaGiveYmd;
+	private int anlLeaGiveAmnt;
+	private int empAnnualLeave;
+
+}

@@ -1,0 +1,27 @@
+package kr.or.ddit.global.security;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+
+import kr.or.ddit.global.vo.EmpVO;
+
+public class EmpVOWrapper extends User {
+	private EmpVO realUser;
+
+	public EmpVOWrapper(EmpVO realUser) {
+		super(realUser.getEmpNo()
+				, realUser.getEmpPw()
+				, realUser.getUserRoles().stream()
+						  .map(SimpleGrantedAuthority::new)
+						  .collect(Collectors.toList()));
+		this.realUser = realUser;
+	}
+	public EmpVO getRealUser() {
+		return realUser;
+	}
+
+}

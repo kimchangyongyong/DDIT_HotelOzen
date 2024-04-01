@@ -1,0 +1,47 @@
+package kr.or.ddit.emp.pms.rsvt.controller;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.emp.pms.rsvt.service.EmpPmsRsvtListService;
+import kr.or.ddit.global.vo.RsvtVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/emp/pms/rsvt")
+public class EmpPmsRsvtListController {
+	
+	@Inject
+	private EmpPmsRsvtListService service;
+	
+	@GetMapping("rsvtList.do")
+	public String rsvtList() {
+		return "emp/pms/rsvt/rsvtList";
+	}
+	
+	@GetMapping("rsvtadd.do")
+	public String rsvtadd() {
+		return "emp/pms/rsvt/rsvtadd";
+	}	
+	
+	@PostMapping(value="rsvtList.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<RsvtVO> selectRsvtList(
+		@RequestParam(value="page", required = false, defaultValue = "1") int currentPage
+	){
+		
+		List<RsvtVO> revtList = service.retrieveRsvtList();
+		log.info("!!!!!!service:{}",revtList);
+		return revtList;
+	}
+}

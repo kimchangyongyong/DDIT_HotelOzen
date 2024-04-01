@@ -1,0 +1,18 @@
+package kr.or.ddit.emp.pms.fxtrs.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("emp/pms/fxtrs")
+public class EmpPmsFxrsOrderController {
+	
+	@GetMapping("orderList.do") //발주 신청 리스트 조회페이지
+	public String fxtrsOrder() {
+		return "emp/pms/fxtrs/orderList";
+	}
+}

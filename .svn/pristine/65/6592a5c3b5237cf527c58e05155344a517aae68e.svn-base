@@ -1,0 +1,14 @@
+package kr.or.ddit.emp.pms.roomsvc.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/emp/pms/rqst/roomSvc")
+public class RoomSvcListRqstController {
+	@GetMapping("roomSvcRqstList.do")
+	public String roomSvcList() {
+		return "emp/pms/roomSvc/roomSvcRastList";
+	}
+}

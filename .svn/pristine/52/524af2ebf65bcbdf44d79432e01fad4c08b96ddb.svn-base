@@ -1,0 +1,14 @@
+package kr.or.ddit.emp.pms.fxtrs.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("emp/pms/fxtrs")
+public class fxtrsController {
+	@GetMapping("fxtrs.do")
+	public String fxtrs() {
+		return "emp/pms/fxtrs/fxtrs";
+	}
+}

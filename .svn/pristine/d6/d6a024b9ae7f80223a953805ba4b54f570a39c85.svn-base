@@ -1,0 +1,10 @@
+package kr.or.ddit.emp.pbl.dclz.service;
+
+import java.util.Map;
+
+import kr.or.ddit.global.vo.WorkSchdlVO;
+
+public interface WorkSchdlService {
+	public WorkSchdlVO retrieveWorkSchdl(Map<String, Object> pkmap);
+
+}

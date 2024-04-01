@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+.sbrs_wrap {
+	max-width : 1280px;
+	margin : 0 auto;
+}
+.sbrs_wrap .sbrs_inner {
+	display: flex;
+	font-size : 0;
+	margin : 0 -5px;
+}
+.sbrs_wrap .sbrs_inner .sbrsImg {
+	max-width: 100%;
+	height: auto;
+
+}
+.sbrs_wrap .sbrs_inner .sbrsImg .sbrsImginner {
+	height : 200px;
+}
+
+.sbrs_wrap .sbrs_inner .main_left,
+.sbrs_wrap .sbrs_inner .main_right {
+    width: 50%; /* 이미지와 텍스트가 반씩 차지하도록 설정 */
+    box-sizing: border-box;
+    padding: 0 5px;
+}
+
+.sbrsList_content {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+}
+
+
+
+
+.main_left{
+	position : relative;
+	height : 500px;
+	width : 500px;
+}
+.main_right{
+	position : relative;
+	margin-left : 30px;
+	height : 500px;
+	width : 500px;
+}
+
+
+.sbrsList_content {
+	position : absolute;
+}

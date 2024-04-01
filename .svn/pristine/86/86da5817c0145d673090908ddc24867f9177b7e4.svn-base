@@ -1,0 +1,143 @@
+package kr.or.ddit.cstmr.rsvt.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.global.vo.AttatchRmTypeVO;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.RecomRoomVO;
+import kr.or.ddit.global.vo.RoomTypeVO;
+import kr.or.ddit.global.vo.RsvtDetailsVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import kr.or.ddit.global.vo.SetleVO;
+import kr.or.ddit.mybatis.mappers.CstmrRsvtMapper;
+import kr.or.ddit.mybatis.mappers.MberMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class CstmrRsvtServiceImpl implements CstmrRsvtService {
+
+	private final CstmrRsvtMapper dao;
+	
+	private final MberMapper mdao;
+	
+	@Override
+	public CstmrVO retrieveCstmrAge(String cstNo) {
+		CstmrVO cstmr = dao.select(cstNo);
+		return cstmr;
+	}
+
+	@Override
+	public List<RecomRoomVO> retrieveRcRm(Map<String, Object> customerData) {
+		List<RecomRoomVO> rcRm = dao.selectRcRm(customerData);
+		return rcRm;
+	}
+
+	@Override
+	public AttatchRmTypeVO retrieveRmt(String rmType) {
+		AttatchRmTypeVO attRmt = dao.selectRmt(rmType);
+		return attRmt;
+	}
+
+	@Override
+	public List<RoomTypeVO> retrieveRsvtRmt(RsvtVO rsvtVO) {
+		
+		log.info("rsvtVO@@@@:{}",rsvtVO);
+		List<RoomTypeVO> rsvtRmt = dao.selectRsvtRmt(rsvtVO);
+		
+		return rsvtRmt;
+	}
+
+	@Override
+	public MberVO retrieveMber(String cstNo) {
+		return mdao.select(cstNo);
+	}
+
+	@Override
+	public ServiceResult createNewRsvt(Map<String,Object> rsvtData) {
+
+		AttatchRmTypeVO roomType = (AttatchRmTypeVO) rsvtData.get("roomType");
+		CstmrVO rsvtCstmr = (CstmrVO) rsvtData.get("rsvtCstmr");
+		SetleVO rsvtSetle = (SetleVO) rsvtData.get("setle");
+		RsvtVO rsvtMap = (RsvtVO) rsvtData.get("rsvtMap");
+		RsvtDetailsVO rsvtDetail = (RsvtDetailsVO) rsvtData.get("rsvtDetail");
+
+		String cstNo = rsvtCstmr.getCstNo();
+		// 비회원일시
+		if(rsvtCstmr.getCstNo()==null) {
+			// 회원번호 발급
+			cstNo = dao.selectNewNberCstNo();
+			rsvtCstmr.setCstNo(cstNo);
+			// 회원정보 저장
+			int insertNber = dao.insertNber(rsvtCstmr);
+		}
+		// 결제번호 발급
+		String setleNo = dao.selectNewSelteNo();
+		
+		rsvtSetle.setSetleNo(setleNo);
+		rsvtSetle.setCstNo(cstNo);
+		// 결제정보 저장
+		int insertSetle = dao.insertSetle(rsvtSetle);
+		
+		// 예약번호 발급
+		String rsvtNo = dao.selectNewRsvtNo();
+		
+		rsvtMap.setRsvtNo(rsvtNo);
+		rsvtMap.setCstNo(cstNo);
+		rsvtMap.setRsvtSetleNo(setleNo);
+		
+		// 예약정보 저장
+		int insertRsvt = dao.insertRsvt(rsvtMap);
+		
+		int insertRsvtDetails;
+		
+		for(int i=0; i < rsvtMap.getRsvtRoomCnt(); i++) {
+			
+		// 예약상세 번호 발급
+		String rsvtDetailNo = dao.selectRsvtDetailNo();
+		
+		rsvtDetail.setRsvtDtlNo(rsvtDetailNo);
+		rsvtDetail.setRsvtNo(rsvtNo);
+		rsvtDetail.setRmtTypeCd(roomType.getRmtTypeCd());
+		rsvtDetail.setRsvtDtlAdultCnt(null);
+		rsvtDetail.setRsvtDtlChildCnt(null);
+		rsvtDetail.setRsvtDtlNmprCnt(null);
+		
+		// 예약상세 정보 저장
+		insertRsvtDetails = dao.insertRsvtDetails(rsvtDetail);
+		
+		}
+//		if(insertNber != 1 || insertSetle != 1 || insertRsvt != 1 || )
+		
+		
+		return null;
+	}
+
+	@Override
+	public ServiceResult createNewSetle(RsvtVO newSetle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResult createNewRsvtDetail(RsvtDetailsVO newRsvtDetail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResult createNewNber(CstmrVO newNber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
+}

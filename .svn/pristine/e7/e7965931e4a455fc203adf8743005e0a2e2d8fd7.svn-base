@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+
+.room-meun-tab{
+	border-bottom : 1px solid #cccccc;
+	width : 100%;
+	overflow:hidden;
+	text-align:center;
+}
+
+.room-meun-tab > ul > li{
+	width : 25%;
+	float:left;
+	font-size:15px;
+	list-style-type: none;
+}
+
+.room-meun-tab > ul > li.current{
+	border-bottom: 3px solid #5c3d5c;
+	boler:#493649;
+}
+
+.room-meun-tab.acco > ul > li{
+	height:55px;
+	padding-top:15px;
+}
+
+.ban-img{
+	padding-left: 200px;
+}
+
+.rom-img{
+	width: 600px;
+	height: 350px;
+	margin: 0 auto;
+}
+
+
+
+.tabType01 {
+	position: relative;
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+	margin-left: 160px;
+}
+.roomType{
+	font-size: 30px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ccc;
+}
+
+.icon-td{
+    padding-left: 160px;
+}
+
+.roomType-e{
+	padding-bottom: 7px;
+	color: #A6A6A6;
+}
+.content{
+	font-size: 18px;
+	
+}
+.container{
+	max-width: 1730px;
+	}
+.room-table{
+	max-width: 550px;
+	margin-left: 90px;
+}
+
+.tr-pad{
+	padding-top: 30px;
+}
+
+
+.fa-wifi{
+	font-size:20px;
+}
+.fa-tv{
+	font-size:20px;
+}
+.fa-smoking-ban{
+	font-size:20px;
+}
+
+
+th{
+	padding-right: 10px;
+	width: 120px;
+}
+td{
+	padding-right: 20px;
+	text-align: left;
+	width: 200px;
+	font-size: 14px;
+}
+.cost{
+	font-size: 40px;
+	padding-top: 40px;
+}
+
+.co-mid{
+	vertical-align: middle;
+	padding-top: 40px;
+}
+.bak{
+	font-size: 20px;
+	padding-top: 40px;
+}
+
+.button-div{
+	text-align: center;
+}
+
+.rsvt-button{
+	width: 200px;
+    height: 50px;
+    margin-top: 80px;
+    position: absolute;
+    padding-top: 13px;
+}
+
+.refund-div{
+	background-color: #eaeaea;
+	padding: 10px;
+}
+
+.refund-sapn{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    letter-spacing: 1px;
+    width:auto;
+    height:auto;
+    padding-top:5px;
+}

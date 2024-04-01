@@ -1,0 +1,61 @@
+$(searchForm).on("submit", function(event){
+	event.preventDefault();
+	let form = this;
+	let url = form.action;
+	let method = form.method;
+	let data = $(form).serialize();
+	let $listBody = $(listBody);
+	let $pagingArea = $(pagingArea);
+	
+	$.ajax({
+		url : url
+		, method : method
+		, data : data
+		, dataType : "json"
+		, success: function(jsonObj) {
+            $listBody.empty();
+			$pagingArea.empty();
+
+		let dataList = jsonObj.rsvtList;
+		let pagingHTML = jsonObj.pagingHTML;
+		
+		let trTags = null;
+		
+		if(dataList.length > 0){
+			$.each(dataList, function(index, rsvt){
+				trTags += `
+					<tr>
+						<td class="rnum">${rsvt.rnum }</td>
+						<td class="rsvtNo">
+							<a href="#rsvtList-select" data-bs-toggle="modal">${rsvt.rsvtNo }</a>
+						</td>
+						<td class="cstNm">${rsvt.cstmr.cstNm }</td>
+						<td class="rsvtYmd">${rsvt.rsvtYmd }</td>
+						<td class="rsvtCheckinYmd">${rsvt.rsvtCheckinYmd }</td>
+						<td class="rmtTypeCd">${rsvt.rsvtDetails[0].rmtTypeCd }</td>
+						<td class="rsvtRoomCnt">${rsvt.rsvtRoomCnt }</td>
+						<td class="rsvtAdultCnt">${rsvt.rsvtAdultCnt }</td>
+						<td class="rsvtChildCnt">${rsvt.rsvtChildCnt }</td>
+						<td class="rsvtSe">${rsvt.rsvtDetails[0].rsvtSe }</td>
+					</tr>	
+				`;
+			});
+		}else{
+			trTags = `
+				<tr>
+					<td colspan="10">조건에 맞는 예약내역이 없음.</td>
+				</tr>
+			`;
+		}
+		
+		$listBody.append(trTags);
+		$pagingArea.append(pagingHTML);
+		
+		}, error : function(jqXHR, txt, status){
+			console.log(txt, status, jqXHR);
+		}
+	}).done(()=>{
+		form.page.value="";
+	});
+	return false;
+}).submit();

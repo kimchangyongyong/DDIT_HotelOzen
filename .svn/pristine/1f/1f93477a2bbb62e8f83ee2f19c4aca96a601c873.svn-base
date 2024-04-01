@@ -1,0 +1,13 @@
+package kr.or.ddit.emp.pms.stay.service;
+
+import java.util.List;
+
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.RsvtVO;
+
+public interface EmpPmsStayChkinListService {
+	
+	public List<RsvtVO> retrieveChkinList(PaginationInfo paging);
+	
+	public RsvtVO retrieveRsvt(String rsvtNo);
+}

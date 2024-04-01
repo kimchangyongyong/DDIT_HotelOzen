@@ -1,0 +1,57 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+        <div class="row min-vh-100" style="background-image:url(${pageContext.request.contextPath}/resources/assets/img/lobby.png); background-size:cover;">
+        <div class="row min-vh-100" style="background-color: rgba(0, 0, 0, 0.6);  margin: 0; padding: 0;">
+         
+          <div class="col-6 d-none d-lg-block position-relative">
+            <div class="bg-holder" >
+            </div>
+            <!--/.bg-holder-->
+
+          </div>
+          
+          <div class="row flex-center min-vh-100 py-6 text-center">
+          <div class="col-sm-10 col-md-8 col-lg-6 col-xl-4 col-xxl-4"><a class="d-flex flex-center mb-4" href="">
+          <img class="me-2" src="../../../assets/img/icons/spot-illustrations/falcon.png" alt="" width="58" />
+          <span class="font-sans-serif text-primary fw-bolder fs-4 d-inline-block">Hotel Ozen</span></a>
+            <div class="card">
+              <div class="card-body p-4 p-sm-5">
+                <h5 class="mb-0">Forgot your ID?</h5><small>Enter your name and phone-number.</small>
+                <form class="mt-4">
+                  <input class="form-control" type="text" placeholder="Your Name" />
+                  <div class="mb-2"></div>
+                  <input class="form-control" type="email" placeholder="Your ID" />
+                  <div class="mb-2"></div>
+                  <input class="form-control" type="email" placeholder="Your Phone Number" />
+                  <div class="mb-2"></div>
+                  <button id="send" class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Send auth number</button>
+                </form>
+                  
+                  <div id="checkId" style="display: none;">
+                  <div class="mb-2"></div>
+                  <input class="form-control" type="email" placeholder="check auth number" />
+                  <div class="mb-2"></div>
+                  <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">change password</button>
+	              <a class="fs-10 text-600" href="">인증번호가 전송되지 않습니다<span class="d-inline-block ms-1">&rarr;</span></a>
+                  </div>
+                <a class="fs-10 text-600" href="${pageContext.request.contextPath }/emp/auth/findId.do">아이디 찾기<span class="d-inline-block ms-1">&rarr;</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+    <script>
+    	let sendBtn = document.querySelector("#send");
+		let myDiv = document.querySelector("#checkId");
+		function sendMsg(){
+			event.preventDefault();
+			myDiv.style.display = "block";
+		}
+		sendBtn.addEventListener("click", sendMsg)
+		
+
+    </script>

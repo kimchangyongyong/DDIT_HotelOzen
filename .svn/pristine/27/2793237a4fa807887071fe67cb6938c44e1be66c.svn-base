@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.table th,
+.table td {
+	padding: 12px; /* 테이블 셀의 안쪽 여백 조절 */
+	font-size: 15px; /* 테이블 글꼴 크기 조절 */
+}
+.container {
+	
+} 

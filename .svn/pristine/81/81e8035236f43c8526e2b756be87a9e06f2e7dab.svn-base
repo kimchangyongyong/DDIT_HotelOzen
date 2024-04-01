@@ -1,0 +1,59 @@
+package kr.or.ddit.cstmr.auth.controller;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.cstmr.auth.service.MberAuthService;
+import kr.or.ddit.global.vo.CstmrVO;
+
+@Controller
+@RequestMapping("/auth")
+public class CstmrAuthFindController {
+	
+	@Inject
+	MberAuthService service;
+	
+	@GetMapping("/findId.do")
+	public String findId() {
+		return "cstmr/auth/findId";
+	}
+	
+	@PostMapping(value = "/findId.do")
+	public String authenticate(
+		@ModelAttribute CstmrVO user
+		, HttpSession session
+		, Model model
+	) {
+		String logicalViewName = null;
+		
+		CstmrVO realUser = service.checkUser(user);
+		
+		if(realUser != null) {
+			session.setAttribute("realUser", realUser);
+			logicalViewName = "redirect:/auth/findId/result.do";
+		}else {			
+			model.addAttribute("message", "등록되지 않은 사용자입니다.");
+			logicalViewName = "cstmr/auth/findId";
+		}
+		
+		return logicalViewName;
+	}
+	
+	@GetMapping("/findPwd.do")
+	public String findPwd() {
+		return "cstmr/auth/findPwd";
+	}
+	
+	@GetMapping("/findId/result.do")
+	public String findIdResult() {
+		return "cstmr/auth/findResult";
+	}
+	
+}

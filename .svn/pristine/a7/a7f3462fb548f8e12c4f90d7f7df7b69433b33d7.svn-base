@@ -1,0 +1,7 @@
+.rmselectBG{
+	background-color: #f2f2f25e;
+}
+
+.rsvtRmCntTC{
+	color: red;
+}

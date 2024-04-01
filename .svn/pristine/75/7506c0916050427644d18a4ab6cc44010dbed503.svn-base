@@ -1,0 +1,53 @@
+package kr.or.ddit.emp.pms.stay.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.ChkoutVO;
+import kr.or.ddit.mybatis.mappers.EmpStayChkoutMapper;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class EmpPmsStayCHkoutListServiceImpl implements EmpPmsStayChkoutListService {
+
+	private final EmpStayChkoutMapper dao;
+	
+	@Override
+	public List<ChkoutVO> retreieveChkoutList(PaginationInfo paging) {
+		
+		int totalRecod = dao.selectTotalRecord(paging);
+		paging.setTotalRecord(totalRecod);
+		
+		List<ChkoutVO> chkoutList = dao.selectList(paging);
+		return chkoutList;
+	}
+
+	@Override
+	public Map<String, Object> retreieveChkout(String chkinNo) {
+		
+		Map<String, Object> chkoutView = new HashMap<>();
+		
+		ChkoutVO chkout =  dao.select(chkinNo);
+		chkoutView.put("chkout", chkout);
+		
+		List<ChkoutVO> chkoutRms = dao.selectRms(chkinNo);
+		chkoutView.put("chkoutRms", chkoutRms);
+		
+		return chkoutView;
+	}
+
+	@Override
+	public boolean modifyChkout(String chkinNo) {
+		
+
+		
+		String setleNo = dao.selectSetleNo();
+		return false;
+	}
+
+}

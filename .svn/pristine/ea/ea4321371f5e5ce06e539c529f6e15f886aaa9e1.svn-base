@@ -1,0 +1,84 @@
+$(searchForm).on("submit", function(event){
+	event.preventDefault();
+	let form = this;
+	let url = form.action;
+	let method = form.method;
+	let data = $(form).serialize();
+	let $listBody = $(listBody);
+	let $pagingArea = $(pagingArea);
+	
+	$.ajax({
+		url : url
+		, method : method
+		, data : data
+		, dataType : "json"
+		, success: function(jsonObj) {
+            $listBody.empty();
+			$pagingArea.empty();
+
+		let dataList = jsonObj.chkinList;
+		let pagingHTML = jsonObj.pagingHTML;
+		
+		let trTags = null;
+		
+		if(dataList.length > 0){
+			$.each(dataList, function(index, chkin){
+				trTags += `
+					<tr>
+						<td class="rnum">${chkin.rnum }</td>
+						<td class="rsvtNo">
+							<a href="#" class="chkinNoLink">${chkin.rsvtNo }</a>
+						</td>
+						<td class="cstNm">${chkin.cstmr.cstNm }</td>
+						<td class="rsvtYmd">${chkin.rsvtYmd }</td>
+						<td class="rsvtCheckinYmd">${chkin.rsvtCheckinYmd }</td>
+						<td class="rmtTypeCd">${chkin.rsvtDetails[0].rmtTypeCd }</td>
+						<td class="rsvtRoomCnt">${chkin.rsvtRoomCnt }</td>
+						<td class="rsvtAdultCnt">${chkin.rsvtAdultCnt }</td>
+						<td class="rsvtChildCnt">${chkin.rsvtChildCnt }</td>
+					</tr>	
+				`;
+			});
+		}else{
+			trTags = `
+				<tr>
+					<td colspan="9">조건에 맞는 예약내역이 없음.</td>
+				</tr>
+			`;
+		}
+		
+		$listBody.append(trTags);
+		$pagingArea.append(pagingHTML);
+		
+		}, error : function(jqXHR, txt, status){
+			console.log(txt, status, jqXHR);
+		}
+	}).done(()=>{
+		form.page.value="";
+	});
+	return false;
+}).submit();
+
+$(document).ready(function () {
+    $('.chkinNoLink').click(function (e) {
+        e.preventDefault(); // 기본 링크 이벤트 방지
+
+        var rsvtNo = $(this).text(); // 클릭된 예약번호
+        console.log("rsvtNo", rsvtNo);
+
+        let url = './chkin?rsvtNo=' + rsvtNo;
+
+        // AJAX 요청을 통해 컨트롤러에 해당 예약번호를 전달하고 데이터를 받아옵니다.
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: "json",
+            success: function (jsonObj) {
+				window.location.href = url;
+            },
+            error: function () {
+                alert('데이터를 불러오는 중 오류가 발생했습니다.');
+            }
+        });
+    });
+});

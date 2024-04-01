@@ -1,0 +1,187 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<style>
+.center{
+	 text-align: center;
+}
+.onfi{
+	max-width: 1000px;
+}
+
+</style>
+<div class="card mb-3">
+	<div class="card-header">
+		<div>
+			<div class="col-auto align-self-center">
+				<h5 data-anchor="data-anchor">비품요청</h5>
+				<div id="tableExample3"
+					data-list='{"valueNames":["fnum","fday","fxnm","amnt","empnm","stts"],"page":20,"pagination":true}'>
+					<div class="row justify-content-end g-0">
+						<div class="col-auto col-sm-5 mb-3">
+							<form>
+								<div class="input-group">
+									<input class="form-control form-control-sm shadow-none search"
+										type="search" placeholder="Search..." aria-label="search" />
+									<div class="input-group-text bg-transparent">
+										<span class="fa fa-search fs--1 text-600"></span>
+									</div>
+								</div>
+								<select class="form-select form-select-sm mb-3"
+									aria-label="Bulk actions" data-list-filter="data-list-filter">
+									<option selected="" value="">Select payment status</option>
+									<option value="Pending">완료</option>
+									<option value="Success">대기</option>
+									<option value="Blocked">반려</option>
+								</select>
+							</form>
+						</div>
+					</div>
+					<div class="table-responsive scrollbar">
+						<table class="table table-bordered table-striped fs--1 mb-0">
+							<thead class="bg-300 text-900">
+								<tr>
+									<th class="sort " data-sort="fnum">요청번호</th>
+									<th class="sort" data-sort="fday">요청일</th>
+									<th class="sort" data-sort="fxnm">비품명</th>
+									<th class="sort" data-sort="amnt">수량</th>
+									<th class="sort" data-sort="empnm">사원명</th>
+									<th class="sort" data-sort="stts">결재상태</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody class="list">
+								<tr>
+									<td class="fnum align-middle">1</td>
+									<td class="fday align-middle">2024.02.13</td>
+									<td class="fxnm align-middle">이불</td>
+									<td class="amnt align-middle">100</td>
+									<td class="empnm align-middle">김한강</td>
+									<td
+										class="align-middle text-end fs-0 white-space-nowrap payment">
+										<span class="badge rounded-pill badge-subtle-success">완료
+											<span class="ms-1 fas fa-stream" data-fa-transform="shrink-2"></span>
+									</span>
+									</td>
+									<td><button class="btn btn-primary" type="button"
+											data-bs-toggle="modal" data-bs-target="#error-modal">상세정보</button></td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+					<div class="d-flex justify-content-center mt-3">
+						<button class="btn btn-sm btn-falcon-default me-1" type="button"
+							title="Previous" data-list-pagination="prev">
+							<span class="fas fa-chevron-left"></span>
+						</button>
+						<ul class="pagination mb-0"></ul>
+						<button class="btn btn-sm btn-falcon-default ms-1" type="button"
+							title="Next" data-list-pagination="next">
+							<span class="fas fa-chevron-right"> </span>
+						</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade " id="error-modal" tabindex="-1" role="dialog"
+	aria-hidden="true">
+	<div class="modal-dialog onfi modal-dialog-centered" role="document">
+		<div class="modal-content position-relative">
+			<div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+				<button
+					class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+					data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+
+			<div class="modal-body p-0">
+				<div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+					<h4 class="mb-1" id="modalExampleDemoLabel">상세정보</h4>
+				</div>
+				<div class="p-4 pb-3">
+					<form>
+
+						<table class="table table-bordered">
+
+							<thead>
+								<tr>
+									<th class="bg-300 text-900 center">부서명</th>
+									<td>관리부</td>
+									<th class="bg-300 text-900 center">사원명</th>
+									<td>김한강</td>
+								</tr>
+								<tr>
+									<th class="bg-300 text-900 center">요청번호</th>
+									<td>1</td>
+									<th class="bg-300 text-900 center">요청일</th>
+									<td>2024.02.14</td>
+								</tr>
+								<tr>
+									<th class="bg-300 text-900 align-middle center" rowspan="4">신청</th>
+									<th class="bg-300 text-900 center">팀장</th>
+									<th class="bg-300 text-900 center">팀장</th>
+									<th class="bg-300 text-900 center"></th>
+								</tr>
+								<tr>
+									<td><button class="btn btn-secondary container" type="button"
+											data-bs-dismiss="modal">결재</button></td>
+									<td><button class="btn btn-secondary container" type="button"
+											data-bs-dismiss="modal">결재</button></td>
+								</tr>
+								<tr>
+
+								</tr>
+								<tr>
+									<td class="center">권지용</td>
+									<td class="center">김대성</td>
+									<td class="center"></td>
+								</tr>
+								<tr>
+									<th class="bg-300 text-900 center">참조</th>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</thead>
+						</table>
+						<table class="table table-bordered">
+							<tr>
+								<th class="bg-300 text-900">비품명</th>
+								<th class="bg-300 text-900">요청수</th>
+								<th class="bg-300 text-900">비품가격</th>
+								<th class="bg-300 text-900">총가격</th>
+							</tr>
+
+
+							<tr>
+								<td>이불</td>
+								<td>100</td>
+								<td>180,000</td>
+								<td>1,800,000</td>
+							</tr>
+							</tbody>
+						</table>
+							<div>
+								
+							</div>
+							<div class="mb-3">
+								<label class="col-form-label" for="message-text">Message:</label>
+								<textarea class="form-control" id="message-text"></textarea>
+							</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button"
+					data-bs-dismiss="modal">Close</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+

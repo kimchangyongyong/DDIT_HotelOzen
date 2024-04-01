@@ -1,0 +1,92 @@
+/**
+ * 
+ */
+
+const baseURI = window.location.href
+
+let form = document.querySelector("#submitForm")
+$("#submitForm").on("submit", (event) => {
+	event.preventDefault();
+	let url = form.action;
+	let method = form.method;
+
+	let formData = new FormData(form);
+	let jsonData = {};
+	formData.forEach((value, key) => {
+		jsonData[key] = value;
+	});
+	let listBody = document.querySelector("#listBody");
+
+	fetch(url, {
+		method: method,
+		headers: {
+			"Content-Type": "application/json",
+			"Accept": "application/json"
+		},
+		body: JSON.stringify(jsonData)
+
+	}).then(resp => {
+		if (resp.ok) {
+			return resp.json();
+		} else {
+			throw new Error("오류발생", { cause: resp })
+		}
+	}).then(jsonObj => {
+		listBody.innerHTML = '';
+
+		for (let mber of jsonObj) {
+			mberList.add(mber)
+		}
+		//listBody.innerHTML = trTags;
+	}).catch(err => {
+		console.error(err)
+	}).finally(() => {
+
+	})
+
+	return false;
+
+})
+
+function fnCommFetch(url, options, fnResolve) {
+	fetch(url, options)
+		.then(resp => {
+			if (resp.ok) {
+				return resp.json()
+			} else {
+				throw new Error(`상태코드 ${resp.status} 수신`, { cause: resp })
+			}
+		}).then(fnResolve).catch(err => console.error(err));
+}
+
+var fnRetrieveMber = (event) => {
+	let mberBtn = (event.relatedTarget);
+	let mberCstNo = (mberBtn.dataset.cstNo);
+
+	fnCommFetch(`${baseURI}/${mberCstNo}`, {
+		headers: {
+			"Accept": "application/json"
+		}
+	}, (jsonObj) => {
+		let mber = jsonObj.mberVO;
+		console.log(mber)
+		for (let n in mber) {
+			let myInput = document.getElementById(n)
+			console.log(n)
+			console.log(myInput)
+			if (myInput == null) continue
+			myInput.value = mber[n];
+		}
+	})
+}
+
+
+
+document.addEventListener("show.bs.modal", fnRetrieveMber);
+
+document.addEventListener("DOMContentLoaded", () => {
+	let options = { "valueNames": ["cstNo", "mberNm", "mberId", "mberHp", "mberMbrsh", "mberMlg"], "page": 10, "pagination": true } 
+	mberList = new List('tableExample3', options)
+	$("#submitForm").submit();
+});
+

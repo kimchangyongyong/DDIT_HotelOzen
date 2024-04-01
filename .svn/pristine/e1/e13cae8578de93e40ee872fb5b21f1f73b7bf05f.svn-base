@@ -1,0 +1,28 @@
+package kr.or.ddit.global.vo;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+import java.util.List;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(of="cstNo")
+public class CstmrVO implements Serializable {
+
+	private String cstNo;
+	private LocalDate cstBirth;
+	private String cstClsfcCd;
+	private String cstGen;
+	private String cstNm;
+	private String cstPh;
+	private String cstRefndAcnt;
+	private String cstRefndBank;
+	
+	private String age;
+	
+	private List<RsvtVO> rsvt;
+}
+

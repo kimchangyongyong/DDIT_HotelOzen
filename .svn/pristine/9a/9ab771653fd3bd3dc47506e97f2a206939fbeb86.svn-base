@@ -1,0 +1,32 @@
+package kr.or.ddit.mybatis.mappers;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.Test;
+
+import kr.or.ddit.AbstractRootContextTest;
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.MberVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+class MberMapperTest  extends AbstractRootContextTest {
+
+	@Inject
+	private MberMapper dao;
+	
+	@Test
+	public void selectTest() {
+		log.info("{}", dao);
+		MberVO vo = dao.select("M2400001");
+		assertNotNull(vo);
+	}
+
+	@Test
+	public void selectTotalRecordTest() {
+		log.info("{}", dao.selectList());
+		
+	}
+}

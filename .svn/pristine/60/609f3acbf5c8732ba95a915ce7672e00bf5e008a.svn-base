@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+/* .s0 {
+	background-size: cover;
+	background-image:url('${pageContext.request.contextPath}/resources/assets/img/generic/hotel01.jpg');
+	/* 	background-color : green; */ 
+*/
+
+#fp-nav ul li a span {
+	background-color: #fff;
+}
+
+/* .h0 {
+	background-color: green;
+} */
+
+*{
+	padding : 0;
+	margin : 0;
+}
+
+
+.footer-video{
+	width : 100%;
+	height : 600px;
+	overflow : hidden;
+	margin : 0px auto;
+/* 	position : relative;
+	opacity : .3; */
+	filter: brightness(0.7) saturate(0.7);
+	position: relative;
+}
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white; /* 텍스트 색상 설정 */
+    text-align: center;
+}
+.first_inner > a {
+	float: right;
+}

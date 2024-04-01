@@ -1,0 +1,17 @@
+package kr.or.ddit.emp.auth.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/emp/auth")
+public class EmpAuthChangePwdController {
+	
+	
+	
+	@PostMapping("/myinfo/changePwd.do")
+	public void changePwd() {
+		
+	}
+}

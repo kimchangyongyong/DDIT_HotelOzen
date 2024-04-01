@@ -1,0 +1,24 @@
+package kr.or.ddit.global.vo;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(of= {"empNo", "workDate"})
+public class WorkSchdlVO implements Serializable{
+	
+	private String empNo;
+	private String empNm;
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate workDate;
+	private String workType;
+
+}

@@ -1,0 +1,484 @@
+@charset "UTF-8";
+
+#fp-nav ul li a span {
+	background-color: #fff;
+}
+
+.d-flex {
+	display: flex;
+}
+
+/* footer 텍스트 */
+.videoTopText {
+	z-index : 100;
+}
+.mainFooter_top {
+	padding-top : 50px;
+	padding-bottom : 50px;
+}
+.mainFooter_row {
+	margin-left : 50px;
+}
+.mainFooter_info {
+	text-align : right;
+}
+.footer_onText {
+	text-align : right;
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    padding-bottom: 30px;
+	margin-right: 50px;
+	color: white;
+}
+.mainFooter_img {
+	width : 50px;
+	height : 50px;
+}
+.mainFooter-text{
+	white-space: nowrap; /* 줄 바꿈 방지 */
+}
+
+
+
+.footer-video {
+	width: 100%;
+	height: 300px;
+	overflow: hidden;
+	margin: 0px auto;
+	/* 	position : relative;
+	opacity : .3; */
+	filter: brightness(0.7) saturate(0.7);
+	position: relative;
+}
+
+.text-overlay {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-30%, -30%);
+	color: white; /* 텍스트 색상 설정 */
+	text-align: center;
+}
+
+.first_inner>a {
+	float: right;
+}
+
+.main_reserv_container {
+	height: 17rem;
+	margin-left: 300px;
+	margin-right: 300px;
+	box-sizing: border-box;
+}
+
+.footer-video_inner {
+	width: 100%
+}
+
+.reserv-top {
+	height: 50%;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	background-color: yellow;
+}
+
+.reserv-top>b {
+	display: flex;
+	justify-content: center; /* 좌우 정렬 */
+	font-size: 50px;
+}
+
+.reserv-bottom {
+	background-color: blue;
+}
+
+.reserv-bottom>p {
+	display: flex;
+	justify-content: center; /* 좌우 정렬 */
+	font-size: 50px;
+}
+
+#roomBox {
+	width: 1200px;
+	height: 380px;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+	margin: 0 auto;
+	display: flex;
+	margin-bottom: 30px;
+}
+.inputBox{
+	margin: 0 auto;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	height: 100px;
+	width: 1200px;
+}
+.room-num {
+	width: 130px;
+	padding-top: 10px;
+	margin-right: 30px;
+}
+
+.room-btn {
+	width: 230px;
+	border-bottom: 1px solid;
+	margin: 10px;
+	padding-bottom: 10px;
+}
+
+.room-btn>span {
+	text-align: center;
+	padding-right: 21px;
+	padding-left: 21px;
+	margin-left: 25px;
+	margin-right: 25px;
+	width: 200px;
+	font-size: 18px;
+	font-weight: 300;
+}
+
+.adl-span {
+	padding-right: 30px !important;
+	padding-left: 30px !important;
+}
+
+#roomBox>div>div>div {
+	justify-content: center;
+	text-align: center;
+	align-items: center;
+}
+
+#roomBox>div {
+	justify-content: center;
+	text-align: center;
+	align-items: center;
+	padding: 20px;
+	padding-left: 75px;
+	padding-top: 31px;
+}
+.inner{
+    padding-top: 130px;
+}
+#submitForm{
+	display: flex;
+	justify-content: center;
+}
+.back{
+	background-color: black;
+	width: 100%;
+	height: 100%;
+}
+.room {
+	margin-right: 110px;
+}
+
+.room-btn>button {
+	border: none;
+	background-color: #fff;
+	width: 33px;
+	height: 33px;
+}
+
+#roomBox>button {
+	border: none;
+	background-color: #fff;
+	width: 45px;
+	height: 45px;
+	float: right;
+	margin: 10px;
+}
+
+.room-num>h2 {
+	font-size: 24px;
+	font-weight: 300;
+}
+
+#input-box > div:first-child {
+	width: 400px;
+	text-align: center;
+	justify-content: center;
+	padding-top: 10px;
+}
+
+#input-box > div > div{
+	padding: 40px;
+	padding-top: 0px;
+}
+
+#input-box > div > div > h3{
+	color: white;
+	font-weight: 700;
+	text-shadow: 1px 1px 2px gray;
+}
+h5{
+	color: #cdcdcd;
+	font-weight: 700;
+	font-size: 15px;
+	vertical-align: bottom;
+	text-shadow: 0px 0px 2px gray;
+}
+h1{
+	color: white;
+	font-family: JungChul !important;
+	text-align: center;
+	font-size: 42px;
+	margin-bottom: 70px;
+	text-shadow: 2px 2px 3px gray;
+	 
+}
+input[type="date"]{
+	border: none;
+    width: 200px;
+    height: 30px;
+    font-size: 25px;
+    color: white !important;
+    background-color: transparent;
+    margin-top: 11px;
+    font-weight: 700;
+    margin-left: 35px;
+}
+.tit{
+	align-items: center;
+	position: relative;
+	align-items: center;
+	width: 1200px;	
+}
+.hotel{
+	margin-top: 2px;
+	width: 168px;
+	text-align: left;
+	margin-right: 3px;
+}
+.hotel > h3 {
+	font-weight: 700;
+	color: white;
+	font-size: 25px;
+	margin-top: 11px;
+	
+}
+.chekInBox{
+	width: 195px;
+	text-align: left;
+	margin-left:38px;
+}
+.chekOutBox{
+	width: 231px;
+	text-align: left;
+	margin-left:38px;
+}
+.roomCnt{
+	width: 90px;
+	text-align: right;
+	margin-left: 8px;
+}
+.adultCnt{
+	width: 94px;
+	text-align: right;
+}
+.childCnt{
+	width: 117px;
+	text-align: right;
+}
+.btnBox{
+	padding:0px !important;
+}
+#submitBtn{
+	width: 130px;
+	height: 50px;
+	margin-top: 2px;
+}
+
+input[type="date"] {
+	position : relative;
+}
+input[type="date"]::-webkit-clear-button,
+input[type="date"]::-webkit-inner-spin-button{
+	display:none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height: 100%;
+	background: transparent;
+	color: transparent;
+	cursor: pointer;
+}
+.dash{
+	color: white;
+    font-weight: 700;
+    font-size: 38px;
+}
+.tit > div:first-child {
+	width: 164px;
+	margin-left: 15px;
+}
+
+
+
+/* section2 => swiper.js*/
+
+.visual-sec{
+    width: 70%;
+    height: 100%;
+}
+
+.visual-sec .txt-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  box-sizing: border-box;
+  width: 90%;
+  padding: 0 2.0rem;
+  transform: translate(-50%, -60%);
+  z-index: 10;
+}
+.visual-sec .txt-box > h3 {
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.4;
+  word-break: keep-all;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: 1s 0.2s;
+}
+.visual-sec .txt-box > p {
+  color: #fff;
+  margin-top: 1.6em;
+  font-size: 1.6rem;
+  transform: translateY(20px);
+  opacity: 0;
+  word-break: keep-all;
+  transition: 1s 0.4s;
+}
+.visual-sec .swiper-slide-active .txt-box > h3,
+.visual-sec .swiper-slide-active .txt-box > p {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.visual-sec .img-box {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.visual-sec .img-box > div {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+.visual-sec .swiper-slide-active img {
+  transform: scale(1.0);
+}
+.visual-sec .all-box {
+  position: absolute;
+  display: inline-flex;
+  width: 90%;
+  height: 50px;
+  left: 50%;
+  bottom: 10px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+.visual-sec .progress-box {
+  position: relative;
+  width: 170px;
+  height: 50px;
+  z-index: 11;
+}
+.autoplay-progress {
+  position: absolute;
+  left: 30px;
+  top: 10px;
+  z-index: 10;
+  width: 100px;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.autoplay-progress svg {
+  --progress: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+/*  height: 100%;*/
+  stroke-width: 4px;
+  stroke: #fff;
+  fill: none;
+  stroke-dashoffset: calc(100 * (1 - var(--progress)));
+  stroke-dasharray: 100;
+}
+/* stroke-dashoffset은 선의 테두리가 얼마나 이동하는지 결정 progress라는 변수를 사용하여 계산되어진 값이 들어감 100은전체길이 
+   stroke-dasharray는 선의 테두리를 구성하는 선 조각의 길이를 설정 전체길이가 100
+ */
+.visual-sec .swiper-pagination {
+  display: flex;
+  color: #fff;
+  justify-content: space-between;
+  position: static;
+  text-align: left;
+}
+.visual-sec .arrow-box {
+  position: relative;
+  width: 80px;
+  height: 50px;
+}
+
+.visual-sec .swiper-button-next,
+.visual-sec .swiper-button-prev {
+  width: 21px;
+  height: 21px;
+  top: 0;
+  margin-top: 0;
+  background: url(https://www.century21cc.co.kr/views/res/imgs/common/icon-arrow-left-fff.svg) no-repeat center / 100%;
+}
+
+.visual-sec .swiper-button-next {
+  background-image: url(https://www.century21cc.co.kr/views/res/imgs/common/icon-arrow-right-fff.svg);
+}
+.visual-sec .swiper-button-next::after,
+.visual-sec .swiper-button-prev::after {
+  font-size: 0;
+}
+
+
+@media screen and (max-width: 480px) {
+  .visual-sec .txt-box {
+    left: 46%;
+  }
+  .visual-sec .txt-box > h3 {
+    font-size: 1.2rem;
+  }
+  .visual-sec .txt-box > p {
+    font-size: 0.8rem
+  }
+  .visual-sec .all-box {
+    bottom: 0;
+    height: 30px;
+  }
+}
+
+/* section3 */
+.s3{
+	position : relative;
+}
+.memberShip_sq {
+	width : 60%;
+	height : 60%;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :#ece1cf;
+}

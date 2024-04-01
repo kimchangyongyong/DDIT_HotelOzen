@@ -1,0 +1,23 @@
+package kr.or.ddit.cstmr.rsvt.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/cstmr/rsvt")
+public class CstmrRsvtRetrieveController {
+
+	@GetMapping
+	public String rsvtList() {
+		return "cstmr/rsvt/rsvtList";
+	}
+	
+	@GetMapping("{rsvtNo}")
+	public String rsvtView(
+		@PathVariable String rsvtNo	
+		) {
+		return "cstmr/rsvt/rsvtView";
+	}
+}

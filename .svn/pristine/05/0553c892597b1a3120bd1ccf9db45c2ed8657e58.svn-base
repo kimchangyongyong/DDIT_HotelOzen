@@ -1,0 +1,45 @@
+package kr.or.ddit.mybatis.mappers;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.Test;
+
+import kr.or.ddit.AbstractRootContextTest;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+class HrmEmpMapperTest extends AbstractRootContextTest{
+	
+	@Inject
+	private HrmEmpMapper dao;
+
+	@Test
+	void testInsert() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSelect() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSelectList() {
+		log.info("전체 : {}", dao.selectList());
+		log.info("근태 : {}", dao.selectDclzList());
+		log.info("퇴사자: {}", dao.selectRtrmList());
+	}
+
+	@Test
+	void testUpdate() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testDelete() {
+		fail("Not yet implemented");
+	}
+
+}

@@ -1,0 +1,84 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<div class="col mb-3">
+	<div class="card h-100">
+		<div class="card-header">
+			<div class="row flex-between-end">
+				<div class="col-auto align-self-center">
+					<h5 class="mb-0" data-anchor="data-anchor" id="share-dataset">
+						<font style="vertical-align: inherit;"> <font
+							style="vertical-align: inherit;">발주 결재 신청 리스트조회 페이지</font>
+						</font>
+					</h5>
+				</div>
+
+				<div id="tableExample4"
+					data-list='{"valueNames":["no","rmNo","rmType","rmstate","clienYN"],"page":10,"pagination":true}'>
+					<div class="row justify-content-end g-0">
+						<div class="col-auto col-sm-5 mb-3">
+							<form>
+								<div class="input-group">
+									<input class="form-control form-control-sm shadow-none search"
+										type="search" placeholder="Search..." aria-label="search" />
+									<div class="input-group-text bg-transparent">
+										<span class="fa fa-search fs-10 text-600"></span>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="table-responsive scrollbar">
+						<table
+							class="table table-bordered table-striped fs-10 mb-0 bg-light">
+							<thead class="bg-200 border border-bottom">
+								<tr>
+									<th class="text-900 sort" data-sort="no">번호</th>
+ 									<th class="text-900 sort" data-sort="fxMinCnt">작성자</th>
+									<th class="text-900 sort" data-sort="fxStaCnt">작성일</th>
+									<th class="text-900 sort" data-sort="fxIn">상태</th>
+									<th class="text-900 sort" data-sort="fxIn">상세</th>
+								</tr>
+							</thead>
+							<tbody class="list" id="table-purchase-body">
+								<c:forEach var="i" begin="1" end="30">
+									<tr class="btn-reveal-trigger">
+										<td class="align-middle white-space-nowrap no">${i }</td>
+										<td class="align-middle white-space-nowrap rmType">김창용</td>
+										<td class="align-middle white-space-nowrap rmstate">2024-02-16</td>
+										<td
+											class="align-middle text-center fs-9 white-space-nowrap status clienYN">
+											<span class="badge badge rounded-pill badge-subtle-success">
+												승인 <span class="ms-1 fas fa-check"
+												data-fa-transform="shrink-2"></span>
+											</span> 
+											<span class="badge badge rounded-pill badge-subtle-secondary">
+												미승인 <span class="ms-1 fas fa-times"
+												data-fa-transform="shrink-2"></span>
+											</span> 
+										</td>
+										<td class="align-middle white-space-nowrap rmstate">[상세]</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					<div class="d-flex justify-content-center mt-3">
+						<button class="btn btn-sm btn-falcon-default me-1" type="button"
+							title="Previous" data-list-pagination="prev">
+							<span class="fas fa-chevron-left"></span>
+						</button>
+						<ul class="pagination mb-0"></ul>
+						<button class="btn btn-sm btn-falcon-default ms-1" type="button"
+							title="Next" data-list-pagination="next">
+							<span class="fas fa-chevron-right"></span>
+						</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>

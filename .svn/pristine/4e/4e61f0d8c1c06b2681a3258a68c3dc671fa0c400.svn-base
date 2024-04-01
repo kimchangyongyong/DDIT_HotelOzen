@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.RecomMbrshMapper">
+
+<select id="select" resultType="RecomMbrshVO" parameterType="string">
+	SELECT
+	    CST_NO
+	  , RECOM_MBRSH_1
+	  , DECODE(RECOM_MBRSH_1
+	  			, 'BBLUE', '0'
+	  			, 'LBLUE', '1'
+	  			, 'DBLUE', '2'
+	  			, 'BGREEN', '3'
+	  			, 'LGREEN', '4'
+	  			, 'DGREEN', '5'
+	  			, 'BRED', '6'
+	  			, 'LRED', '7'
+	  			, 'DRED', '8'
+	  			, 'BBLACK', '9'
+	  			, 'LBLACK', '10'
+	  			, 'DBLACK', '11'
+	  			, '9')
+	  			AS RECOM_MBRSH_LBL_1
+	  , RECOM_MBRSH_2
+	  , DECODE(RECOM_MBRSH_2
+	  			, 'BBLUE', '0'
+	  			, 'LBLUE', '1'
+	  			, 'DBLUE', '2'
+	  			, 'BGREEN', '3'
+	  			, 'LGREEN', '4'
+	  			, 'DGREEN', '5'
+	  			, 'BRED', '6'
+	  			, 'LRED', '7'
+	  			, 'DRED', '8'
+	  			, 'BBLACK', '9'
+	  			, 'LBLACK', '10'
+	  			, 'DBLACK', '11'
+	  			, '9')
+	  			AS RECOM_MBRSH_LBL_2
+	  , RECOM_MBRSH_3
+	  , DECODE(RECOM_MBRSH_3
+	  			, 'BBLUE', '0'
+	  			, 'LBLUE', '1'
+	  			, 'DBLUE', '2'
+	  			, 'BGREEN', '3'
+	  			, 'LGREEN', '4'
+	  			, 'DGREEN', '5'
+	  			, 'BRED', '6'
+	  			, 'LRED', '7'
+	  			, 'DRED', '8'
+	  			, 'BBLACK', '9'
+	  			, 'LBLACK', '10'
+	  			, 'DBLACK', '11'
+	  			, '9')
+	  			AS RECOM_MBRSH_LBL_3
+	FROM
+	    TB_RECOM_MBRSH
+	WHERE CST_NO = #{cst_no} AND ROWNUM = 1
+</select>
+</mapper>

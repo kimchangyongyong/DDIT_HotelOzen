@@ -1,0 +1,27 @@
+package kr.or.ddit.cstmr.myinfo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/myinfo")
+public class CstmrMyInfoController {
+	@GetMapping
+	public String mypage() {
+		return "cstmr/myinfo/mypage";
+	}
+	
+	@GetMapping("/updateInfo.do")
+	public String updateInfoForm() {
+		return "cstmr/myinfo/updateInfo";
+	}
+	
+	@PostMapping("/updateInfo.do")
+	public void updateInfoLogic() {
+		
+	}
+
+
+}

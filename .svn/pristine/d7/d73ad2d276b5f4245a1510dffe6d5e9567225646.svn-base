@@ -1,0 +1,38 @@
+package kr.or.ddit.mybatis.mappers;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.Test;
+
+import kr.or.ddit.AbstractRootContextTest;
+import kr.or.ddit.global.common.paging.PaginationInfo;
+import kr.or.ddit.global.vo.EmpVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+class EmpMapperTest extends AbstractRootContextTest {
+	
+	@Inject
+	private EmpMapper dao;
+	
+	@Test
+	void testSelect() {
+		EmpVO vo = dao.select("E240001");
+		log.info("{}", vo);
+	}
+
+	@Test
+	void testSelectTotalRecord() {
+		PaginationInfo paging = new PaginationInfo(2, 3);
+		
+		int record= dao.selectTotalRecord(paging);
+		paging.setTotalRecord(record);
+		
+		log.info("{}", record);
+		log.info("{}", dao.selectList(paging));
+		
+	}
+
+}

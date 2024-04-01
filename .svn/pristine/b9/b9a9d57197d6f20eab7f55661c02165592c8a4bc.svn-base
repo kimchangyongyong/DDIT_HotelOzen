@@ -1,0 +1,97 @@
+package kr.or.ddit.emp.pms.rsvt.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.global.vo.ChkinVO;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.RoomVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import kr.or.ddit.mybatis.mappers.EmpRsvtAddMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class EmpPmsRsvtAddServiceImpl implements EmpPmsRsvtAddServcie{
+
+	private final EmpRsvtAddMapper dao;
+	
+	@Override
+	public Map<String, Object> retrieveRoomList(String roomTypeNm) {
+		
+		Map<String, Object> rsvtselect = new HashMap<>();
+		
+		List<RoomVO> rsvtroomList = dao.selectList(roomTypeNm);
+		
+		int rsvtYmdCnt = dao.selectRsvtCnt(roomTypeNm);
+		
+		rsvtselect.put("rsvtroomList", rsvtroomList);
+		rsvtselect.put("rsvtYmdCnt", rsvtYmdCnt);
+		
+		return rsvtselect;
+	}
+
+	
+	@Override
+	public ServiceResult createChkin(ChkinVO newChkin) {
+		
+		ServiceResult result = null;
+		
+		CstmrVO cstmr = new CstmrVO();
+		
+		String cstNo = dao.selectCstmrNo();
+		cstmr.setCstNo(cstNo);
+		cstmr.setCstNm(newChkin.getCstmr().getCstNm());
+		cstmr.setCstHp(newChkin.getCstmr().getCstHp());
+		log.info("######selectCstmrNo, cstNo:{}",cstNo);
+		log.info("######CstmrVO, cstNo:{}",cstmr);
+		
+		int cstmrInsert = dao.insertCstmr(cstmr); //cstmr 생성
+		log.info("######cstmrInsert:{}",cstmrInsert);
+		
+		log.info("##########cstmrInsert:{}",cstmrInsert);
+		
+		String chkinNo = dao.selectChkinNo();
+		log.info("######selectChkinNo, chkinNo:{}",chkinNo);
+		newChkin.setChkinNo(chkinNo); //체크인 번호
+		newChkin.setCstNo(cstNo); //고객번호
+			
+		String setleNo = dao.selectSetleNo();
+		log.info("######selectSetleNo, setleNo:{}",setleNo);
+		newChkin.setCiSetleNo(setleNo); //결제번호
+		
+		int totalNmpr = newChkin.getCiAdultCnt() + newChkin.getCiAdultCnt();
+		log.info("###### totalNmpr:{}",totalNmpr);
+		newChkin.setCiTotalNmpr(totalNmpr); //총인원수
+		
+		String carNo = dao.selectCarNo(newChkin.getCar().getCarNm());
+		log.info("######selectCarNo, carNo:{}",carNo);
+		newChkin.setCiCarKind(carNo);
+		
+		int chkinInsert = dao.insertChkin(newChkin);
+		log.info("######chkinInsert:{}",chkinInsert);
+		
+		String rmNo = newChkin.getRmNo();
+		int roomUpdate = dao.updateRoom(rmNo);
+		log.info("######roomUpdate:{}",roomUpdate);
+		
+		if(chkinInsert != 1 || cstmrInsert != 1) {
+			throw new RuntimeException();
+		}else {
+			result = ServiceResult.OK;
+		}
+		
+		int chkoutInsert = dao.inserChkout(chkinNo);
+		log.info("######chkoutInsert:{}",chkoutInsert);
+		
+		return result;
+	}
+
+
+}

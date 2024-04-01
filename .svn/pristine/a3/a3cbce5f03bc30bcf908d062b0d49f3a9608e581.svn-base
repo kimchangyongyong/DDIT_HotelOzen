@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.EmpRsvtMapper">
+
+	<resultMap type="RsvtVO" id="rsvtMap" autoMapping="true">
+		<id property="rsvtNo" column="RSVT_NO"/>
+	</resultMap>
+
+	<select id="selectList" resultMap="rsvtMap">
+		SELECT 
+			RSVT_NO
+			, CST_NM
+			, RSVT_YMD
+			, RSVT_CHECKIN_YMD
+			, RM.RMT_TYPE_CD
+			, RSVT_ROOM_CNT
+			, RSVT_ADULT_CNT
+			, RSVT_CHILD_CNT
+			, RSVT_SE
+		FROM 
+			TB_RSVT
+			INNER JOIN (SELECT *
+		                FROM TB_ROOM 
+		                    INNER JOIN 
+		                    	TB_RSVT_DETAILS USING(RMT_TYPE_CD)
+		                    INNER JOIN 
+		                    	TB_ROOM_TYPE USING(RMT_TYPE_CD)) RM USING(RSVT_NO)
+		    INNER JOIN 
+		    	TB_CSTMR USING (CST_NO)
+	</select> 
+
+
+</mapper>

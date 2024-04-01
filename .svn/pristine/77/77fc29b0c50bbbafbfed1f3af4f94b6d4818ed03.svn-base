@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+.mypage-side{
+	background: #f9f9f9;
+	padding: 52px 35px 44px;
+}
+
+.mypage-side .name {
+    margin-bottom: 21px;
+    font: 500 32px/1 notokrR;
+    letter-spacing: -.025em;
+}
+
+.mypage-side .info a {
+    display: block;
+    margin-bottom: 3px;
+    letter-spacing: -.01em;
+}
+
+.mypage-side .info a .tit {
+    display: inline-block;
+    width: 72px;
+    color: #000;
+    font: 400 18px/1.5 gothamL,notokrL;
+}
+
+.mypage-side .info a .txt {
+    position: relative;
+    color: #989442;
+    font: 500 18px/1.5 gothamM,notokrR;
+    word-break: break-all;
+}
+
+.mypage-side .lnb li {
+    font: 500 22px/1 notokrR;
+    letter-spacing: -.025em;
+}
+
+.mypage-side .lnb li > ul {
+    margin: 16px 0 37px;
+    padding-inline-start:0px;
+}
+
+.mypage-side .lnb li > ul li a {
+    font: 400 18px/38px gothamL, notokrL;
+    letter-spacing: -.01em;
+}

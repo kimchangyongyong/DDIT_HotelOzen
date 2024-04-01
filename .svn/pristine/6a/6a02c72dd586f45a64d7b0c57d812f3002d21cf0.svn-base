@@ -1,0 +1,152 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<style>
+div {
+	font-size : 17px;	
+}
+.weather {
+  list-style: none;
+}
+</style>
+
+  <header id="header">
+   <nav class="navbar navbar-standard navbar-expand-lg fixed-top py-5">
+       <div class="container mx-5"><a class="navbar-brand" href="${pageContext.request.contextPath}/." ><img src="${pageContext.request.contextPath}/resources/assets/img/generic/hotelozen.png" width="270" /></a>
+       <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStandard" aria-controls="navbarStandard" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+       <div class="scrollbar collapse navbar-collapse" id="navbarStandard">
+       	<div class="mx-10">
+          <ul class="navbar-nav" data-top-nav-dropdowns="data-top-nav-dropdowns">
+          
+<!-- Accommodation -->
+            <li class="nav-item dropdown text-dark">
+            	<a class="nav-link link-600" href="room.do" role="button" id="apps">Accommodation</a>
+            </li>
+<!-- Recommendation -->
+            <li class="nav-item dropdown mx-5">
+            	<a class="nav-link link-600" href="#" role="button" id="pagess">Recommendation</a>
+            </li>
+<!-- Community -->
+            <li class="nav-item dropdown">
+            	<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="moduless">Community</a>
+	              <div class="dropdown-menu dropdown-menu-card border-0 mt-0" aria-labelledby="moduless">
+	                <div class="bg-white dark__bg-1000 rounded-3 py-2">
+	                	<a class="dropdown-item link-600 fw-medium" href="${pageContext.request.contextPath}/comm/notice/noticeList.do">공지사항</a>
+	                </div>
+	                <div class="bg-white dark__bg-1000 rounded-3 py-2">
+	                	<a class="dropdown-item link-600 fw-medium" href="${pageContext.request.contextPath}/comm/FAQ">FAQ</a>
+	                </div>
+	                <div class="bg-white dark__bg-1000 rounded-3 py-2">
+	                	<a class="dropdown-item link-600 fw-medium" href="${pageContext.request.contextPath}/comm/qestnar">설문조사</a>
+	                </div>
+	              </div>
+            </li>
+<!-- About us -->
+            <li class="nav-item dropdown mx-5">
+            	<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="documentations">About us</a>
+                <div class="dropdown-menu dropdown-menu-card border-0 mt-0" aria-labelledby="documentations">
+                  <div class="bg-white dark__bg-1000 rounded-3 py-2">
+                	<a class="dropdown-item link-600 fw-medium" href="${pageContext.request.contextPath}/intrcn/location">오시는길</a>
+                  </div>
+                  <div class="bg-white dark__bg-1000 rounded-3 py-2">
+                	<a class="dropdown-item link-600 fw-medium" href="${pageContext.request.contextPath}/intrcn/floormap.do">층별 안내도</a>
+                  </div>
+                  <div class="bg-white dark__bg-1000 rounded-3 py-2">
+                	<a class="dropdown-item link-600 fw-medium" href="${pageContext.request.contextPath}/intrcn/sbrsLiar">부대시설</a>
+                  </div>
+                  <div class="bg-white dark__bg-1000 rounded-3 py-2">
+                	<a class="dropdown-item link-600 fw-medium" href="${pageContext.request.contextPath}/intrcn/trstspot.do">관광지</a>
+                  </div>
+                </div>
+             </li>
+          </ul>
+         </div>
+      </div>
+      </div>
+	  <div class="px-2 scrollbar collapse navbar-collapse" id="navbarStandard">
+	    <ul class="main-weather">
+	    	<li class="weather">
+	    		<span class="text">
+	    			<span class="text-900 fs-6 bi-sun-fill"></span>
+	    			<em>맑음</em>
+	    			,
+	    		</span>
+	    		<span>
+	    			<em>미세먼지 좋음</em>
+	    		</span>
+	    		<span class="temp">
+	    			<em>10℃</em>
+	    		</span>
+	    	</li>
+	    </ul>
+	   </div>  
+  
+<!-- =================================== -->
+		<div>
+         <div class="navbar navbar-standard navbar-expand-lg mx-5 fixed-top scrollbar collapse navbar-collapse" id="navbarStandard">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item d-flex align-items-center me-2">
+              <div class="dropdown theme-control-dropdown landing-drop"><a class="nav-link d-flex align-items-center dropdown-toggle fa-icon-wait pe-1" href="#" role="button" id="themeSwitchDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="d-none d-lg-block"><span class="fas fa-sun" data-theme-dropdown-toggle-icon="light"></span><span class="fas fa-moon" data-theme-dropdown-toggle-icon="dark"></span><span class="fas fa-adjust" data-theme-dropdown-toggle-icon="auto"></span></span><span class="d-lg-none">Switch theme</span></a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-caret border py-0 mt-1" aria-labelledby="themeSwitchDropdown">
+                  <div class="bg-white dark__bg-1000 rounded-2 py-2">
+                    <button class="dropdown-item link-600 d-flex align-items-center gap-2" type="button" value="light" data-theme-control="theme"><span class="fas fa-sun"></span>Light<span class="fas fa-check dropdown-check-icon ms-auto text-600"></span></button>
+                    <button class="dropdown-item link-600 d-flex align-items-center gap-2" type="button" value="dark" data-theme-control="theme"><span class="fas fa-moon" data-fa-transform=""></span>Dark<span class="fas fa-check dropdown-check-icon ms-auto text-600"></span></button>
+                    <button class="dropdown-item link-600 d-flex align-items-center gap-2" type="button" value="auto" data-theme-control="theme"><span class="fas fa-adjust" data-fa-transform=""></span>Auto<span class="fas fa-check dropdown-check-icon ms-auto text-600"></span></button>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarDropdownLogin" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
+              <div class="dropdown-menu dropdown-caret dropdown-menu-end dropdown-menu-card" aria-labelledby="navbarDropdownLogin">
+                <div class="card shadow-none navbar-card-login">
+                  <div class="card-body fs-10 p-4 fw-normal">
+                    <div class="row text-start justify-content-between align-items-center mb-2">
+                      <div class="col-auto">
+                        <h5 class="mb-0">Log in</h5>
+                      </div>
+                      <div class="col-auto">
+                        <p class="fs-10 text-600 mb-0">or <a href="${pageContext.request.contextPath}/resources/pages/authentication/simple/register.html">Create an account</a></p>
+                      </div>
+                    </div>
+                    <form>
+                      <div class="mb-3">
+                        <input class="form-control" type="email" placeholder="Email address" />
+                      </div>
+                      <div class="mb-3">
+                        <input class="form-control" type="password" placeholder="Password" />
+                      </div>
+                      <div class="row flex-between-center">
+                        <div class="col-auto">
+                          <div class="form-check mb-0">
+                            <input class="form-check-input" type="checkbox" id="modal-checkbox" />
+                            <label class="form-check-label mb-0" for="modal-checkbox">Remember me</label>
+                          </div>
+                        </div>
+                        <div class="col-auto"><a class="fs-10" href="${pageContext.request.contextPath}/resources/pages/authentication/simple/forgot-password.html">Forgot Password?</a></div>
+                      </div>
+                      <div class="mb-3">
+                        <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button>
+                      </div>
+                    </form>
+                    <div class="position-relative mt-4">
+                      <hr />
+                      <div class="divider-content-center">or log in with</div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100" href="#"><span class="fab fa-google-plus-g me-2" data-fa-transform="grow-8"></span> google</a></div>
+                      <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100" href="#"><span class="fab fa-facebook-square me-2" data-fa-transform="grow-8"></span> facebook</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Register</a></li>
+          </ul>
+         </div>
+       </div>
+       </nav>
+  </header>
+  
+  <script>
+  	
+  </script>

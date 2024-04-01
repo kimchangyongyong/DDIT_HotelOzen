@@ -1,0 +1,288 @@
+package kr.or.ddit.cstmr.rsvt.controller;
+
+import java.security.Principal;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.cstmr.rsvt.service.CstmrRsvtService;
+import kr.or.ddit.global.security.MberUser;
+import kr.or.ddit.global.security.MberVOWrapper;
+import kr.or.ddit.global.vo.AttatchRmTypeVO;
+import kr.or.ddit.global.vo.CstmrVO;
+import kr.or.ddit.global.vo.MberVO;
+import kr.or.ddit.global.vo.RecomRoomVO;
+import kr.or.ddit.global.vo.RoomTypeVO;
+import kr.or.ddit.global.vo.RsvtDetailsVO;
+import kr.or.ddit.global.vo.RsvtParamsVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import kr.or.ddit.global.vo.SetleVO;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ *	고객 예약 클래스
+ */
+@Slf4j
+@Controller
+@RequestMapping("cstmr/rsvt")
+public class CstmrRsvtRmtRetrieveController {
+
+	/**
+	 * 예약 서비스 객체 인스턴스 주입
+	 */
+	@Inject
+	private CstmrRsvtService service;
+	
+
+
+	@PostMapping("rsvtStep01")
+	public String rsvtStep01(
+			@ModelAttribute("rsvtVO") RsvtVO rsvtVO
+			, HttpServletRequest request
+			){
+		
+		LocalDate checkin = rsvtVO.getRsvtCheckinYmd();
+		LocalDate checkout = rsvtVO.getRsvtCheckoutYmd();
+
+		log.info("checkin@@@@:{}",checkin);
+		log.info("checkout@@@@:{}",checkout);
+		int nbrCnt = rsvtVO.getRsvtAdultCnt() + rsvtVO.getRsvtChildCnt();
+		long rsvtDay = ChronoUnit.DAYS.between(checkin, checkout);
+
+		rsvtVO.setRsvtNberCnt(nbrCnt);
+		rsvtVO.setRsvtDay(rsvtDay);
+	
+		HttpSession session = request.getSession();
+		
+		// 새로운 세션으로 접근 시
+		if (session.isNew()) {
+			// 에러 처리
+		}
+		
+		session.setAttribute("rsvtVO", rsvtVO);
+
+		// 받은 파라미터 값으로 예약가능객실 조회 후 리스트에 저장
+		List<RoomTypeVO> rsvtRmtList = service.retrieveRsvtRmt(rsvtVO);
+		
+		// 파라미터가 비어있지 않을 떄
+		if (!rsvtRmtList.isEmpty()) {
+			Iterator<RoomTypeVO> value = rsvtRmtList.iterator();
+
+			List<AttatchRmTypeVO> attatchRmTypeVO = new ArrayList<>();
+
+			while (value.hasNext()) {
+				// 다음 요소의 RmtTypeCd를 저장
+				String rmtTypeCd = value.next().getRmtTypeCd();
+
+				// 조회한 RmtTypeCd로 객실타입 조회 후 저장
+				AttatchRmTypeVO rmtList = service.retrieveRmt(rmtTypeCd);
+
+				attatchRmTypeVO.add(rmtList);
+				log.info("rmtList@@@@:{}",rmtList);
+				log.info("attatchRmTypeVO@@@@:{}",attatchRmTypeVO);
+				
+			}
+			session.setAttribute("attatchRmTypeVO", attatchRmTypeVO);
+
+			// 파라미터가 비어있을 시
+		} else {
+			
+			// 예약객실 없음 메세지 추가
+		}
+
+		return "redirect:rsvtStep01";
+	}
+	
+	@GetMapping("rsvtStep01")
+	public String rsvtStep01() {
+		return "cstmr/rsvt/rsvtStep01";
+	}
+
+	@GetMapping("recomRsvtList")
+	public String rcrmtList() {
+		return "error/403";
+	}
+
+	@GetMapping("rsvtStep02")
+	public String rsvtStep02() {
+		return "cstmr/rsvt/rsvtStep02";
+	}
+
+	@PostMapping("rsvtStep02")
+	public String rsvtStep02(
+			@ModelAttribute RsvtParamsVO rsvtParams
+			, HttpServletRequest request
+			, @RequestParam("rmtTypeCd") String rmtTypeCd
+		) {
+		
+		HttpSession session = request.getSession();
+		
+		// 고객인 선택한 객실 타입
+		AttatchRmTypeVO roomType = service.retrieveRmt(rmtTypeCd);
+		
+		session.setAttribute("roomType", roomType);
+
+		return "redirect:rsvtStep02";
+	}
+	
+	@PostMapping("rsvtStep03")
+	public String rsvtStep03(
+			Authentication authentication
+			, @ModelAttribute("totalAmnt") int totalAmnt
+			, HttpServletRequest request
+			) {
+		HttpSession session = request.getSession();
+		
+		// 총가격
+		session.setAttribute("totalAmnt", totalAmnt);
+		
+		
+		// 비회과 회원을 구분하기 위해 authentication으로 인증유무 확인, 현재 사용자의 정보를 가져와 mberVo의 인스턴스인지 확인
+	    if (authentication != null && authentication.getPrincipal() instanceof MberVOWrapper) {
+	        MberVO mber = ((MberVOWrapper) authentication.getPrincipal()).getMberUser();
+
+	        if (mber != null) {
+	            String cstNo = mber.getCstNo();
+	            MberVO realMber = service.retrieveMber(cstNo);
+	            session.setAttribute("realMber", realMber);
+	            
+	        }
+	    }
+	    log.info("비회원입니다 ."); 
+
+	    return "redirect:rsvtStep03";
+	}
+
+	@GetMapping("rsvtStep03")
+	public String rsvtStep03() {
+		return "cstmr/rsvt/rsvtStep03";
+	}
+
+
+	@PostMapping("rsvtStep04")
+	public String rsvtSetle(
+			@ModelAttribute CstmrVO rsvtCstmr
+			, @ModelAttribute SetleVO setle
+			, HttpServletRequest request
+		) {
+		HttpSession session = request.getSession();
+		
+		Map<String, Object> rsvtData = new HashMap<>();
+		RsvtDetailsVO rsvtDetail = new RsvtDetailsVO();
+
+		// 선택 객실 타입정보
+		AttatchRmTypeVO roomType = (AttatchRmTypeVO) session.getAttribute("roomType");
+		
+		// 예약정보
+		Map<String, Object> rsvtRmtMap = (Map<String, Object>) session.getAttribute("rsvtRmtMap");
+		
+		// 필요한 정보 추출해 맵에 저장 - Map사용하지 않고 vo를 수정할 시 더욱 간편할 것으로 판단.
+		RsvtVO rsvtMap = new RsvtVO();
+		int rsvtRoomCnt = (int) rsvtRmtMap.get("rsvtRoomCnt");
+		int adultCnt = (int) rsvtRmtMap.get("adultCnt");
+		int childCnt = (int) rsvtRmtMap.get("childCnt");
+		
+		if(rsvtRoomCnt>=2) {
+			int adultCnt2 = (int) rsvtRmtMap.get("adultCnt2");
+			int childCnt2 = (int) rsvtRmtMap.get("childCnt2");
+			
+			adultCnt += adultCnt2;
+			childCnt += childCnt2;
+			if(rsvtRoomCnt>=3) {
+				int adultCnt3 = (int) rsvtRmtMap.get("adultCnt3");
+				int childCnt3 = (int) rsvtRmtMap.get("childCnt3");
+				
+				adultCnt += adultCnt3;
+				childCnt += childCnt3;
+			}
+		}
+		
+		LocalDate rsvtCheckinYmd = LocalDate.parse(rsvtRmtMap.get("rsvtCheckinYmd").toString());
+		LocalDate rsvtCheckoutYmd = LocalDate.parse(rsvtRmtMap.get("rsvtCheckoutYmd").toString());
+		rsvtMap.setRsvtCheckinYmd(rsvtCheckinYmd);
+		rsvtMap.setRsvtCheckoutYmd(rsvtCheckoutYmd);
+		rsvtMap.setRsvtRoomCnt(rsvtRoomCnt);
+		rsvtMap.setRsvtAdultCnt(adultCnt);
+		rsvtMap.setRsvtChildCnt(childCnt);
+		rsvtMap.setRsvtAmnt((Integer) session.getAttribute("totalAmnt"));
+		
+		rsvtData.put("rsvtMap", rsvtMap);
+		rsvtData.put("rsvtCstmr", rsvtCstmr);
+		rsvtData.put("setle", setle);
+		rsvtData.put("roomType",roomType);
+		
+		service.createNewRsvt(rsvtData);
+		
+		
+		return "redirect:rsvtEnd";
+	}
+
+	@GetMapping("rsvtEnd")
+	public String rsvtEnd() {
+		return "cstmr/rsvt/rsvtEnd";
+	}
+
+	@PostMapping("recomRsvtList")
+	public String rcRmList(String adult, String child, Model model) {
+		int totalNmpr = Integer.parseInt(adult) + Integer.parseInt(child);
+		String cstNo = "M2400019"; // 추후 가져와야됨.
+		CstmrVO cstmr = service.retrieveCstmrAge(cstNo);
+		String age = cstmr.getAge();
+
+		Map<String, Object> customerData = new HashMap<>();
+		customerData.put("age", age);
+		customerData.put("totalNmpr", totalNmpr);
+
+		List<RecomRoomVO> rcRm = service.retrieveRcRm(customerData);
+		model.addAttribute("rcRm", rcRm);
+		log.info("######################rcRm:{}", rcRm);
+
+		String rmType1 = rcRm.get(0).getRermRmtype();
+		String rmType2 = rcRm.get(1).getRermRmtype();
+
+		log.info("##########################rmType1:{}", rmType1);
+
+		AttatchRmTypeVO attRmt1 = service.retrieveRmt(rmType1);
+		AttatchRmTypeVO attRmt2 = service.retrieveRmt(rmType2);
+
+		log.info("##########################attRmt1:{}", attRmt1);
+
+		Map<String, AttatchRmTypeVO> attRmtMap = new HashMap<>();
+		attRmtMap.put("attRmt1", attRmt1);
+		attRmtMap.put("attRmt2", attRmt2);
+
+		log.info("attRmtMap:{}", attRmtMap);
+
+		model.addAttribute("attRmtMap", attRmtMap);
+
+		return "cstmr/rsvt/recomRsvtList";
+	}
+
+}

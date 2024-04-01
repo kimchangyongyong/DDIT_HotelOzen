@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.CarMapper">
+<resultMap type="CarVO" id="CarMap" autoMapping="true">
+	<association property="recomCarVO" javaType="RecomCarVO" autoMapping="true">
+		<id property="recRank" column="REC_RANK"/>
+	</association>
+
+</resultMap>
+<select id="select" parameterType="CstmrVO" resultMap="CarMap">
+	SELECT
+		CAR_NO
+		, CAR_NM
+		, CAR_LIM
+		, CAR_KIND
+		, CAR_AGE
+        , REC_RANK
+	FROM 
+		TB_CAR INNER JOIN TB_RECOM_CAR USING (CAR_NO)
+	WHERE 
+		REC_AGE = #{cstBirth} AND REC_GEN = #{cstGen}
+    GROUP BY 
+    	CAR_NO, CAR_NM, CAR_LIM, CAR_KIND, CAR_AGE, REC_RANK
+	ORDER BY 
+		REC_RANK
+
+</select>
+
+</mapper>

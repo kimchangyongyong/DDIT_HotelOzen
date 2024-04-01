@@ -1,0 +1,38 @@
+package kr.or.ddit.emp.pms.rsvt.controller;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.or.ddit.emp.pms.rsvt.service.EmpPmsQrRsvtService;
+import kr.or.ddit.global.vo.RsvtDetailsVO;
+import kr.or.ddit.global.vo.RsvtVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/emp/pms/rsvt")
+public class EmpPmsQrRsvtController {
+	
+	@Inject
+	private EmpPmsQrRsvtService service;
+	
+	@RequestMapping(value="/QRRsvtList", method = {RequestMethod.GET})
+	public String qrRsvtList(
+		@RequestParam String rsvtNo
+		,Model model
+	) {
+		List<RsvtDetailsVO> rsvtDtlList = service.retrieveRsvtDtlList(rsvtNo);
+		model.addAttribute("rsvtDtlList", rsvtDtlList);
+		
+		log.info("{######################rsvtDtlList:{}",rsvtDtlList );
+		
+		return "emp/pms/rsvt/qrRsvtList";
+	}
+}

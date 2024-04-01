@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.HrmEmpMapper">
+
+<insert id="insert" parameterType="HrmEmpVO">
+
+INSERT INTO tb_emp (
+    emp_no
+    , emp_nm
+    , emp_tel
+    , emp_home_tel
+    , emp_eml
+    , emp_addr
+    , emp_jncmp_ymd
+    , emp_rtrm_yn
+    , emp_profl_nm
+    , emp_profl_uuid
+    , emp_annual_leave
+    , emp_jbgd
+    , emp_dept
+    , emp_birth
+    , emp_pw
+    , user_role
+) VALUES (
+    :v0
+  , :v1
+  , :v2
+  , :v3
+  , :v4
+  , :v5
+  , :v6
+  , :v7
+  , :v8
+  , :v9
+  , :v10
+  , :v11
+  , :v12
+  , :v13
+  , :v14
+  , :v15
+);
+
+</insert>
+
+<select id="selectList" resultType="HrmEmpVO">
+	SELECT A.*, ROWNUM RNUM
+	FROM
+		(SELECT
+		    EMP_NO
+		  , EMP_NM
+		  , EMP_TEL
+		  , EMP_HOME_TEL
+		  , EMP_EML
+		  , EMP_ADDR
+		  , EMP_JNCMP_YMD
+		  , EMP_RTRM_YN
+		  , EMP_PROFL_NM
+		  , EMP_PROFL_UUID
+		  , EMP_ANNUAL_LEAVE
+		  , EMP_JBGD
+		  , EMP_DEPT
+		  , EMP_BIRTH
+		  , EMP_PW
+		  , USER_ROLE
+		FROM
+	    	TB_EMP) A
+</select>
+
+
+<resultMap type="HrmEmpVO" id="hrmEmpDclzMap" autoMapping="true">
+	<id property="empNo" column="EMP_NO"/>
+	<association property="dclz" javaType="DclzVO" autoMapping="true">
+		<id property="dclzNo" column="DCLZ_NO"/>
+	</association>
+</resultMap>
+<select id="selectDclzList" resultMap="hrmEmpDclzMap">
+	SELECT
+	    EMP_NO
+	  , EMP_NM
+	  , EMP_TEL
+	  , EMP_HOME_TEL
+	  , EMP_EML
+	  , EMP_ADDR
+	  , EMP_JNCMP_YMD
+	  , EMP_RTRM_YN
+	  , EMP_PROFL_NM
+	  , EMP_PROFL_UUID
+	  , EMP_ANNUAL_LEAVE
+	  , EMP_JBGD
+	  , EMP_DEPT
+	  , EMP_BIRTH
+	  , EMP_PW
+	  , USER_ROLE
+	  , DCLZ_NO
+	  , WORK_TYPE_CD
+	  , DCLZ_BGN_DT
+	  , DCLZ_END_DT
+	FROM
+	    TB_DCLZ LEFT OUTER JOIN TB_EMP USING (EMP_NO)
+	WHERE TO_CHAR(DCLZ_YMD, 'yyyy/mm/dd') = TO_CHAR(SYSDATE, 'yyyy/mm/dd') AND DCLZ_STTS='O'
+</select>
+
+<select id="selectRtrmList" resultType="HrmEmpVO">
+	SELECT
+	    EMP_NO
+	  , EMP_NM
+	  , EMP_TEL
+	  , EMP_HOME_TEL
+	  , EMP_EML
+	  , EMP_ADDR
+	  , EMP_JNCMP_YMD
+	  , EMP_RTRM_YN
+	  , EMP_PROFL_NM
+	  , EMP_PROFL_UUID
+	  , EMP_ANNUAL_LEAVE
+	  , EMP_JBGD
+	  , EMP_DEPT
+	  , EMP_BIRTH
+	  , EMP_PW
+	  , USER_ROLE
+	FROM
+	   TB_EMP 
+	WHERE EMP_RTRM_YN = 'Y'
+</select>
+
+
+<update id="update">
+	UPDATE tb_emp
+	SET
+	    #{empTel,jdbcType=VARCHAR}
+	    , #{empHomeTel,jdbcType=VARCHAR}
+	    , #{empEml,jdbcType=VARCHAR}
+	    , #{empAddr,jdbcType=VARCHAR}
+	    , #{empProflNm,jdbcType=VARCHAR}
+	    , #{empProflUuid,jdbcType=VARCHAR}
+	    , #{empPw,jdbcType=VARCHAR}
+	WHERE
+	    emp_no = #{empNo,jdbcType=VARCHAR}
+
+
+
+</update>
+
+<delete id="delete">
+	UPDATE TB_EMP
+	SET 
+	EMP_RTRM_YN = 'Y'
+	WHERE EMP_NO = #{empNo}
+</delete>
+
+
+</mapper>

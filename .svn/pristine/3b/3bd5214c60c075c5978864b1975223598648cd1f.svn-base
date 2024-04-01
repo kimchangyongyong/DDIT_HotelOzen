@@ -1,0 +1,9 @@
+package kr.or.ddit.global.vo;
+
+import lombok.Data;
+
+@Data
+public class ScrapVO {
+	private String cstNo;
+	private String scrapNo;
+}

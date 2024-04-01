@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+
+.center {
+	text-align: center;
+}
+
+.onfi {
+	max-width: 1000px;
+}
+
+.wdf {
+	width: 150px;
+}
+.twid {
+	width: 1000px;
+}
+.bg-oran {
+	border-top: 2px solid #000000;
+	border-bottom: 1px solid #000000;
+}
+
+/* 탭 css */
+.tabcontent {
+  margin-top: 15px;
+  box-sizing: border-box;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"] + label {
+  display: inline-block;
+  padding: 10px 20px;
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none; /* 기본값인 밑줄 제거 */
+}
+
+input[type="radio"]:checked + label {
+  background-color: rgba(80, 255, 0, 0.3);
+}
+
+.content-box {
+  display: none;
+  box-sizing: border-box;
+}
+
+input[id="tabmenu01"]:checked ~ .content01 {
+  display: block;
+}
+
+input[id="tabmenu02"]:checked ~ .content02 {
+  display: block;
+}
+
+input[id="tabmenu03"]:checked ~ .content03 {
+  display: block;
+}

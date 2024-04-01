@@ -1,0 +1,482 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+<link href="${pageContext.request.contextPath}/resources/css/emp/rsvtList/rsvtListCss.css" rel="stylesheet">
+
+<div class="col mb-3">
+	<div class="card h-100">
+		<div class="card-header">
+			<div class="row flex-between-end">
+				<div class="col-auto align-self-center">
+					<h5 class="mb-0" data-anchor="data-anchor" id="share-dataset">
+						<font style="vertical-align: inherit;"> <font
+							style="vertical-align: inherit;">예약 내역 조회</font>
+						</font>
+					</h5>
+				</div>
+
+				<!-- 테이블 -->
+				<div id="tableExample4"
+					data-list='{"valueNames":["name","email","age"],"page":10,"pagination":true}'>
+					<div class="row justify-content-end g-0">
+						<div class="col-auto px-3">
+							<select class="form-select form-select-sm mb-3"
+								aria-label="Bulk actions" data-list-filter="data-list-filter">
+								<option selected="" value="">==예약 현황==</option>
+								<option value="이용완료">이용완료</option>
+								<option value="투숙중">투숙중</option>
+								<option value="예약취소">예약취소</option>
+							</select>
+						</div>
+						<div class="col-auto col-sm-5 mb-3">
+							<form>
+								<div class="input-group">
+									<input class="form-control form-control-sm shadow-none search"
+										type="search" placeholder="Search..." aria-label="search" />
+									<div class="input-group-text bg-transparent">
+										<span class="fa fa-search fs-10 text-600"></span>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div>
+						
+							<a class="btn float-end border mb-2 mx-2" href="#"> <!-- 미완성 -->
+							    <i class="fas fa-qrcode"></i> QR코드
+							</a>
+							<button class="btn float-end border mb-2" href="#rsvt-create" data-bs-toggle="modal">
+								<i class="bi bi-plus-lg"></i> 예약추가(워크인)
+							</button>
+						</div>
+					</div>
+					<div class="table-responsive scrollbar">
+						<table
+							class="table table-bordered table-striped fs-10 mb-0 bg-light">
+							<thead class="bg-200 border border-bottom">
+								<tr>
+									<th class="text-900 sort" data-sort="no">번호</th>
+									<th class="text-900 sort" data-sort="rsvtno">예약번호</th>
+									<th class="text-900 sort" data-sort="name">고객이름</th>
+									<th class="text-900 sort" data-sort="rsvtDt">예약일</th>
+									<th class="text-900 sort" data-sort="checkDt">투숙일</th>
+									<th class="text-900 sort" data-sort="rmType">객실종류</th>
+									<th class="text-900 sort" data-sort="rmcnt">객실수</th>
+									<th class="text-900 sort" data-sort="adcnt">성인수</th>
+									<th class="text-900 sort" data-sort="chcnt">아동수</th>
+									<th class="text-900 sort" data-sort="status">예약현황</th>
+									<th class="text-900 sort" data-sort="status">예약취소</th>
+								</tr>
+							</thead>
+							<tbody class="list" id="table-purchase-body">
+								<c:forEach var="i" begin="1" end="30">
+									<tr class="btn-reveal-trigger">
+										<td class="align-middle white-space-nowrap no">${i }</td>
+										<td class="align-middle white-space-nowrap rsvtno"><a
+											href="#rsvtList-select" data-bs-toggle="modal">RSV2402001</a>
+										</td>
+										<td class="align-middle white-space-nowrap name">김창용</td>
+										<td class="align-middle white-space-nowrap rsvtDt">2024-02-01</td>
+										<td class="align-middle white-space-nowrap checkDt">2024-02-05</td>
+										<td class="align-middle white-space-nowrap rmType">STD</td>
+										<td class="align-middle white-space-nowrap rmcnt">1</td>
+										<td class="align-middle white-space-nowrap dacnt">2</td>
+										<td class="align-middle white-space-nowrap chcnt">0</td>
+										<td
+											class="align-middle text-center fs-9 white-space-nowrap status">
+											<span class="badge badge rounded-pill badge-subtle-success"> 이용완료 
+												<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> 
+										</span>
+											<span class="badge badge rounded-pill badge-subtle-warning"> 투숙중
+												<span class="ms-1 fas fa-stream" data-fa-transform="shrink-2"></span>
+										</span>
+											<span class="badge badge rounded-pill badge-subtle-primary">예약중
+												<span class="ms-1 fas fa-sync" data-fa-transform="shrink-2"></span>
+										</span>
+										</span>
+											<span class="badge badge rounded-pill badge-subtle-secondary">예약취소
+												<span class="ms-1 fas fa-ban" data-fa-transform="shrink-2"></span>
+										</span>
+										</td>
+										<td class="align-middle text-center fs-9 white-space-nowrap ">
+											<i id="rsvt-cancel"
+											class=" white-space-nowrap far fa-times-circle fs-8"></i>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					<!-- 페이징 -->
+					<div class="d-flex justify-content-center mt-3">
+						<button class="btn btn-sm btn-falcon-default me-1" type="button"
+							title="Previous" data-list-pagination="prev">
+							<span class="fas fa-chevron-left"></span>
+						</button>
+						<ul class="pagination mb-0"></ul>
+						<button class="btn btn-sm btn-falcon-default ms-1" type="button"
+							title="Next" data-list-pagination="next">
+							<span class="fas fa-chevron-right"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- 예약 상세 조회 -->
+			<div class="modal fade" id="rsvtList-select" tabindex="-1"
+				role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
+				<div class="modal-dialog modal-lg mt-6" role="document">
+					<div class="modal-content border-0">
+						<div class="modal-header px-5 position-relative bg-secondary  ">
+							<div class="position-relative z-1">
+								<h4 class="mb-0 text-white" id="authentication-modal-label">예약 상세내역 조회</h4>
+							</div>
+							<button class="btn-close position-absolute top-0 end-0 mt-2 me-2"
+								data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body py-4 px-5">
+							<form>
+								<div class="row gx-2">
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-no">예약번호</label> <input
+											class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-no" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-name">고객이름</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-name" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for=model-rsvt-tel>휴대폰</label>
+										<input class="form-control" type="tel" autocomplete="on"
+											id="model-rsvt-tel" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for=model-rsvt-tel>차량번호</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-tel" />
+									</div>
+								</div>
+								<div class="row gx-2">
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-date1">예약일</label>
+										<input class="form-control" type="date" autocomplete="on"
+											id="model-rsvt-date1" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-date2">투숙일</label>
+										<input class="form-control" type="date" autocomplete="on"
+											id="model-rsvt-date2" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-date3">퇴실일</label>
+										<input class="form-control" type="date" autocomplete="on"
+											id="model-rsvt-date3" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-type">객실종류</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-type" />
+									</div>
+								</div>
+								<div class="row gx-2">
+									<div class="mb-3 col-sm-4">
+										<label class="form-label" for="model-rsvt-roomcnt">객실수</label>
+										<input class="form-control" type="number" autocomplete="on"
+											id="model-rsvt-roomcnt" />
+									</div>
+									<div class="mb-3 col-sm-4">
+										<label class="form-label" for="model-rsvt-cnt1">성인수</label>
+										<input class="form-control" type="number" autocomplete="on"
+											id="model-rsvt-cnt1" />
+									</div>
+									<div class="mb-3 col-sm-4">
+										<label class="form-label" for="model-rsvt-cnt2">아동수</label>
+										<input class="form-control" type="number" autocomplete="on"
+											id="model-rsvt-cnt2" />
+									</div>
+								</div>
+								<div class="row gx-2">
+									<div class="mb-3 col-sm-6">
+										<label class="form-label" for="model-rsvt-add1">구성원</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-add1" />
+									</div>
+									<div class="mb-3 col-sm-6">
+										<label class="form-label" for="model-rsvt-add3">여행예산</label> 
+										<input class="form-control" type="text"
+										autocomplete="on" id="model-rsvt-add3" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-1">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio1"
+												type="radio" name="inlineRadioOptions" value="option1" /> <label
+												class="form-check-label" for="inlineRadio1">STD</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">STT</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">STF</label>
+										</div>
+									</div>
+									<div class="col-sm-1">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio1"
+												type="radio" name="inlineRadioOptions" value="option1" /> <label
+												class="form-check-label" for="inlineRadio1">SWD</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">SWT</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">SWF</label>
+										</div>
+									</div>
+									<div class="col-sm-1">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio1"
+												type="radio" name="inlineRadioOptions" value="option1" /> <label
+												class="form-check-label" for="inlineRadio1">PRD</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">PRT</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">PRF</label>
+										</div>
+									</div>
+									<div class="col-sm-1"></div>
+									<div class="col-sm-4" id="roomNo">
+										<table>
+											<tbody>
+												<tr>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+												</tr>
+												<tr>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="mb-3 col-sm-4">
+										<label class="form-label" for="modal-auth-confirm-password">호실</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="modal-auth-confirm-password" />
+									</div>
+								</div>
+
+								<div>
+									<div class="mb-3 col-sm-4 float-end">
+										<button class="btn btn-secondary d-block w-100 mt-3"
+											type="submit" name="submit">체크인</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 예약 추가 (워크인) -->
+			<div class="modal fade" id="rsvt-create" tabindex="-1"
+				role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
+				<div class="modal-dialog modal-lg mt-6" role="document">
+					<div class="modal-content border-0">
+						<div class="modal-header px-5 position-relative bg-secondary  ">
+							<div class="position-relative z-1">
+								<h4 class="mb-0 text-white" id="authentication-modal-label">예약 추가 (워크인)</h4>
+							</div>
+							<button class="btn-close position-absolute top-0 end-0 mt-2 me-2"
+								data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body py-4 px-5">
+							<form>
+								<div class="row gx-2">
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-no">예약번호</label> <input
+											class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-no" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-name">고객이름</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-name" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for=model-rsvt-tel>휴대폰</label>
+										<input class="form-control" type="tel" autocomplete="on"
+											id="model-rsvt-tel" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for=model-rsvt-tel>차량번호</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-tel" />
+									</div>
+								</div>
+								<div class="row gx-2">
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-date1">예약일</label>
+										<input class="form-control" type="date" autocomplete="on"
+											id="model-rsvt-date1" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-date2">투숙일</label>
+										<input class="form-control" type="date" autocomplete="on"
+											id="model-rsvt-date2" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-date3">퇴실일</label>
+										<input class="form-control" type="date" autocomplete="on"
+											id="model-rsvt-date3" />
+									</div>
+									<div class="mb-3 col-sm-3">
+										<label class="form-label" for="model-rsvt-type">객실종류</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-type" />
+									</div>
+								</div>
+								<div class="row gx-2">
+									<div class="mb-3 col-sm-4">
+										<label class="form-label" for="model-rsvt-roomcnt">객실수</label>
+										<input class="form-control" type="number" autocomplete="on"
+											id="model-rsvt-roomcnt" />
+									</div>
+									<div class="mb-3 col-sm-4">
+										<label class="form-label" for="model-rsvt-cnt1">성인수</label>
+										<input class="form-control" type="number" autocomplete="on"
+											id="model-rsvt-cnt1" />
+									</div>
+									<div class="mb-3 col-sm-4">
+										<label class="form-label" for="model-rsvt-cnt2">아동수</label>
+										<input class="form-control" type="number" autocomplete="on"
+											id="model-rsvt-cnt2" />
+									</div>
+								</div>
+								<div class="row gx-2">
+									<div class="mb-3 col-sm-6">
+										<label class="form-label" for="model-rsvt-add1">구성원</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="model-rsvt-add1" />
+									</div>
+									<div class="mb-3 col-sm-6">
+										<label class="form-label" for="model-rsvt-add3">여행예산</label> 
+										<input class="form-control" type="text"
+										autocomplete="on" id="model-rsvt-add3" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-1">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio1"
+												type="radio" name="inlineRadioOptions" value="option1" /> <label
+												class="form-check-label" for="inlineRadio1">STD</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">STT</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">STF</label>
+										</div>
+									</div>
+									<div class="col-sm-1">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio1"
+												type="radio" name="inlineRadioOptions" value="option1" /> <label
+												class="form-check-label" for="inlineRadio1">SWD</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">SWT</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">SWF</label>
+										</div>
+									</div>
+									<div class="col-sm-1">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio1"
+												type="radio" name="inlineRadioOptions" value="option1" /> <label
+												class="form-check-label" for="inlineRadio1">PRD</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">PRT</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" id="inlineRadio2"
+												type="radio" name="inlineRadioOptions" value="option2" /> <label
+												class="form-check-label" for="inlineRadio2">PRF</label>
+										</div>
+									</div>
+									<div class="col-sm-1"></div>
+									<div class="col-sm-4" id="roomNo">
+										<table>
+											<tbody>
+												<tr>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+												</tr>
+												<tr>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+													<td><div class="cell-content">501</div></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="mb-3 col-sm-4">
+										<label class="form-label" for="modal-auth-confirm-password">호실</label>
+										<input class="form-control" type="text" autocomplete="on"
+											id="modal-auth-confirm-password" />
+									</div>
+								</div>
+
+								<div>
+									<div class="mb-3 col-sm-4 float-end">
+										<button class="btn btn-secondary d-block w-100 mt-3"
+											type="submit" name="submit">체크인</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>		
+</div>
+

@@ -1,0 +1,33 @@
+package kr.or.ddit.global.vo;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(of = "rsvtNo")
+public class RsvtVO {
+	
+	private int rnum;
+	
+	private String rsvtNo;
+	private String cstNo;
+	private LocalDate rsvtYmd;
+	private Integer rsvtAmnt;
+	private String rsvtCnclYn;
+	private LocalDate rsvtCheckinYmd;
+	private LocalDate rsvtCheckoutYmd;
+	private Integer rsvtRoomCnt;
+	private Integer rsvtAdultCnt;
+	private Integer rsvtChildCnt;
+	private String rsvtSetleNo;
+	
+	private CstmrVO cstmr; 
+	private List<RsvtDetailsVO> rsvtDetails;
+	
+	private RecomRoomVO rcrm;
+	private RoomVO room;
+	
+}

@@ -1,0 +1,51 @@
+package kr.or.ddit.emp.hrm.emply.service;
+
+import java.util.List;
+
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.global.vo.HrmEmpVO;
+
+public interface HrmEmpService {
+	
+	/**
+	 * 직원 계정 생성 처리
+	 * @param hrmEmp
+	 * @return 
+	 */
+	public ServiceResult createHrmEmp(HrmEmpVO hrmEmp);
+	/**
+	 * 직원 정보 상세 조회
+	 * @param empNo 조회할 직원의 primary key
+	 * @return
+	 */
+	public HrmEmpVO retrieveHrmEmp(String empNo);
+	/**
+	 * 직원 목록 조회
+	 * @return
+	 */
+	public List<HrmEmpVO> retrieveHrmEmpList();
+	/**
+	 * 출근 직원 목록 조회
+	 * @return
+	 */
+	public List<HrmEmpVO> retrieveHrmEmpDclzList();
+	/**
+	 * 퇴사 직원 목록 조회
+	 * @return
+	 */
+	public List<HrmEmpVO> retrieveHrmEmpRtrmList();
+	/**
+	 * 직원 정보 수정
+	 * @param hrmEmp
+	 * @return
+	 */
+	public ServiceResult modifyHrmEmp(HrmEmpVO hrmEmp);
+	/**
+	 * 직원 삭제(퇴사처리)
+	 * @param hrmEmp
+	 * @return
+	 */
+	public ServiceResult removeHrmEmp(HrmEmpVO hrmEmp);
+	
+
+}

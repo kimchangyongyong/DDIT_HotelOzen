@@ -1,0 +1,5 @@
+package kr.or.ddit.emp.auth.service;
+
+public interface EmpAuthChangePwdService {
+	
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mappers.MberNoticeMapper">
+
+	<select id="selectTotalRecord" parameterType="PaginationInfo" resultType="int">
+		SELECT COUNT(*)
+		FROM 
+		TB_MBER_NOTICE
+	</select>
+
+	<select id="mberNoticeList" resultType="MberNoticeVO">
+		WITH RNUMNOTI AS (
+		    SELECT 
+		        ROWNUM RNUM, A.*
+		    FROM(
+		        SELECT
+		            MBER_NT_NO
+		            , MBER_NT_NM
+		            , MBER_NT_YMD
+		            , MBER_NT_CNT
+		            , MBER_NT_CN
+		        FROM
+		            TB_MBER_NOTICE
+		        ORDER BY MBER_NT_NO DESC
+		    ) A
+		)
+		SELECT *
+		FROM RNUMNOTI
+		<![CDATA[
+			WHERE RNUM >=#{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+
+	<select id="mberNoticeView" parameterType="string" resultType="MberNoticeVO">
+		SELECT
+			MBER_NT_NO
+		    , MBER_NT_NM
+		    , MBER_NT_YMD
+		    , MBER_NT_CN
+		FROM TB_MBER_NOTICE
+		WHERE MBER_NT_NO = #{mberNtNo}
+	</select>
+</mapper>

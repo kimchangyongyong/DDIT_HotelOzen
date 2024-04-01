@@ -1,0 +1,19 @@
+package kr.or.ddit.global.vo;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(of="rsvtDtlNo")
+public class RsvtDetailsVO {
+	private String rsvtDtlNo;
+	private String rsvtNo;
+	private Integer rsvtDtlNmprCnt;
+	private Integer rsvtDtlAmnt;
+	private Integer rsvtDtlAdultCnt;
+	private Integer rsvtDtlChildCnt;
+	private String rsvtSe;
+	private String rmtTypeCd;
+	
+	private RsvtVO rsvt;
+}

@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.tab_start{
+	position:fixed;
+  	width:60px;
+  	height:60px;
+  	bottom:200px;
+  	right:40px;
+}
+.btn {
+    display: inline-block;
+}
+.recom-table{
+	max-width: 800px;
+}
+.recom-div{
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.scrapModal {
+	transform: translateX(200px) translateY(170px);
+}
+.tab_start {
+	 z-index: 1060;
+}
+.modal-content {
+	z-index : 1060;
+}
